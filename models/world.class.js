@@ -1,14 +1,14 @@
 class World {
   character = new Character();
   enemies = [
-    new Fish(),
-    new Fish(),
-    new Fish(),
-    new Fish(),
-    new Fish(),
-    new Fish(),
-    new Fish(),
-    new Fish(),
+    new Fish("GREEN", 1),
+    new Fish("RED", 3),
+    new Fish("GREEN", 1),
+    new Fish("RED", 3),
+    new Fish("ORANGE", 2),
+    new Fish("ORANGE", 2),
+    new Fish("RED", 3),
+    new Fish("GREEN", 1),
   ];
   backgroundObject = [
     new BackgroundObject("img/3. Background/Layers/5. Water/d1.png", 0),
@@ -29,6 +29,7 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.addObjectsToMap(this.backgroundObject);
+
     this.addToMap(this.character);
 
     this.addObjectsToMap(this.enemies);
