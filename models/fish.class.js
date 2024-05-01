@@ -26,12 +26,17 @@ class Fish extends MovableObject {
 
   constructor(fishType, fishIndex) {
     super().loadImage(`img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/${fishIndex}.swim1.png`);
-    this.x = 400 + Math.random() * 250;
     this.loadImages(this[`ENEMY_${fishType.toUpperCase()}`]);
+
+    this.x = 400 + Math.random() * 250;
+    this.speed = 0.15 + Math.random() * 0.25;
+
     this.animate(fishType.toUpperCase());
   }
 
   animate(fishType) {
+    this.moveLeft();
+
     setInterval(() => {
       let idx = this.currentImage % this[`ENEMY_${fishType}`].length;
       let path = this[`ENEMY_${fishType}`][idx];
