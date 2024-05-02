@@ -12,6 +12,7 @@ const level1 = new Level(
     new Fish("ORANGE", 2),
     new Fish("RED", 3),
     new Fish("GREEN", 1),
+    new Endboss(),
   ],
   backgroundObject
 );

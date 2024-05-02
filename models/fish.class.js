@@ -2,6 +2,10 @@ class Fish extends MovableObject {
   y = Math.random() * 430;
   height = 40;
   width = 40;
+  offsetX = 0;
+  offsetY = 0;
+  offsetHeight = 8;
+  offsetWidth = 0;
   ENEMY_RED = [
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim1.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim2.png",
@@ -38,10 +42,7 @@ class Fish extends MovableObject {
     this.moveLeft();
 
     setInterval(() => {
-      let idx = this.currentImage % this[`ENEMY_${fishType}`].length;
-      let path = this[`ENEMY_${fishType}`][idx];
-      this.img = this.imageCache[path];
-      this.currentImage++;
+      this.playAnimation(this[`ENEMY_${fishType}`]);
     }, 200);
   }
 }
