@@ -52,12 +52,23 @@ class Character extends MovableObject {
     "img/1.Sharkie/5.Hurt/1.Poisoned/4.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/5.png",
   ];
+  IMAGES_BUBBLE = [
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
+  ];
 
   constructor() {
     super().loadImage("img/1.Sharkie/1.IDLE/1.png");
     this.loadImages(this.IMAGES_SWIMMING);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_BUBBLE);
     this.animate();
   }
 
@@ -82,6 +93,10 @@ class Character extends MovableObject {
       if (this.world.keyboard.DOWN && !this.isDead()) {
         this.y += this.speed;
         this.swimming_sound.play();
+      }
+      if (this.world.keyboard.SPACE && !this.isDead()) {
+        this.playAnimation(this.IMAGES_BUBBLE);
+        // this.swimming_sound.play();
       }
     }, 1000 / 60);
 

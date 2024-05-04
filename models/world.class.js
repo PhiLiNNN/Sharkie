@@ -1,10 +1,13 @@
 class World {
   character = new Character();
   statusBar = new StatusBar();
+  throwableObjects = [];
   level = level1;
   canvas;
   ctx;
   keyboard;
+  isSwimmingLeft;
+  isBlowBubbleInProgress = false;
   camera_x = 0;
 
   constructor(canvas, keyboard) {
@@ -13,7 +16,7 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
-    this.checkCollisions();
+    this.swim();
   }
 
   /**
@@ -23,14 +26,38 @@ class World {
     this.character.world = this;
   }
 
-  checkCollisions() {
+  swim() {
     setInterval(() => {
-      this.level.enemies.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-          this.character.hit();
-        }
-      });
+      this.checkSwimDirection();
+      this.checkCollisions();
+      this.checkBlowBubble();
     }, 200);
+  }
+  checkCollisions() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        this.statusBar.setPercentage(this.character.energy);
+      }
+    });
+  }
+
+  checkBlowBubble() {
+    document.addEventListener("click", (event) => {
+      if (event.button === 0 && !this.isBlowBubbleInProgress) {
+        const xOffset = this.isSwimmingLeft ? 60 : 140;
+        const bubble = new ThrowableObject(
+          this.character.x + xOffset,
+          this.character.y + 90,
+          this.isSwimmingLeft
+        );
+        this.throwableObjects.push(bubble);
+        this.isBlowBubbleInProgress = true;
+        setTimeout(() => {
+          this.isBlowBubbleInProgress = false;
+        }, 200);
+      }
+    });
   }
 
   /**
@@ -39,11 +66,18 @@ class World {
    */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObject);
+
+    this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
+    this.ctx.translate(this.camera_x, 0);
+
     this.addToMap(this.character);
+
     this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.throwableObjects);
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
     requestAnimationFrame(function () {
@@ -90,5 +124,10 @@ class World {
   flipImageBack(mo) {
     mo.x = mo.x * -1;
     this.ctx.restore();
+  }
+
+  checkSwimDirection() {
+    if (this.keyboard.RIGHT) this.isSwimmingLeft = false;
+    if (this.keyboard.LEFT) this.isSwimmingLeft = true;
   }
 }
