@@ -1,11 +1,4 @@
-class MovableObject {
-  height;
-  width;
-  x;
-  y;
-  img;
-  imageCache = {};
-  currentImage = 0;
+class MovableObject extends DrawableObject {
   speed = 0.15;
   otherDirection = false;
   spawnAnimation = true;
@@ -19,49 +12,16 @@ class MovableObject {
   recovery = 1;
   isAlive = true;
 
-  loadImage(path) {
-    this.img = new Image();
-    this.img.src = path;
-  }
-
-  loadImages(arr) {
-    arr.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
-    });
-  }
-
-  draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  }
-
-  drawFrame(ctx) {
-    if (this instanceof Character || this instanceof Fish) {
-      ctx.beginPath();
-      ctx.lineWidth = "5";
-      ctx.strokeStyle = "blue";
-      ctx.rect(
-        this.x + this.offsetX,
-        this.y + this.offsetY,
-        this.width - this.offsetWidth,
-        this.height - this.offsetHeight
-      );
-      ctx.stroke();
-    }
-  }
-
-  moveLeft() {
-    setInterval(() => {
-      this.x -= this.speed;
-    }, 1000 / 60);
-  }
-
   playAnimation(arr) {
     let idx = this.currentImage % arr.length;
     let path = arr[idx];
     this.img = this.imageCache[path];
     this.currentImage++;
+  }
+  moveLeft() {
+    setInterval(() => {
+      this.x -= this.speed;
+    }, 1000 / 60);
   }
 
   isColliding(obj) {
@@ -72,6 +32,7 @@ class MovableObject {
       this.y + this.offsetY <= obj.y + obj.height - obj.offsetHeight
     );
   }
+
   hit() {
     this.energy -= this.damage;
     if (this.energy < 0) this.energy = 0;
