@@ -60,22 +60,16 @@ class Fish extends MovableObject {
   animate(fishType) {
     this.moveLeft();
 
-    setInterval(() => {
+    const animateFunction = () => {
       if (this.isDead()) {
-        // let idx = this.currentImage % this[`ENEMY_${fishType.toUpperCase()}_DEAD`].length;
-        // if (idx === 2) {
-        //   this.endAnimation = true;
-        // }
-        // if (!this.endAnimation) {
-        //   this.playAnimation(this.ENEMY_ORANGE_DEAD);
-        //   console.log("2222222");
-        //   this.y = -50;
-        // }
-        this.playAnimation(this[`ENEMY_${fishType}_DEAD`]);
-        this.y -= 10;
+        this.img = this.imageCache[this[`ENEMY_${fishType.toUpperCase()}_DEAD`][0]];
+        this.y -= 2;
+        setTimeout(animateFunction, 20);
       } else {
         this.playAnimation(this[`ENEMY_${fishType}`]);
+        setTimeout(animateFunction, 200);
       }
-    }, 200);
+    };
+    animateFunction();
   }
 }

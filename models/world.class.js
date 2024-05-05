@@ -2,6 +2,7 @@ class World {
   character = new Character();
   statusBar = new StatusBar();
   throwableObjects = [];
+  throwableObjectsEnemy = [];
   level = level1;
   canvas;
   ctx;
@@ -9,7 +10,8 @@ class World {
   isSwimmingLeft;
   isBlowBubbleInProgress = false;
   camera_x = 0;
-  lastBubble;
+  lastHitTime = 0;
+  enemyShootinginterval = 1;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -17,7 +19,8 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
-    this.swim();
+    this.checkCollisions();
+    this.enemyAttack();
   }
 
   /**
@@ -27,29 +30,49 @@ class World {
     this.character.world = this;
   }
 
-  swim() {
+  checkCollisions() {
     setInterval(() => {
       this.checkSwimDirection();
-      this.checkCollisions();
+      this.checkCharacterCollisions();
       this.checkBlowBubble();
       this.checkCollisionWithBubble();
     }, 25);
   }
-  dws;
 
-  checkCollisions() {
+  checkCharacterCollisions() {
+    this.checkCharacterEnemyCollision();
+    this.checkCharacterThrowableObjectCollision();
+  }
+
+  checkCharacterEnemyCollision() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
+      if (this.character.isColliding(enemy, this.isSwimmingLeft) && enemy.isAlive) {
         this.character.hit();
         this.statusBar.setPercentage(this.character.energy);
       }
     });
   }
 
+  checkCharacterThrowableObjectCollision() {
+    this.throwableObjectsEnemy.forEach((enemyBubble, idx) => {
+      if (this.character.isColliding(enemyBubble, true)) {
+        let currentTime = new Date().getTime();
+        let timeSinceLastHit = currentTime - this.lastHitTime;
+        if (timeSinceLastHit >= 1000) {
+          this.lastHitTime = currentTime;
+          this.character.hit();
+          this.statusBar.setPercentage(this.character.energy);
+          this.throwableObjectsEnemy.splice(idx, 1);
+        }
+      }
+    });
+  }
+
   checkCollisionWithBubble() {
-    this.throwableObjects.forEach((bubble) => {
+    this.throwableObjects.forEach((bubble, idx) => {
       this.level.enemies.forEach((enemy) => {
-        if (bubble.isColliding(enemy)) {
+        if (bubble.isColliding(enemy, this.isSwimmingLeft)) {
+          this.throwableObjects.splice(idx, 1);
           enemy.hit();
           enemy.isAlive = false;
         }
@@ -61,19 +84,36 @@ class World {
     document.addEventListener("click", (event) => {
       if (event.button === 0 && !this.isBlowBubbleInProgress) {
         const xOffset = this.isSwimmingLeft ? 60 : 140;
-        const bubble = new ThrowableObject(
+        const bubble = new SharkieAttack(
           this.character.x + xOffset,
           this.character.y + 90,
           this.isSwimmingLeft
         );
         this.throwableObjects.push(bubble);
-        this.lastBubble = bubble;
         this.isBlowBubbleInProgress = true;
         setTimeout(() => {
           this.isBlowBubbleInProgress = false;
         }, 200);
       }
     });
+  }
+
+  enemyAttack() {
+    const enemyCount = this.level.enemies.length - 1;
+    const randomInterval = () => (Math.random() * 1000) / this.enemyShootinginterval;
+    console.log("object :>> ", Math.random() * this.enemyShootinginterval * 1000);
+    const addEnemyAttack = () => {
+      const randomEnemyIndex = Math.floor(Math.random() * enemyCount);
+      const bubbleEnemy = new EnemyAttack(
+        this.level.enemies[randomEnemyIndex].x,
+        this.level.enemies[randomEnemyIndex].y,
+        true
+      );
+      let isEnemyAlive = this.level.enemies[randomEnemyIndex].isAlive;
+      if (isEnemyAlive) this.throwableObjectsEnemy.push(bubbleEnemy);
+      setTimeout(addEnemyAttack, randomInterval());
+    };
+    addEnemyAttack();
   }
 
   /**
@@ -94,6 +134,7 @@ class World {
 
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.throwableObjects);
+    this.addObjectsToMap(this.throwableObjectsEnemy);
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
     requestAnimationFrame(function () {
@@ -118,7 +159,7 @@ class World {
   addToMap(mo) {
     if (mo.otherDirection) this.flipImage(mo);
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx);
     if (mo.otherDirection) this.flipImageBack(mo);
   }
 

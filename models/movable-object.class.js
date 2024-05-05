@@ -1,5 +1,4 @@
 class MovableObject extends DrawableObject {
-  isAlive = true;
   speed = 0.15;
   otherDirection = false;
   spawnAnimation = true;
@@ -11,7 +10,7 @@ class MovableObject extends DrawableObject {
   damage = 5;
   lastHit = 0;
   recovery = 1;
-
+  isAlive = true;
   endAnimation = false;
 
   playAnimation(arr) {

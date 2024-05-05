@@ -4,9 +4,10 @@ class Character extends MovableObject {
   x = 40;
   y = 130;
   offsetX = 35;
-  offsetY = 85;
-  offsetHeight = 127;
+  offsetY = 100;
+  offsetHeight = 150;
   offsetWidth = 70;
+  endAnimation = false;
   speed = 3;
   world;
   swimming_sound = new Audio("audio/swim.mp3");
