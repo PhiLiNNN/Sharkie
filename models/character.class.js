@@ -7,7 +7,6 @@ class Character extends MovableObject {
   offsetY = 85;
   offsetHeight = 127;
   offsetWidth = 70;
-  endAnimation = false;
   speed = 3;
   world;
   swimming_sound = new Audio("audio/swim.mp3");

@@ -9,6 +9,7 @@ class World {
   isSwimmingLeft;
   isBlowBubbleInProgress = false;
   camera_x = 0;
+  lastBubble;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -31,14 +32,28 @@ class World {
       this.checkSwimDirection();
       this.checkCollisions();
       this.checkBlowBubble();
-    }, 200);
+      this.checkCollisionWithBubble();
+    }, 25);
   }
+  dws;
+
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusBar.setPercentage(this.character.energy);
       }
+    });
+  }
+
+  checkCollisionWithBubble() {
+    this.throwableObjects.forEach((bubble) => {
+      this.level.enemies.forEach((enemy) => {
+        if (bubble.isColliding(enemy)) {
+          enemy.hit();
+          enemy.isAlive = false;
+        }
+      });
     });
   }
 
@@ -52,6 +67,7 @@ class World {
           this.isSwimmingLeft
         );
         this.throwableObjects.push(bubble);
+        this.lastBubble = bubble;
         this.isBlowBubbleInProgress = true;
         setTimeout(() => {
           this.isBlowBubbleInProgress = false;

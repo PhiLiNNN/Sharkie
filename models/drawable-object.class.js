@@ -32,8 +32,15 @@ class DrawableObject {
         this.width - this.offsetWidth,
         this.height - this.offsetHeight
       );
-      ctx.stroke();
     }
+
+    if (this instanceof ThrowableObject) {
+      ctx.beginPath();
+      ctx.lineWidth = "5";
+      ctx.strokeStyle = "blue";
+      ctx.rect(this.x, this.y, this.width, this.height);
+    }
+    ctx.stroke();
   }
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);

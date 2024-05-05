@@ -1,4 +1,5 @@
 class MovableObject extends DrawableObject {
+  isAlive = true;
   speed = 0.15;
   otherDirection = false;
   spawnAnimation = true;
@@ -10,7 +11,8 @@ class MovableObject extends DrawableObject {
   damage = 5;
   lastHit = 0;
   recovery = 1;
-  isAlive = true;
+
+  endAnimation = false;
 
   playAnimation(arr) {
     let idx = this.currentImage % arr.length;
@@ -20,7 +22,7 @@ class MovableObject extends DrawableObject {
   }
   moveLeft() {
     setInterval(() => {
-      this.x -= this.speed;
+      if (!this.isDead()) this.x -= this.speed;
     }, 1000 / 60);
   }
 
@@ -35,10 +37,8 @@ class MovableObject extends DrawableObject {
 
   hit() {
     this.energy -= this.damage;
-    if (this.energy < 0) this.energy = 0;
-    else {
-      this.lastHit = new Date().getTime();
-    }
+    if (this.energy <= 0) this.energy = 0;
+    else this.lastHit = new Date().getTime();
   }
 
   isDead() {
