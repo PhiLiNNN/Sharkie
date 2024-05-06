@@ -35,7 +35,7 @@ class Endboss extends MovableObject {
     this.loadImages(this.ENDBOSS_APPEARS);
     this.loadImages(this.ENDBOSS_SWIMMING);
 
-    this.x = 1000;
+    this.x = 2160;
     // this.speed = 0.15 + Math.random() * 0.25;
 
     this.animate();

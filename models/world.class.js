@@ -11,7 +11,7 @@ class World {
   isBlowBubbleInProgress = false;
   camera_x = 0;
   lastHitTime = 0;
-  enemyShootinginterval = 0.01;
+  enemyShootingInterval = 0.01;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -119,7 +119,7 @@ class World {
 
   enemyAttack() {
     const enemyCount = this.level.enemies.length - 1;
-    const randomInterval = () => (Math.random() * 1000) / this.enemyShootinginterval;
+    const randomInterval = () => (Math.random() * 1000) / this.enemyShootingInterval;
     const addEnemyAttack = () => {
       const randomEnemyIndex = Math.floor(Math.random() * enemyCount);
       const bubbleEnemy = new EnemyAttack(
@@ -150,7 +150,10 @@ class World {
 
     this.addToMap(this.character);
 
+    this.addToMap(this.level.endboss);
+    this.addObjectsToMap(this.level.jellyFish);
     this.addObjectsToMap(this.level.enemies);
+
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.throwableObjectsEnemy);
     this.ctx.translate(-this.camera_x, 0);
