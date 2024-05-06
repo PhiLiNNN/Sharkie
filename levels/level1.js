@@ -1,7 +1,7 @@
 backgroundObject = [];
 width = 720;
 layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
-repeaterAmount = 3; // change this number to set the  length of the world
+repeaterAmount = 3; // change this number to set the length of the world
 const level1 = new Level(
   [
     new Fish("GREEN", 1),

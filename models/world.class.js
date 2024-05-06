@@ -11,7 +11,7 @@ class World {
   isBlowBubbleInProgress = false;
   camera_x = 0;
   lastHitTime = 0;
-  enemyShootinginterval = 1;
+  enemyShootinginterval = 0.01;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -19,8 +19,9 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
+    this.checkSwimDirection(9);
     this.checkCollisions();
-    this.enemyAttack();
+    this.areEnemiesWithinSight();
   }
 
   /**
@@ -32,7 +33,6 @@ class World {
 
   checkCollisions() {
     setInterval(() => {
-      this.checkSwimDirection();
       this.checkCharacterCollisions();
       this.checkBlowBubble();
       this.checkCollisionWithBubble();
@@ -65,6 +65,7 @@ class World {
           this.throwableObjectsEnemy.splice(idx, 1);
         }
       }
+      if (enemyBubble.x < 0) this.throwableObjectsEnemy.splice(idx, 1);
     });
   }
 
@@ -98,10 +99,15 @@ class World {
     });
   }
 
+  areEnemiesWithinSight() {
+    setInterval(() => {
+      if (this.character.x >= 319) this.enemyAttack();
+    }, 500);
+  }
+
   enemyAttack() {
     const enemyCount = this.level.enemies.length - 1;
     const randomInterval = () => (Math.random() * 1000) / this.enemyShootinginterval;
-    console.log("object :>> ", Math.random() * this.enemyShootinginterval * 1000);
     const addEnemyAttack = () => {
       const randomEnemyIndex = Math.floor(Math.random() * enemyCount);
       const bubbleEnemy = new EnemyAttack(
@@ -184,7 +190,9 @@ class World {
   }
 
   checkSwimDirection() {
-    if (this.keyboard.RIGHT) this.isSwimmingLeft = false;
-    if (this.keyboard.LEFT) this.isSwimmingLeft = true;
+    setInterval(() => {
+      if (this.keyboard.RIGHT) this.isSwimmingLeft = false;
+      if (this.keyboard.LEFT) this.isSwimmingLeft = true;
+    }, 25);
   }
 }

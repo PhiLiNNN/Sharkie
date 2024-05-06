@@ -10,6 +10,7 @@ class Character extends MovableObject {
   endAnimation = false;
   speed = 3;
   world;
+  energy = 1000;
   swimming_sound = new Audio("audio/swim.mp3");
   IMAGES_SWIMMING = [
     "img/1.Sharkie/1.IDLE/1.png",

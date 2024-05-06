@@ -50,7 +50,7 @@ class Fish extends MovableObject {
     this.loadImages(this.ENEMY_GREEN_DEAD);
     this.loadImages(this.ENEMY_RED_DEAD);
 
-    this.x = 400 + Math.random() * 250;
+    this.x = 800 + Math.random() * 250;
     this.speed = 0.15 + Math.random() * 0.25;
     this.damage = 100;
 
