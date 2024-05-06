@@ -4,21 +4,30 @@ layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
 repeaterAmount = 3; // change this number to set the length of the world
 const level1 = new Level(
   [
-    new Fish("GREEN", 1),
-    new Fish("RED", 3),
-    new Fish("GREEN", 1),
-    new Fish("RED", 3),
-    new Fish("ORANGE", 2),
-    new Fish("ORANGE", 2),
-    new Fish("RED", 3),
-    new Fish("GREEN", 1),
+    new PufferFish("GREEN", 1),
+    new PufferFish("RED", 3),
+    new PufferFish("GREEN", 1),
+    new PufferFish("RED", 3),
+    new PufferFish("ORANGE", 2),
+    new PufferFish("ORANGE", 2),
+    new PufferFish("RED", 3),
+    new PufferFish("GREEN", 1),
   ],
   [
-    new JellyFish("PINK", 1),
-    new JellyFish("PINK", 1),
-    new JellyFish("PINK", 1),
-    new JellyFish("PINK", 1),
-    new JellyFish("PINK", 1),
+    new JellyDangerous("GREEN", 1),
+    new JellyDangerous("PINK", 1),
+    new JellyDangerous("GREEN", 1),
+    new JellyDangerous("GREEN", 1),
+    new JellyDangerous("PINK", 1),
+  ],
+  [
+    new JellyRegular("YELLOW", 1),
+    new JellyRegular("LILA", 1),
+    new JellyRegular("LILA", 1),
+    new JellyRegular("YELLOW", 1),
+
+    new JellyRegular("YELLOW", 1),
+    new JellyRegular("LILA", 1),
   ],
   new Endboss(),
   backgroundObject

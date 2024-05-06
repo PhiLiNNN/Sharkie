@@ -1,20 +1,22 @@
-class JellyFish extends MovableObject {
+class JellyDangerous extends MovableObject {
   y = Math.random() * 430;
-  height = 40;
-  width = 40;
+  height = 50;
+  width = 50;
   offsetX = 0;
   offsetY = 0;
   offsetHeight = 8;
   offsetWidth = 0;
   JELLY_GREEN = [
-    "img/2.Enemy/2 Jelly fish/Super dangerous/Green1.png",
-    "img/2.Enemy/2 Jelly fish/Super dangerous/Green2.png",
-    "img/2.Enemy/2 Jelly fish/Super dangerous/Green3.png",
+    "img/2.Enemy/2 Jelly fish/Super dangerous/GREEN1.png",
+    "img/2.Enemy/2 Jelly fish/Super dangerous/GREEN2.png",
+    "img/2.Enemy/2 Jelly fish/Super dangerous/GREEN3.png",
+    "img/2.Enemy/2 Jelly fish/Super dangerous/GREEN4.png",
   ];
   JELLY_PINK = [
     "img/2.Enemy/2 Jelly fish/Super dangerous/PINK1.png",
     "img/2.Enemy/2 Jelly fish/Super dangerous/PINK2.png",
     "img/2.Enemy/2 Jelly fish/Super dangerous/PINK3.png",
+    "img/2.Enemy/2 Jelly fish/Super dangerous/PINK4.png",
   ];
   JELLY_GREEN_DEAD = [
     "img/2.Enemy/2 Jelly fish/Dead/green/g1.png",
@@ -31,6 +33,7 @@ class JellyFish extends MovableObject {
 
   constructor(fishType, fishIndex) {
     super().loadImage(`img/2.Enemy/2 Jelly fish/Super dangerous/${fishType}${fishIndex}.png`);
+
     this.loadImages(this[`JELLY_${fishType.toUpperCase()}`]);
 
     this.loadImages(this.JELLY_GREEN_DEAD);

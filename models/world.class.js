@@ -151,7 +151,8 @@ class World {
     this.addToMap(this.character);
 
     this.addToMap(this.level.endboss);
-    this.addObjectsToMap(this.level.jellyFish);
+    this.addObjectsToMap(this.level.regularJellyFish);
+    this.addObjectsToMap(this.level.dangerousJellyFish);
     this.addObjectsToMap(this.level.enemies);
 
     this.addObjectsToMap(this.throwableObjects);

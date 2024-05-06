@@ -1,4 +1,4 @@
-class Fish extends MovableObject {
+class PufferFish extends MovableObject {
   y = Math.random() * 430;
   height = 40;
   width = 40;
