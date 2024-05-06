@@ -36,6 +36,7 @@ class World {
       this.checkCharacterCollisions();
       this.checkBlowBubble();
       this.checkCollisionWithBubble();
+      this.checkBubbleBubbleCollision();
     }, 25);
   }
 
@@ -68,11 +69,20 @@ class World {
       if (enemyBubble.x < 0) this.throwableObjectsEnemy.splice(idx, 1);
     });
   }
-
+  checkBubbleBubbleCollision() {
+    this.throwableObjectsEnemy.forEach((enemyBubble, idx) => {
+      this.throwableObjects.forEach((bubble, index) => {
+        if (enemyBubble.isColliding(bubble)) {
+          this.throwableObjectsEnemy.splice(idx, 1);
+          this.throwableObjects.splice(index, 1);
+        }
+      });
+    });
+  }
   checkCollisionWithBubble() {
     this.throwableObjects.forEach((bubble, idx) => {
       this.level.enemies.forEach((enemy) => {
-        if (bubble.isColliding(enemy, this.isSwimmingLeft)) {
+        if (bubble.isColliding(enemy, this.isSwimmingLeft) && enemy.isAlive) {
           this.throwableObjects.splice(idx, 1);
           enemy.hit();
           enemy.isAlive = false;
@@ -101,8 +111,10 @@ class World {
 
   areEnemiesWithinSight() {
     setInterval(() => {
-      if (this.character.x >= 319) this.enemyAttack();
-    }, 500);
+      this.level.enemies.forEach((enemy) => {
+        if (this.character.x >= 119 || enemy.x <= 300) this.enemyAttack();
+      });
+    }, 1500);
   }
 
   enemyAttack() {
