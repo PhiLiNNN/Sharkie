@@ -1,7 +1,8 @@
 class MovableObject extends DrawableObject {
   speed;
   otherDirection = false;
-  spawnAnimation = true;
+  spawnAnimation = false;
+  endAnimation = false;
   offsetX;
   offsetY;
   offsetHeight;
@@ -9,9 +10,8 @@ class MovableObject extends DrawableObject {
   energy = 100;
   damage = 5;
   lastHit = 0;
-  recovery = 1;
-  isAlive = true;
-  endAnimation = false;
+  recovery = 0.6;
+  deadAnimation = false;
   wordLefEnd = 0;
 
   playAnimation(arr) {
@@ -37,6 +37,7 @@ class MovableObject extends DrawableObject {
 
   hit() {
     this.energy -= this.damage;
+
     if (this.energy <= 0) this.energy = 0;
     else this.lastHit = new Date().getTime();
   }

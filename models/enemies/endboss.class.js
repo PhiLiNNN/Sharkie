@@ -2,6 +2,12 @@ class Endboss extends MovableObject {
   y = -10;
   height = 400;
   width = 400;
+  offsetX = 25;
+  offsetY = 140;
+  offsetHeight = 100;
+  offsetWidth = 70;
+  energy = 20;
+  world;
   ENDBOSS_APPEARS = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/2.png",
@@ -29,26 +35,47 @@ class Endboss extends MovableObject {
     "img/2.Enemy/3 Final Enemy/2.floating/12.png",
     "img/2.Enemy/3 Final Enemy/2.floating/13.png",
   ];
+  ENDBOSS_HURT = [
+    "img/2.Enemy/3 Final Enemy/Hurt/1.png",
+    "img/2.Enemy/3 Final Enemy/Hurt/2.png",
+    "img/2.Enemy/3 Final Enemy/Hurt/3.png",
+    "img/2.Enemy/3 Final Enemy/Hurt/4.png",
+  ];
+  ENDBOSS_DEAD = [
+    "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png",
+    "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png",
+    "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png",
+    "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png",
+    "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
+  ];
 
   constructor() {
-    super().loadImage(this.ENDBOSS_APPEARS[0]);
-    this.loadImages(this.ENDBOSS_APPEARS);
+    super().loadImage(this.ENDBOSS_SWIMMING[0]);
     this.loadImages(this.ENDBOSS_SWIMMING);
+    this.loadImages(this.ENDBOSS_APPEARS);
+    this.loadImages(this.ENDBOSS_HURT);
+    this.loadImages(this.ENDBOSS_DEAD);
 
-    this.x = 2160;
+    this.x = 2100;
     // this.speed = 0.15 + Math.random() * 0.25;
 
     this.animate();
   }
+
   animate() {
     setInterval(() => {
-      let idx = this.currentImage % this.ENDBOSS_APPEARS.length;
-      if (idx === 9) {
-        this.spawnAnimation = false;
+      if (this.isDead()) {
+        let idx = this.currentImage % this.ENDBOSS_DEAD.length;
+        if (idx === this.ENDBOSS_DEAD.length - 1) this.deadAnimation = true;
+        if (!this.deadAnimation) this.playAnimation(this.ENDBOSS_DEAD);
+      } else if (this.isHurt()) this.playAnimation(this.ENDBOSS_HURT);
+      else {
+        let idx = this.currentImage % this.ENDBOSS_APPEARS.length;
+
+        if (idx === this.ENDBOSS_APPEARS.length - 1) this.endAnimation = true;
+        if (!this.spawnAnimation) this.playAnimation(this.ENDBOSS_APPEARS);
+        else this.playAnimation(this.ENDBOSS_SWIMMING);
       }
-      if (this.spawnAnimation) {
-        this.playAnimation(this.ENDBOSS_APPEARS);
-      } else this.playAnimation(this.ENDBOSS_SWIMMING);
     }, 200);
   }
 }

@@ -7,7 +7,7 @@ class Character extends MovableObject {
   offsetY = 100;
   offsetHeight = 150;
   offsetWidth = 70;
-  endAnimation = false;
+  deadAnimation = false;
   speed = 3;
   world;
   energy = 1000;
@@ -104,14 +104,16 @@ class Character extends MovableObject {
     setInterval(() => {
       if (this.isDead()) {
         let idx = this.currentImage % this.IMAGES_DEAD.length;
-        if (idx === 11) {
-          this.endAnimation = true;
+        if (idx === this.IMAGES_DEAD.length - 1) {
+          this.deadAnimation = true;
         }
-        if (!this.endAnimation) {
+        if (!this.deadAnimation) {
           this.playAnimation(this.IMAGES_DEAD);
         }
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
+      } else if (this.x > 2000) {
+        this.world.level.endboss.spawnAnimation = true;
       } else {
         if (
           (this.world.keyboard.RIGHT ||

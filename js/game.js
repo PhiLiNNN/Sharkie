@@ -9,10 +9,10 @@ function init() {
 }
 
 function handleKeyPress(e, isPressed) {
-  if (e.key === "w") keyboard.UP = isPressed;
-  if (e.key === "a") keyboard.LEFT = isPressed;
-  if (e.key === "s") keyboard.DOWN = isPressed;
-  if (e.key === "d") keyboard.RIGHT = isPressed;
+  if (e.key === "w" || e.key === "W") keyboard.UP = isPressed;
+  if (e.key === "a" || e.key === "A") keyboard.LEFT = isPressed;
+  if (e.key === "s" || e.key === "S") keyboard.DOWN = isPressed;
+  if (e.key === "d" || e.key === "D") keyboard.RIGHT = isPressed;
 }
 
 document.addEventListener("keypress", (e) => {

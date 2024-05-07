@@ -29,6 +29,7 @@ class World {
    */
   setWorld() {
     this.character.world = this;
+    this.level.endboss.world = this;
   }
 
   checkCollisions() {
@@ -47,7 +48,7 @@ class World {
 
   checkCharacterEnemyCollision() {
     this.level.pufferFishes.forEach((pufferFish) => {
-      if (this.character.isColliding(pufferFish, this.isSwimmingLeft) && pufferFish.isAlive) {
+      if (this.character.isColliding(pufferFish) && !pufferFish.isDead()) {
         this.character.hit();
         this.statusBar.setPercentage(this.character.energy);
       }
@@ -56,7 +57,7 @@ class World {
 
   checkCharacterThrowableObjectCollision() {
     this.throwableObjectsEnemy.forEach((enemyBubble, idx) => {
-      if (this.character.isColliding(enemyBubble, true)) {
+      if (this.character.isColliding(enemyBubble)) {
         let currentTime = new Date().getTime();
         let timeSinceLastHit = currentTime - this.lastHitTime;
         if (timeSinceLastHit >= 1000) {
@@ -69,6 +70,7 @@ class World {
       if (enemyBubble.x < 0) this.throwableObjectsEnemy.splice(idx, 1);
     });
   }
+
   checkBubbleBubbleCollision() {
     this.throwableObjectsEnemy.forEach((enemyBubble, idx) => {
       this.throwableObjects.forEach((bubble, index) => {
@@ -81,13 +83,21 @@ class World {
   }
   checkCollisionWithBubble() {
     this.throwableObjects.forEach((bubble, bubbleIdx) => {
-      this.level.pufferFishes.forEach((pufferFish, fishIdx) => {
-        if (bubble.isColliding(pufferFish, this.isSwimmingLeft) && pufferFish.isAlive) {
+      this.level.pufferFishes.forEach((pufferFish) => {
+        if (bubble.isColliding(pufferFish) && !pufferFish.isDead()) {
           this.throwableObjects.splice(bubbleIdx, 1);
           pufferFish.hit();
-          pufferFish.isAlive = false;
         }
       });
+      if (bubble.isColliding(this.level.endboss) && !this.level.endboss.isDead()) {
+        let currentTime = new Date().getTime();
+        let timeSinceLastHit = currentTime - this.lastHitTime;
+        this.throwableObjects.splice(bubbleIdx, 1);
+        if (timeSinceLastHit >= 1000) {
+          this.lastHitTime = currentTime;
+          this.level.endboss.hit();
+        }
+      }
     });
   }
 
@@ -127,7 +137,7 @@ class World {
         this.level.pufferFishes[randomEnemyIndex].y,
         true
       );
-      let isEnemyAlive = this.level.pufferFishes[randomEnemyIndex].isAlive;
+      let isEnemyAlive = !this.level.pufferFishes[randomEnemyIndex].isDead();
       if (isEnemyAlive) this.throwableObjectsEnemy.push(bubbleEnemy);
       setTimeout(addEnemyAttack, randomInterval());
     };
@@ -149,8 +159,9 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
+    console.log("this.level.endboss.spawnAnimation :>> ", this.level.endboss.spawnAnimation);
+    if (this.level.endboss.spawnAnimation) this.addToMap(this.level.endboss);
 
-    this.addToMap(this.level.endboss);
     this.addObjectsToMap(this.level.regularJellyFish);
     this.addObjectsToMap(this.level.dangerousJellyFish);
     this.addObjectsToMap(this.level.pufferFishes);
