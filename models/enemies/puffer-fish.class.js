@@ -1,5 +1,5 @@
 class PufferFish extends MovableObject {
-  y = Math.random() * 430;
+  y = 90 + Math.random() * 320;
   height = 40;
   width = 40;
   offsetX = 0;
@@ -51,7 +51,7 @@ class PufferFish extends MovableObject {
     this.loadImages(this.ENEMY_RED_DEAD);
 
     this.x = 800 + Math.random() * 250;
-    this.speed = 0.15 + Math.random() * 0.25;
+    this.speed = 0.15 + Math.random() * 0.5;
     this.damage = 100;
 
     this.animate(fishType.toUpperCase());

@@ -9,7 +9,7 @@ class ThrowableObject extends MovableObject {
       this.y += Math.sin(angle) * 1;
       if (isSwimmingLeft) {
         this.x -= this.BUBBLESPEED;
-        this.offsetX = offsetX;
+        this.offsetX = offsetX + 65;
       } else this.x += this.BUBBLESPEED;
       angle += 0.1;
     }, 1);

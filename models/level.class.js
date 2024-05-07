@@ -1,13 +1,16 @@
 class Level {
-  enemies;
+  pufferFishes;
   endboss;
   regularJellyFish;
   dangerousJellyFish;
   backgroundObject;
-  level_end_x = 2160;
+  level_rightEnd = 2160;
+  level_leftEnd = 0;
+  level_topEnd = 0;
+  level_bottomEnd = 320;
 
-  constructor(enemies, regularJellyFish, dangerousJellyFish, endboss, backgroundObject) {
-    this.enemies = enemies;
+  constructor(pufferFishes, regularJellyFish, dangerousJellyFish, endboss, backgroundObject) {
+    this.pufferFishes = pufferFishes;
     this.endboss = endboss;
     this.regularJellyFish = regularJellyFish;
     this.dangerousJellyFish = dangerousJellyFish;

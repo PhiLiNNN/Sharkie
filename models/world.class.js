@@ -46,8 +46,8 @@ class World {
   }
 
   checkCharacterEnemyCollision() {
-    this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy, this.isSwimmingLeft) && enemy.isAlive) {
+    this.level.pufferFishes.forEach((pufferFish) => {
+      if (this.character.isColliding(pufferFish, this.isSwimmingLeft) && pufferFish.isAlive) {
         this.character.hit();
         this.statusBar.setPercentage(this.character.energy);
       }
@@ -80,12 +80,12 @@ class World {
     });
   }
   checkCollisionWithBubble() {
-    this.throwableObjects.forEach((bubble, idx) => {
-      this.level.enemies.forEach((enemy) => {
-        if (bubble.isColliding(enemy, this.isSwimmingLeft) && enemy.isAlive) {
-          this.throwableObjects.splice(idx, 1);
-          enemy.hit();
-          enemy.isAlive = false;
+    this.throwableObjects.forEach((bubble, bubbleIdx) => {
+      this.level.pufferFishes.forEach((pufferFish, fishIdx) => {
+        if (bubble.isColliding(pufferFish, this.isSwimmingLeft) && pufferFish.isAlive) {
+          this.throwableObjects.splice(bubbleIdx, 1);
+          pufferFish.hit();
+          pufferFish.isAlive = false;
         }
       });
     });
@@ -111,23 +111,23 @@ class World {
 
   areEnemiesWithinSight() {
     setInterval(() => {
-      this.level.enemies.forEach((enemy) => {
-        if (this.character.x >= 119 || enemy.x <= 300) this.enemyAttack();
+      this.level.pufferFishes.forEach((pufferFish) => {
+        if (this.character.x >= 119 || pufferFish.x <= 300) this.enemyAttack();
       });
     }, 1500);
   }
 
   enemyAttack() {
-    const enemyCount = this.level.enemies.length - 1;
+    const enemyCount = this.level.pufferFishes.length;
     const randomInterval = () => (Math.random() * 1000) / this.enemyShootingInterval;
     const addEnemyAttack = () => {
       const randomEnemyIndex = Math.floor(Math.random() * enemyCount);
       const bubbleEnemy = new EnemyAttack(
-        this.level.enemies[randomEnemyIndex].x,
-        this.level.enemies[randomEnemyIndex].y,
+        this.level.pufferFishes[randomEnemyIndex].x,
+        this.level.pufferFishes[randomEnemyIndex].y,
         true
       );
-      let isEnemyAlive = this.level.enemies[randomEnemyIndex].isAlive;
+      let isEnemyAlive = this.level.pufferFishes[randomEnemyIndex].isAlive;
       if (isEnemyAlive) this.throwableObjectsEnemy.push(bubbleEnemy);
       setTimeout(addEnemyAttack, randomInterval());
     };
@@ -153,7 +153,7 @@ class World {
     this.addToMap(this.level.endboss);
     this.addObjectsToMap(this.level.regularJellyFish);
     this.addObjectsToMap(this.level.dangerousJellyFish);
-    this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.pufferFishes);
 
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.throwableObjectsEnemy);

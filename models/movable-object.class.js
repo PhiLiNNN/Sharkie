@@ -1,5 +1,5 @@
 class MovableObject extends DrawableObject {
-  speed = 0.15;
+  speed;
   otherDirection = false;
   spawnAnimation = true;
   offsetX;
@@ -12,6 +12,7 @@ class MovableObject extends DrawableObject {
   recovery = 1;
   isAlive = true;
   endAnimation = false;
+  wordLefEnd = 0;
 
   playAnimation(arr) {
     let idx = this.currentImage % arr.length;
