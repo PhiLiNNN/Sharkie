@@ -50,32 +50,38 @@ class Endboss extends MovableObject {
   ];
 
   constructor() {
-    super().loadImage(this.ENDBOSS_SWIMMING[0]);
+    super().loadImage(this.ENDBOSS_APPEARS[0]);
     this.loadImages(this.ENDBOSS_SWIMMING);
     this.loadImages(this.ENDBOSS_APPEARS);
     this.loadImages(this.ENDBOSS_HURT);
     this.loadImages(this.ENDBOSS_DEAD);
+    this.spawnAnimationPlayed = false;
 
-    this.x = 2100;
+    this.x = 500;
     // this.speed = 0.15 + Math.random() * 0.25;
+    this.spawnEndboss();
+  }
 
-    this.animate();
+  spawnEndboss() {
+    setInterval(() => {
+      if (this.spawnAnimation && !this.spawnAnimationPlayed) {
+        this.playAnimation(this.ENDBOSS_APPEARS);
+        setTimeout(() => {
+          this.spawnAnimationPlayed = true;
+        }, 786);
+      }
+    }, 85);
+    setInterval(() => {
+      if (this.spawnAnimationPlayed) this.animate();
+    }, 200);
   }
 
   animate() {
-    setInterval(() => {
-      if (this.isDead()) {
-        let idx = this.currentImage % this.ENDBOSS_DEAD.length;
-        if (idx === this.ENDBOSS_DEAD.length - 1) this.deadAnimation = true;
-        if (!this.deadAnimation) this.playAnimation(this.ENDBOSS_DEAD);
-      } else if (this.isHurt()) this.playAnimation(this.ENDBOSS_HURT);
-      else {
-        let idx = this.currentImage % this.ENDBOSS_APPEARS.length;
-
-        if (idx === this.ENDBOSS_APPEARS.length - 1) this.endAnimation = true;
-        if (!this.spawnAnimation) this.playAnimation(this.ENDBOSS_APPEARS);
-        else this.playAnimation(this.ENDBOSS_SWIMMING);
-      }
-    }, 200);
+    if (this.isDead()) {
+      let idx = this.currentImage % this.ENDBOSS_DEAD.length;
+      if (idx === this.ENDBOSS_DEAD.length - 1) this.deadAnimation = true;
+      if (!this.deadAnimation) this.playAnimation(this.ENDBOSS_DEAD);
+    } else if (this.isHurt()) this.playAnimation(this.ENDBOSS_HURT);
+    else this.playAnimation(this.ENDBOSS_SWIMMING);
   }
 }

@@ -51,7 +51,7 @@ class PufferFish extends MovableObject {
     this.loadImages(this.ENEMY_GREEN_DEAD);
     this.loadImages(this.ENEMY_RED_DEAD);
 
-    this.x = 800 + Math.random() * 250;
+    this.x = 8000 + Math.random() * 250;
     this.speed = 0.15 + Math.random() * 0.5;
     this.damage = 100;
 

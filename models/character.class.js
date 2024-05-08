@@ -112,7 +112,7 @@ class Character extends MovableObject {
         }
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
-      } else if (this.x > 2000) {
+      } else if (this.x > 200) {
         this.world.level.endboss.spawnAnimation = true;
       } else {
         if (

@@ -89,7 +89,11 @@ class World {
           pufferFish.hit();
         }
       });
-      if (bubble.isColliding(this.level.endboss) && !this.level.endboss.isDead()) {
+      if (
+        bubble.isColliding(this.level.endboss) &&
+        !this.level.endboss.isDead() &&
+        this.level.endboss.spawnAnimation
+      ) {
         let currentTime = new Date().getTime();
         let timeSinceLastHit = currentTime - this.lastHitTime;
         this.throwableObjects.splice(bubbleIdx, 1);
@@ -159,7 +163,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
-    console.log("this.level.endboss.spawnAnimation :>> ", this.level.endboss.spawnAnimation);
+
     if (this.level.endboss.spawnAnimation) this.addToMap(this.level.endboss);
 
     this.addObjectsToMap(this.level.regularJellyFish);
@@ -192,7 +196,7 @@ class World {
   addToMap(mo) {
     if (mo.otherDirection) this.flipImage(mo);
     mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx);
+    mo.drawFrame(this.ctx);
     if (mo.otherDirection) this.flipImageBack(mo);
   }
 
