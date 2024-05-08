@@ -79,21 +79,21 @@ class Character extends MovableObject {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_rightEnd && !this.isDead()) {
         this.x += this.speed;
         this.otherDirection = false;
-        this.swimming_sound.play();
+        // this.swimming_sound.play();
       }
       if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd && !this.isDead()) {
         this.x -= this.speed;
         this.otherDirection = true;
-        this.swimming_sound.play();
+        // this.swimming_sound.play();
       }
       this.world.camera_x = -this.x + 100;
       if (this.world.keyboard.UP && this.y > this.world.level.level_topEnd && !this.isDead()) {
         this.y -= this.speed;
-        this.swimming_sound.play();
+        // this.swimming_sound.play();
       }
       if (this.world.keyboard.DOWN && this.y < this.world.level.level_bottomEnd && !this.isDead()) {
         this.y += this.speed;
-        this.swimming_sound.play();
+        // this.swimming_sound.play();
       }
       if (this.world.keyboard.SPACE && !this.isDead()) {
         this.playAnimation(this.IMAGES_BUBBLE);
@@ -112,7 +112,7 @@ class Character extends MovableObject {
         }
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
-      } else if (this.x > 200) {
+      } else if (this.checkEntityDistance(this.world.level.endboss)) {
         this.world.level.endboss.spawnAnimation = true;
       } else {
         if (

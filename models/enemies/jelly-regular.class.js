@@ -1,5 +1,5 @@
 class JellyRegular extends MovableObject {
-  y = Math.random() * 430;
+  y = 90 + Math.random() * 320;
   height = 40;
   width = 40;
   offsetX = 0;
@@ -38,7 +38,7 @@ class JellyRegular extends MovableObject {
     this.loadImages(this.JELLY_LILA_DEAD);
     this.loadImages(this.JELLY_YELLOW_DEAD);
 
-    this.x = 1800 + Math.random() * 250;
+    this.x = 1600 + Math.random() * 250;
     this.speed = 0.15 + Math.random() * 0.25;
     this.damage = 100;
 
@@ -49,9 +49,12 @@ class JellyRegular extends MovableObject {
 
     const animateFunction = () => {
       if (this.isDead()) {
-        this.img = this.imageCache[this[`JELLY_${fishType.toUpperCase()}_DEAD`][0]];
-        this.y -= 2;
-        setTimeout(animateFunction, 20);
+        this.height = 50;
+        this.width = 50;
+        this.playAnimation(this[`JELLY_${fishType}_DEAD`]);
+
+        this.y -= 10;
+        setTimeout(animateFunction, 80);
       } else {
         this.playAnimation(this[`JELLY_${fishType}`]);
         setTimeout(animateFunction, 200);

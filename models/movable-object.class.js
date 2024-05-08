@@ -13,6 +13,7 @@ class MovableObject extends DrawableObject {
   recovery = 0.6;
   deadAnimation = false;
   wordLefEnd = 0;
+  interactionDistance = 500;
 
   playAnimation(arr) {
     let idx = this.currentImage % arr.length;
@@ -37,7 +38,6 @@ class MovableObject extends DrawableObject {
 
   hit() {
     this.energy -= this.damage;
-
     if (this.energy <= 0) this.energy = 0;
     else this.lastHit = new Date().getTime();
   }
@@ -50,5 +50,9 @@ class MovableObject extends DrawableObject {
     let timepassed = new Date().getTime() - this.lastHit;
     timepassed = timepassed / 1000;
     return timepassed < this.recovery;
+  }
+
+  checkEntityDistance(obj) {
+    return Math.abs(this.x - obj.x) <= this.interactionDistance;
   }
 }

@@ -57,7 +57,8 @@ class Endboss extends MovableObject {
     this.loadImages(this.ENDBOSS_DEAD);
     this.spawnAnimationPlayed = false;
 
-    this.x = 500;
+    this.x = 2100;
+
     // this.speed = 0.15 + Math.random() * 0.25;
     this.spawnEndboss();
   }

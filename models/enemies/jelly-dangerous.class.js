@@ -1,5 +1,5 @@
 class JellyDangerous extends MovableObject {
-  y = Math.random() * 430;
+  y = 90 + Math.random() * 320;
   height = 50;
   width = 50;
   offsetX = 0;
@@ -33,9 +33,7 @@ class JellyDangerous extends MovableObject {
 
   constructor(fishType, fishIndex) {
     super().loadImage(`img/2.Enemy/2 Jelly fish/Super dangerous/${fishType}${fishIndex}.png`);
-
     this.loadImages(this[`JELLY_${fishType.toUpperCase()}`]);
-
     this.loadImages(this.JELLY_GREEN_DEAD);
     this.loadImages(this.JELLY_PINK_DEAD);
 
@@ -50,9 +48,9 @@ class JellyDangerous extends MovableObject {
 
     const animateFunction = () => {
       if (this.isDead()) {
-        this.img = this.imageCache[this[`JELLY_${fishType.toUpperCase()}_DEAD`][0]];
-        this.y -= 2;
-        setTimeout(animateFunction, 20);
+        this.playAnimation(this[`JELLY_${fishType}_DEAD`]);
+        this.y -= 10;
+        setTimeout(animateFunction, 40);
       } else {
         this.playAnimation(this[`JELLY_${fishType}`]);
         setTimeout(animateFunction, 200);

@@ -89,6 +89,18 @@ class World {
           pufferFish.hit();
         }
       });
+      this.level.dangerousJellyFishes.forEach((dangerousJellyFish) => {
+        if (bubble.isColliding(dangerousJellyFish) && !dangerousJellyFish.isDead()) {
+          this.throwableObjects.splice(bubbleIdx, 1);
+          dangerousJellyFish.hit();
+        }
+      });
+      this.level.regularJellyFishes.forEach((regularJellyFish) => {
+        if (bubble.isColliding(regularJellyFish) && !regularJellyFish.isDead()) {
+          this.throwableObjects.splice(bubbleIdx, 1);
+          regularJellyFish.hit();
+        }
+      });
       if (
         bubble.isColliding(this.level.endboss) &&
         !this.level.endboss.isDead() &&
@@ -126,7 +138,7 @@ class World {
   areEnemiesWithinSight() {
     setInterval(() => {
       this.level.pufferFishes.forEach((pufferFish) => {
-        if (this.character.x >= 119 || pufferFish.x <= 300) this.enemyAttack();
+        if (this.character.checkEntityDistance(pufferFish)) this.enemyAttack();
       });
     }, 1500);
   }
@@ -166,8 +178,8 @@ class World {
 
     if (this.level.endboss.spawnAnimation) this.addToMap(this.level.endboss);
 
-    this.addObjectsToMap(this.level.regularJellyFish);
-    this.addObjectsToMap(this.level.dangerousJellyFish);
+    this.addObjectsToMap(this.level.regularJellyFishes);
+    this.addObjectsToMap(this.level.dangerousJellyFishes);
     this.addObjectsToMap(this.level.pufferFishes);
 
     this.addObjectsToMap(this.throwableObjects);
@@ -196,7 +208,7 @@ class World {
   addToMap(mo) {
     if (mo.otherDirection) this.flipImage(mo);
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx);
     if (mo.otherDirection) this.flipImageBack(mo);
   }
 
