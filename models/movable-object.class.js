@@ -15,6 +15,19 @@ class MovableObject extends DrawableObject {
   wordLefEnd = 0;
   interactionDistance = 500;
 
+  playAnimationOnce(arr) {
+    let idx = 0;
+    const interval = setInterval(() => {
+      if (idx < arr.length) {
+        let path = arr[idx];
+        this.img = this.imageCache[path];
+        idx++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 40);
+  }
+
   playAnimation(arr) {
     let idx = this.currentImage % arr.length;
     let path = arr[idx];

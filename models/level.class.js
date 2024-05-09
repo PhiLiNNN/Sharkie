@@ -11,9 +11,9 @@ class Level {
 
   constructor(pufferFishes, regularJellyFishes, dangerousJellyFishes, endboss, backgroundObject) {
     this.pufferFishes = pufferFishes;
-    this.endboss = endboss;
     this.regularJellyFishes = regularJellyFishes;
     this.dangerousJellyFishes = dangerousJellyFishes;
+    this.endboss = endboss;
     this.backgroundObject = backgroundObject;
   }
 }

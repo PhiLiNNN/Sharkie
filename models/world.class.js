@@ -8,7 +8,6 @@ class World {
   ctx;
   keyboard;
   isSwimmingLeft;
-  isBlowBubbleInProgress = false;
   camera_x = 0;
   lastHitTime = 0;
   enemyShootingInterval = 0.01;
@@ -20,8 +19,30 @@ class World {
     this.draw();
     this.setWorld();
     this.checkSwimDirection(9);
-    this.checkCollisions();
+    this.checkBlowBubble();
+    this.checkAllPossibleCollisions();
     this.areEnemiesWithinSight();
+  }
+
+  checkBlowBubble() {
+    let lastClickTime = 0;
+
+    document.addEventListener("click", (event) => {
+      const currentTime = new Date().getTime();
+      if (event.button === 0 && currentTime - lastClickTime >= 500) {
+        this.character.playAnimationOnce(this.character.IMAGES_BUBBLE);
+        setTimeout(() => {
+          const xOffset = this.isSwimmingLeft ? 60 : 140;
+          const bubble = new SharkieAttack(
+            this.character.x + xOffset,
+            this.character.y + 90,
+            this.isSwimmingLeft
+          );
+          this.throwableObjects.push(bubble);
+        }, 180);
+        lastClickTime = currentTime;
+      }
+    });
   }
 
   /**
@@ -32,10 +53,9 @@ class World {
     this.level.endboss.world = this;
   }
 
-  checkCollisions() {
+  checkAllPossibleCollisions() {
     setInterval(() => {
       this.checkCharacterCollisions();
-      this.checkBlowBubble();
       this.checkCollisionWithBubble();
       this.checkBubbleBubbleCollision();
     }, 25);
@@ -47,12 +67,17 @@ class World {
   }
 
   checkCharacterEnemyCollision() {
-    this.level.pufferFishes.forEach((pufferFish) => {
-      if (this.character.isColliding(pufferFish) && !pufferFish.isDead()) {
-        this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
-      }
-    });
+    const checkCollisions = (enemies) => {
+      enemies.forEach((enemy) => {
+        if (this.character.isColliding(enemy) && !enemy.isDead()) {
+          this.character.hit();
+          this.statusBar.setPercentage(this.character.energy);
+        }
+      });
+    };
+    checkCollisions(this.level.pufferFishes);
+    checkCollisions(this.level.dangerousJellyFishes);
+    checkCollisions(this.level.regularJellyFishes);
   }
 
   checkCharacterThrowableObjectCollision() {
@@ -67,6 +92,7 @@ class World {
           this.throwableObjectsEnemy.splice(idx, 1);
         }
       }
+
       if (enemyBubble.x < 0) this.throwableObjectsEnemy.splice(idx, 1);
     });
   }
@@ -81,26 +107,20 @@ class World {
       });
     });
   }
+
   checkCollisionWithBubble() {
     this.throwableObjects.forEach((bubble, bubbleIdx) => {
-      this.level.pufferFishes.forEach((pufferFish) => {
-        if (bubble.isColliding(pufferFish) && !pufferFish.isDead()) {
-          this.throwableObjects.splice(bubbleIdx, 1);
-          pufferFish.hit();
-        }
-      });
-      this.level.dangerousJellyFishes.forEach((dangerousJellyFish) => {
-        if (bubble.isColliding(dangerousJellyFish) && !dangerousJellyFish.isDead()) {
-          this.throwableObjects.splice(bubbleIdx, 1);
-          dangerousJellyFish.hit();
-        }
-      });
-      this.level.regularJellyFishes.forEach((regularJellyFish) => {
-        if (bubble.isColliding(regularJellyFish) && !regularJellyFish.isDead()) {
-          this.throwableObjects.splice(bubbleIdx, 1);
-          regularJellyFish.hit();
-        }
-      });
+      const checkCollisions = (enemies) => {
+        enemies.forEach((enemy) => {
+          if (bubble.isColliding(enemy) && !enemy.isDead()) {
+            this.throwableObjects.splice(bubbleIdx, 1);
+            enemy.hit();
+          }
+        });
+      };
+      checkCollisions(this.level.pufferFishes);
+      checkCollisions(this.level.dangerousJellyFishes);
+      checkCollisions(this.level.regularJellyFishes);
       if (
         bubble.isColliding(this.level.endboss) &&
         !this.level.endboss.isDead() &&
@@ -113,24 +133,6 @@ class World {
           this.lastHitTime = currentTime;
           this.level.endboss.hit();
         }
-      }
-    });
-  }
-
-  checkBlowBubble() {
-    document.addEventListener("click", (event) => {
-      if (event.button === 0 && !this.isBlowBubbleInProgress) {
-        const xOffset = this.isSwimmingLeft ? 60 : 140;
-        const bubble = new SharkieAttack(
-          this.character.x + xOffset,
-          this.character.y + 90,
-          this.isSwimmingLeft
-        );
-        this.throwableObjects.push(bubble);
-        this.isBlowBubbleInProgress = true;
-        setTimeout(() => {
-          this.isBlowBubbleInProgress = false;
-        }, 200);
       }
     });
   }
