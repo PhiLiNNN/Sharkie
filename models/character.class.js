@@ -96,18 +96,6 @@ class Character extends MovableObject {
         this.y += this.speed;
         // this.swimming_sound.play();
       }
-      // if (this.world.isBlowBubbleInProgress && !this.isDead()) {
-      //   let blowAnimation = false;
-      //   let idx = this.currentImage % this.IMAGES_BUBBLE.length;
-      //   if (idx === this.IMAGES_BUBBLE.length - 1) {
-      //     blowAnimation = true;
-      //     this.img = this.imageCache["img/1.Sharkie/1.IDLE/1.png"];
-      //   }
-      //   if (!blowAnimation) {
-      //     console.log("blowAnimation :>> ", blowAnimation);
-      //     this.playAnimation(this.IMAGES_BUBBLE);
-      //   }
-      // }
     }, 25);
 
     setInterval(() => {

@@ -7,6 +7,7 @@ class PufferFish extends MovableObject {
   offsetHeight = 8;
   offsetWidth = 0;
   energy = 1;
+  world;
   ENEMY_RED = [
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim1.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim2.png",
@@ -60,7 +61,6 @@ class PufferFish extends MovableObject {
 
   animate(fishType) {
     this.moveLeft();
-
     const animateFunction = () => {
       if (this.isDead()) {
         this.img = this.imageCache[this[`ENEMY_${fishType.toUpperCase()}_DEAD`][0]];

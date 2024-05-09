@@ -26,7 +26,6 @@ class World {
 
   checkBlowBubble() {
     let lastClickTime = 0;
-
     document.addEventListener("click", (event) => {
       const currentTime = new Date().getTime();
       if (event.button === 0 && currentTime - lastClickTime >= 500) {
@@ -51,6 +50,9 @@ class World {
   setWorld() {
     this.character.world = this;
     this.level.endboss.world = this;
+    this.level.pufferFishes.forEach((pufferFish) => {
+      pufferFish.world = true;
+    });
   }
 
   checkAllPossibleCollisions() {
@@ -93,7 +95,7 @@ class World {
         }
       }
 
-      if (enemyBubble.x < 0) this.throwableObjectsEnemy.splice(idx, 1);
+      if (enemyBubble.x < this.character.x - 100) this.throwableObjectsEnemy.splice(idx, 1);
     });
   }
 
@@ -115,7 +117,8 @@ class World {
           if (bubble.isColliding(enemy) && !enemy.isDead()) {
             this.throwableObjects.splice(bubbleIdx, 1);
             enemy.hit();
-          }
+          } else if (bubble.x > this.character.x + 800 || bubble.x < this.character.x - 100)
+            this.throwableObjects.splice(bubbleIdx, 1);
         });
       };
       checkCollisions(this.level.pufferFishes);
@@ -171,6 +174,7 @@ class World {
 
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObject);
+    this.addObjectsToMap(this.level.border);
 
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
