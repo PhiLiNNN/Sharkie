@@ -29,7 +29,7 @@ class World {
     document.addEventListener("click", (event) => {
       const currentTime = new Date().getTime();
       if (event.button === 0 && currentTime - lastClickTime >= 500) {
-        this.character.playAnimationOnce(this.character.IMAGES_BUBBLE);
+        this.character.playAnimationOnce(this.character.IMAGES_BUBBLE, 40);
         setTimeout(() => {
           const xOffset = this.isSwimmingLeft ? 60 : 140;
           const bubble = new SharkieAttack(
@@ -148,6 +148,18 @@ class World {
     setInterval(() => {
       this.level.pufferFishes.forEach((pufferFish) => {
         if (this.character.checkEntityDistance(pufferFish)) this.enemyAttack();
+
+        //   {
+        //   if (pufferFish.fishType === "ORANGE")
+        //     pufferFish.playAnimationOnce(pufferFish.ENEMY_ORANGE_TRANSITION, 120);
+        //   if (pufferFish.fishType === "GREEN")
+        //     pufferFish.playAnimationOnce(pufferFish.ENEMY_GREEN_TRANSITION, 120);
+        //   if (pufferFish.fishType === "RED")
+        //     pufferFish.playAnimationOnce(pufferFish.ENEMY_RED_TRANSITION, 120);
+        //   setTimeout(() => {
+        //     this.enemyAttack();
+        //   }, 700);
+        // }
       });
     }, 1500);
   }
@@ -157,18 +169,29 @@ class World {
     const randomInterval = () => (Math.random() * 1000) / this.enemyShootingInterval;
     const addEnemyAttack = () => {
       const randomEnemyIndex = Math.floor(Math.random() * enemyCount);
-      const bubbleEnemy = new EnemyAttack(
-        this.level.pufferFishes[randomEnemyIndex].x,
-        this.level.pufferFishes[randomEnemyIndex].y,
-        true
-      );
       let isEnemyAlive = !this.level.pufferFishes[randomEnemyIndex].isDead();
-      if (isEnemyAlive) this.throwableObjectsEnemy.push(bubbleEnemy);
-      setTimeout(addEnemyAttack, randomInterval());
+      const fish = this.level.pufferFishes[randomEnemyIndex];
+      if (isEnemyAlive) {
+        this.setRightAnimation(fish);
+        setTimeout(() => {
+          const bubbleEnemy = new EnemyAttack(
+            this.level.pufferFishes[randomEnemyIndex].x,
+            this.level.pufferFishes[randomEnemyIndex].y,
+            true
+          );
+          this.throwableObjectsEnemy.push(bubbleEnemy);
+        }, 700);
+        setTimeout(addEnemyAttack, randomInterval());
+      }
     };
     addEnemyAttack();
   }
 
+  setRightAnimation(fish) {
+    if (fish.fishType === "ORANGE") fish.playAnimationOnce(fish.ENEMY_ORANGE_TRANSITION, 120);
+    if (fish.fishType === "RED") fish.playAnimationOnce(fish.ENEMY_RED_TRANSITION, 120);
+    if (fish.fishType === "GREEN") fish.playAnimationOnce(fish.ENEMY_GREEN_TRANSITION, 120);
+  }
   /**
    * Clears the canvas and draws the game elements including background, character, and enemies.
    * Continuously calls itself using requestAnimationFrame for smooth animation.

@@ -8,6 +8,7 @@ class PufferFish extends MovableObject {
   offsetWidth = 0;
   energy = 1;
   world;
+  fishType;
   ENEMY_RED = [
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim1.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim2.png",
@@ -44,6 +45,27 @@ class PufferFish extends MovableObject {
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/red2.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/red3.png",
   ];
+  ENEMY_RED_TRANSITION = [
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/3.transition1.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/3.transition2.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/3.transition3.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/3.transition4.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/3.transition5.png",
+  ];
+  ENEMY_ORANGE_TRANSITION = [
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition1.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition2.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition3.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition4.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/2.transition5.png",
+  ];
+  ENEMY_GREEN_TRANSITION = [
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition1.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition2.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition3.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition4.png",
+    "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition5.png",
+  ];
 
   constructor(fishType, fishIndex) {
     super().loadImage(`img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/${fishIndex}.swim1.png`);
@@ -51,6 +73,8 @@ class PufferFish extends MovableObject {
     this.loadImages(this.ENEMY_ORANGE_DEAD);
     this.loadImages(this.ENEMY_GREEN_DEAD);
     this.loadImages(this.ENEMY_RED_DEAD);
+    this.loadImages(this[`ENEMY_${fishType}_TRANSITION`]);
+    this.fishType = fishType;
 
     this.x = 800 + Math.random() * 250;
     this.speed = 0.15 + Math.random() * 0.5;

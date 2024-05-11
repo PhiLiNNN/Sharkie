@@ -15,7 +15,7 @@ class MovableObject extends DrawableObject {
   wordLefEnd = 0;
   interactionDistance = 500;
 
-  playAnimationOnce(arr) {
+  playAnimationOnce(arr, ms) {
     let idx = 0;
     const interval = setInterval(() => {
       if (idx < arr.length) {
@@ -25,7 +25,7 @@ class MovableObject extends DrawableObject {
       } else {
         clearInterval(interval);
       }
-    }, 40);
+    }, ms);
   }
 
   playAnimation(arr) {
@@ -51,7 +51,6 @@ class MovableObject extends DrawableObject {
 
   hit() {
     this.energy -= this.damage;
-    console.log("this.energy :>> ", this.energy);
     if (this.energy <= 0) this.energy = 0;
     else this.lastHit = new Date().getTime();
   }
