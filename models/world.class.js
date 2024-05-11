@@ -72,8 +72,13 @@ class World {
     const checkCollisions = (enemies) => {
       enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy) && !enemy.isDead()) {
-          this.character.hit();
-          this.statusBar.setPercentage(this.character.energy);
+          let currentTime = new Date().getTime();
+          let timeSinceLastHit = currentTime - this.lastHitTime;
+          if (timeSinceLastHit >= 1000) {
+            this.lastHitTime = currentTime;
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.energy);
+          }
         }
       });
     };
@@ -94,7 +99,6 @@ class World {
           this.throwableObjectsEnemy.splice(idx, 1);
         }
       }
-
       if (enemyBubble.x < this.character.x - 100) this.throwableObjectsEnemy.splice(idx, 1);
     });
   }
