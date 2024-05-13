@@ -8,9 +8,8 @@ class MovableObject extends DrawableObject {
   offsetHeight;
   offsetWidth;
   energy = 100;
-  damage = 5;
   lastHit = 0;
-  recovery = 0.6;
+  recovery = 0.8;
   deadAnimation = false;
   wordLefEnd = 0;
 
@@ -48,8 +47,8 @@ class MovableObject extends DrawableObject {
     );
   }
 
-  hit() {
-    this.energy -= this.damage;
+  hit(damage) {
+    this.energy -= damage;
     if (this.energy <= 0) this.energy = 0;
     else this.lastHit = new Date().getTime();
   }

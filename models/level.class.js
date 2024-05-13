@@ -4,7 +4,8 @@ class Level {
   regularJellyFishes;
   dangerousJellyFishes;
   backgroundObject;
-  border;
+  leftBorder;
+  rightBorder;
   level_rightEnd = 2160;
   level_leftEnd = 0;
   level_topEnd = 0;
@@ -16,13 +17,15 @@ class Level {
     dangerousJellyFishes,
     endboss,
     backgroundObject,
-    border
+    leftBorder,
+    rightBorder
   ) {
     this.pufferFishes = pufferFishes;
     this.regularJellyFishes = regularJellyFishes;
     this.dangerousJellyFishes = dangerousJellyFishes;
     this.endboss = endboss;
     this.backgroundObject = backgroundObject;
-    this.border = border;
+    this.leftBorder = leftBorder;
+    this.rightBorder = rightBorder;
   }
 }

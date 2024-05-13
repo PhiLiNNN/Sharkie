@@ -6,7 +6,7 @@ class Endboss extends MovableObject {
   offsetY = 140;
   offsetHeight = 100;
   offsetWidth = 70;
-  energy = 20;
+  energy = 100;
   world;
   ENDBOSS_APPEARS = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",

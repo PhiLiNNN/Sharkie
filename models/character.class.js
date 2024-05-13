@@ -11,6 +11,8 @@ class Character extends MovableObject {
   speed = 3;
   world;
   energy = 100;
+  hitFromDangerousJellyFish = false;
+  interactionDistanceEndboss = 300;
   swimming_sound = new Audio("audio/swim.mp3");
   IMAGES_SWIMMING = [
     "img/1.Sharkie/1.IDLE/1.png",
@@ -46,13 +48,21 @@ class Character extends MovableObject {
     "img/1.Sharkie/6.dead/1.Poisoned/11.png",
     "img/1.Sharkie/6.dead/1.Poisoned/12.png",
   ];
-  IMAGES_HURT = [
+
+  IMAGES_HURT_BUBBLE = [
     "img/1.Sharkie/5.Hurt/1.Poisoned/1.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/2.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/3.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/4.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/5.png",
   ];
+
+  IMAGES_HURT_ELECTRO = [
+    "img/1.Sharkie/5.Hurt/2.Electric shock/1.png",
+    "img/1.Sharkie/5.Hurt/2.Electric shock/2.png",
+    "img/1.Sharkie/5.Hurt/2.Electric shock/3.png",
+  ];
+
   IMAGES_BUBBLE = [
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
@@ -68,7 +78,8 @@ class Character extends MovableObject {
     super().loadImage("img/1.Sharkie/1.IDLE/1.png");
     this.loadImages(this.IMAGES_SWIMMING);
     this.loadImages(this.IMAGES_DEAD);
-    this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_HURT_BUBBLE);
+    this.loadImages(this.IMAGES_HURT_ELECTRO);
     this.loadImages(this.IMAGES_BUBBLE);
     this.animate();
     this.isBlowBubble = false;
@@ -108,8 +119,14 @@ class Character extends MovableObject {
           this.playAnimation(this.IMAGES_DEAD);
         }
       } else if (this.isHurt()) {
-        this.playAnimation(this.IMAGES_HURT);
-      } else if (this.checkEntityDistance(this.world.level.endboss)) {
+        if (this.hitFromDangerousJellyFish) {
+          this.playAnimation(this.IMAGES_HURT_ELECTRO);
+        } else {
+          this.playAnimation(this.IMAGES_HURT_BUBBLE);
+        }
+      } else if (
+        this.checkEntityDistance(this.world.level.endboss, this.interactionDistanceEndboss)
+      ) {
         this.world.level.endboss.spawnAnimation = true;
       } else {
         this.playAnimation(this.IMAGES_SWIMMING);
