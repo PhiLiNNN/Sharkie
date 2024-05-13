@@ -13,7 +13,6 @@ class MovableObject extends DrawableObject {
   recovery = 0.6;
   deadAnimation = false;
   wordLefEnd = 0;
-  interactionDistance = 500;
 
   playAnimationOnce(arr, ms) {
     let idx = 0;
@@ -65,7 +64,7 @@ class MovableObject extends DrawableObject {
     return timepassed < this.recovery;
   }
 
-  checkEntityDistance(obj) {
-    return Math.abs(this.x - obj.x) <= this.interactionDistance;
+  checkEntityDistance(obj, interactionDistance) {
+    return Math.abs(this.x - obj.x) <= interactionDistance;
   }
 }

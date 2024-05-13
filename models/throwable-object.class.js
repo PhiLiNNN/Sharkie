@@ -14,4 +14,12 @@ class ThrowableObject extends MovableObject {
       angle += 0.1;
     }, 1);
   }
+  lightningShot(isSwimmingLeft, offsetX) {
+    setInterval(() => {
+      if (isSwimmingLeft) {
+        this.x -= this.BUBBLESPEED;
+        this.offsetX = offsetX + 65;
+      } else this.x += this.BUBBLESPEED;
+    }, 1);
+  }
 }

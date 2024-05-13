@@ -1,14 +1,17 @@
 class World {
   character = new Character();
   statusBar = new StatusBar();
-  throwableObjects = [];
-  throwableObjectsEnemy = [];
+  throwableObjectsCharacter = [];
+  throwableObjectsPufferFish = [];
+  throwableObjectsJellyDangerousFish = [];
   level = level1;
   canvas;
   ctx;
   keyboard;
   isSwimmingLeft;
   camera_x = 0;
+  interactionDistancePufferFish = 500;
+  interactionDistanceDangerousJellyFish = 800;
   lastHitTime = 0;
   enemyShootingInterval = 0.01;
 
@@ -37,7 +40,7 @@ class World {
             this.character.y + 90,
             this.isSwimmingLeft
           );
-          this.throwableObjects.push(bubble);
+          this.throwableObjectsCharacter.push(bubble);
         }, 180);
         lastClickTime = currentTime;
       }
@@ -88,7 +91,7 @@ class World {
   }
 
   checkCharacterThrowableObjectCollision() {
-    this.throwableObjectsEnemy.forEach((enemyBubble, idx) => {
+    this.throwableObjectsPufferFish.forEach((enemyBubble, idx) => {
       if (this.character.isColliding(enemyBubble)) {
         let currentTime = new Date().getTime();
         let timeSinceLastHit = currentTime - this.lastHitTime;
@@ -96,38 +99,45 @@ class World {
           this.lastHitTime = currentTime;
           this.character.hit();
           this.statusBar.setPercentage(this.character.energy);
-          this.throwableObjectsEnemy.splice(idx, 1);
+          this.throwableObjectsPufferFish.splice(idx, 1);
         }
       }
-      if (enemyBubble.x < this.character.x - 100) this.throwableObjectsEnemy.splice(idx, 1);
+      if (enemyBubble.x < this.character.x - 100) this.throwableObjectsPufferFish.splice(idx, 1);
     });
   }
 
   checkBubbleBubbleCollision() {
-    this.throwableObjectsEnemy.forEach((enemyBubble, idx) => {
-      this.throwableObjects.forEach((bubble, index) => {
+    this.throwableObjectsPufferFish.forEach((enemyBubble, idx) => {
+      this.throwableObjectsCharacter.forEach((bubble, index) => {
         if (enemyBubble.isColliding(bubble)) {
-          this.throwableObjectsEnemy.splice(idx, 1);
-          this.throwableObjects.splice(index, 1);
+          this.throwableObjectsPufferFish.splice(idx, 1);
+          this.throwableObjectsCharacter.splice(index, 1);
         }
       });
     });
   }
 
   checkCollisionWithBubble() {
-    this.throwableObjects.forEach((bubble, bubbleIdx) => {
+    const bubblesToRemove = [];
+
+    this.throwableObjectsCharacter.forEach((bubble, bubbleIdx) => {
       const checkCollisions = (enemies) => {
         enemies.forEach((enemy) => {
           if (bubble.isColliding(enemy) && !enemy.isDead()) {
-            this.throwableObjects.splice(bubbleIdx, 1);
+            bubblesToRemove.push(bubbleIdx);
             enemy.hit();
-          } else if (bubble.x > this.character.x + 800 || bubble.x < this.character.x - 100)
-            this.throwableObjects.splice(bubbleIdx, 1);
+          }
         });
       };
+
       checkCollisions(this.level.pufferFishes);
       checkCollisions(this.level.dangerousJellyFishes);
       checkCollisions(this.level.regularJellyFishes);
+
+      if (bubble.x > this.character.x + 800 || bubble.x < this.character.x - 100) {
+        bubblesToRemove.push(bubbleIdx);
+      }
+
       if (
         bubble.isColliding(this.level.endboss) &&
         !this.level.endboss.isDead() &&
@@ -135,36 +145,61 @@ class World {
       ) {
         let currentTime = new Date().getTime();
         let timeSinceLastHit = currentTime - this.lastHitTime;
-        this.throwableObjects.splice(bubbleIdx, 1);
+
         if (timeSinceLastHit >= 1000) {
           this.lastHitTime = currentTime;
           this.level.endboss.hit();
         }
       }
     });
+
+    bubblesToRemove.sort((a, b) => b - a);
+    bubblesToRemove.forEach((idx) => {
+      this.throwableObjectsCharacter.splice(idx, 1);
+    });
   }
 
   areEnemiesWithinSight() {
     setInterval(() => {
       this.level.pufferFishes.forEach((pufferFish) => {
-        if (this.character.checkEntityDistance(pufferFish)) this.enemyAttack();
-
-        //   {
-        //   if (pufferFish.fishType === "ORANGE")
-        //     pufferFish.playAnimationOnce(pufferFish.ENEMY_ORANGE_TRANSITION, 120);
-        //   if (pufferFish.fishType === "GREEN")
-        //     pufferFish.playAnimationOnce(pufferFish.ENEMY_GREEN_TRANSITION, 120);
-        //   if (pufferFish.fishType === "RED")
-        //     pufferFish.playAnimationOnce(pufferFish.ENEMY_RED_TRANSITION, 120);
-        //   setTimeout(() => {
-        //     this.enemyAttack();
-        //   }, 700);
-        // }
+        if (this.character.checkEntityDistance(pufferFish, this.interactionDistancePufferFish))
+          this.pufferFishAttack();
+      });
+      this.level.dangerousJellyFishes.forEach((dangerousJellyFish) => {
+        if (
+          this.character.checkEntityDistance(
+            dangerousJellyFish,
+            this.interactionDistanceDangerousJellyFish
+          )
+        )
+          this.jellyDangerousFishAttack();
       });
     }, 1500);
   }
+  jellyDangerousFishAttack() {
+    const enemyCount = this.level.dangerousJellyFishes.length;
+    const randomInterval = () => (Math.random() * 1000) / this.enemyShootingInterval;
+    const addEnemyAttack = () => {
+      const randomEnemyIndex = Math.floor(Math.random() * enemyCount);
+      let isEnemyAlive = !this.level.dangerousJellyFishes[randomEnemyIndex].isDead();
+      const fish = this.level.dangerousJellyFishes[randomEnemyIndex];
+      if (isEnemyAlive) {
+        this.setRightAnimation(fish);
+        setTimeout(() => {
+          const lightningEnemy = new jellyDangerousFishAttack(
+            this.level.dangerousJellyFishes[randomEnemyIndex].x,
+            this.level.dangerousJellyFishes[randomEnemyIndex].y,
+            true
+          );
+          this.throwableObjectsJellyDangerousFish.push(lightningEnemy);
+        }, 700);
+        setTimeout(addEnemyAttack, randomInterval());
+      }
+    };
+    addEnemyAttack();
+  }
 
-  enemyAttack() {
+  pufferFishAttack() {
     const enemyCount = this.level.pufferFishes.length;
     const randomInterval = () => (Math.random() * 1000) / this.enemyShootingInterval;
     const addEnemyAttack = () => {
@@ -174,12 +209,12 @@ class World {
       if (isEnemyAlive) {
         this.setRightAnimation(fish);
         setTimeout(() => {
-          const bubbleEnemy = new EnemyAttack(
+          const bubbleEnemy = new pufferFishAttack(
             this.level.pufferFishes[randomEnemyIndex].x,
             this.level.pufferFishes[randomEnemyIndex].y,
             true
           );
-          this.throwableObjectsEnemy.push(bubbleEnemy);
+          this.throwableObjectsPufferFish.push(bubbleEnemy);
         }, 700);
         setTimeout(addEnemyAttack, randomInterval());
       }
@@ -192,6 +227,7 @@ class World {
     if (fish.fishType === "RED") fish.playAnimationOnce(fish.ENEMY_RED_TRANSITION, 120);
     if (fish.fishType === "GREEN") fish.playAnimationOnce(fish.ENEMY_GREEN_TRANSITION, 120);
   }
+
   /**
    * Clears the canvas and draws the game elements including background, character, and enemies.
    * Continuously calls itself using requestAnimationFrame for smooth animation.
@@ -214,9 +250,10 @@ class World {
     this.addObjectsToMap(this.level.regularJellyFishes);
     this.addObjectsToMap(this.level.dangerousJellyFishes);
     this.addObjectsToMap(this.level.pufferFishes);
+    this.addObjectsToMap(this.throwableObjectsCharacter);
 
-    this.addObjectsToMap(this.throwableObjects);
-    this.addObjectsToMap(this.throwableObjectsEnemy);
+    this.addObjectsToMap(this.throwableObjectsPufferFish);
+    this.addObjectsToMap(this.throwableObjectsJellyDangerousFish);
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
     requestAnimationFrame(function () {

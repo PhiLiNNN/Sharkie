@@ -30,7 +30,7 @@ const level1 = new Level(
   ],
   new Endboss(),
   backgroundObject,
-  [new Border(-280), new Border(2500)]
+  [(new Border(-280), new Border(2500))]
 );
 repeatBackground();
 
