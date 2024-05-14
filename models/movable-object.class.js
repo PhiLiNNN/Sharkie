@@ -42,7 +42,6 @@ class MovableObject extends DrawableObject {
   circle() {
     const centerX = this.x;
     const centerY = this.y;
-    console.log("this.angle :>> ", this.angle);
     setInterval(() => {
       if (!this.isDead()) {
         this.angle += this.speed;

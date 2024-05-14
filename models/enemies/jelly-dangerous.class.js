@@ -44,8 +44,6 @@ class JellyDangerous extends MovableObject {
     this.animate(fishType.toUpperCase());
   }
   animate(fishType) {
-    // this.moveLeft();
-
     const animateFunction = () => {
       if (this.isDead()) {
         this.playAnimation(this[`JELLY_${fishType}_DEAD`]);

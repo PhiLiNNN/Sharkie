@@ -43,6 +43,11 @@ class DrawableObject {
     ctx.stroke();
   }
   draw(ctx) {
+    console.log("this.img :>> ", this.x);
+    console.log("this.img :>> ", this.y);
+    console.log("this.img :>> ", this.width);
+    console.log("this.img :>> ", this.img);
+    console.log("this.img :>> ", this.height);
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 }

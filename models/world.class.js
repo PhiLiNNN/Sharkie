@@ -1,6 +1,7 @@
 class World {
   character = new Character();
   statusBar = new StatusBar();
+  poisonBar = new PoisonBar();
   throwableObjectsCharacter = [];
   throwableObjectsPufferFish = [];
   throwableObjectsJellyDangerousFish = [];
@@ -91,6 +92,7 @@ class World {
             this.lastHitTime = currentTime;
             this.character.hit(damage);
             this.statusBar.setPercentage(this.character.energy);
+            this.poisonBar.setPercentage(this.character.energy);
             if (enemy instanceof JellyDangerous) {
               this.character.hitFromDangerousJellyFish = true;
             } else {
@@ -121,6 +123,7 @@ class World {
             }
 
             this.statusBar.setPercentage(this.character.energy);
+            this.poisonBar.setPercentage(this.character.energy);
             enemies.splice(idx, 1);
           }
         }
@@ -255,6 +258,7 @@ class World {
 
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
+    this.addToMap(this.poisonBar);
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
