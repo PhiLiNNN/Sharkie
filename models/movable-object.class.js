@@ -32,9 +32,23 @@ class MovableObject extends DrawableObject {
     this.img = this.imageCache[path];
     this.currentImage++;
   }
+
   moveLeft() {
     setInterval(() => {
       if (!this.isDead()) this.x -= this.speed;
+    }, 1000 / 60);
+  }
+
+  circle() {
+    const centerX = this.x;
+    const centerY = this.y;
+    console.log("this.angle :>> ", this.angle);
+    setInterval(() => {
+      if (!this.isDead()) {
+        this.angle += this.speed;
+        this.x = centerX + Math.cos(this.angle) * this.radius;
+        this.y = centerY + Math.sin(this.angle) * this.radius;
+      }
     }, 1000 / 60);
   }
 

@@ -91,7 +91,7 @@ class World {
             this.lastHitTime = currentTime;
             this.character.hit(damage);
             this.statusBar.setPercentage(this.character.energy);
-            if (enemy instanceof jellyDangerousFishAttack) {
+            if (enemy instanceof JellyDangerous) {
               this.character.hitFromDangerousJellyFish = true;
             } else {
               this.character.hitFromDangerousJellyFish = false;
@@ -247,7 +247,11 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.ctx.translate(this.camera_x, 0);
+
     this.addObjectsToMap(this.level.backgroundObject);
+
+    this.addToMap(this.level.leftBorder);
+    this.addToMap(this.level.rightBorder);
 
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
@@ -260,12 +264,11 @@ class World {
     this.addObjectsToMap(this.level.regularJellyFishes);
     this.addObjectsToMap(this.level.dangerousJellyFishes);
     this.addObjectsToMap(this.level.pufferFishes);
-    this.addObjectsToMap(this.throwableObjectsCharacter);
 
+    this.addObjectsToMap(this.throwableObjectsCharacter);
     this.addObjectsToMap(this.throwableObjectsPufferFish);
     this.addObjectsToMap(this.throwableObjectsJellyDangerousFish);
-    this.addToMap(this.level.leftBorder);
-    this.addToMap(this.level.rightBorder);
+
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
     requestAnimationFrame(function () {

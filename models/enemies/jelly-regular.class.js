@@ -1,11 +1,13 @@
 class JellyRegular extends MovableObject {
-  y = 90 + Math.random() * 320;
   height = 40;
   width = 40;
   offsetX = 0;
   offsetY = 0;
   offsetHeight = 8;
   offsetWidth = 0;
+  angle;
+  speed = 0.01;
+  radius;
 
   JELLY_LILA = [
     "img/2.Enemy/2 Jelly fish/Regular damage/LILA1.png",
@@ -32,21 +34,22 @@ class JellyRegular extends MovableObject {
     "img/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png",
   ];
 
-  constructor(fishType, fishIndex) {
+  constructor(fishType, fishIndex, x, y, angle, radius) {
     super().loadImage(`img/2.Enemy/2 Jelly fish/Regular damage/${fishType}${fishIndex}.png`);
     this.loadImages(this[`JELLY_${fishType.toUpperCase()}`]);
     this.loadImages(this.JELLY_LILA_DEAD);
     this.loadImages(this.JELLY_YELLOW_DEAD);
 
-    this.x = 1600 + Math.random() * 250;
-    this.speed = 0.15 + Math.random() * 0.25;
+    this.x = x;
+    this.y = y;
+    this.angle = (angle / 360) * 2 * Math.PI;
     this.damage = 100;
-
+    this.radius = radius;
+    this.circle();
     this.animate(fishType.toUpperCase());
   }
-  animate(fishType) {
-    this.moveLeft();
 
+  animate(fishType) {
     const animateFunction = () => {
       if (this.isDead()) {
         this.height = 50;
