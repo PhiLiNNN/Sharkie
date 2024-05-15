@@ -88,7 +88,7 @@ class World {
   checkCharacterItemCollision() {
     const checkCollisions = (items) => {
       items.forEach((item, idx) => {
-        if (this.character.isColliding(item)) {
+        if (this.character.isColliding(item) && this.character.poison_energy !== 100) {
           this.character.collect();
           this.poisonBar.setPercentage(this.character.poison_energy);
           items.splice(idx, 1);

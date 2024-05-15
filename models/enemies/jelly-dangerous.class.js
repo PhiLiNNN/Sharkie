@@ -37,7 +37,7 @@ class JellyDangerous extends MovableObject {
     this.loadImages(this.JELLY_GREEN_DEAD);
     this.loadImages(this.JELLY_PINK_DEAD);
     this.y = y;
-    this.x = 1800;
+    this.x = 2300;
     this.speed = 0.15 + Math.random() * 0.25;
     this.damage = 100;
 

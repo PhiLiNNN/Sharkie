@@ -7,7 +7,7 @@ class PoisonItem extends DrawableObject {
   offsetY = 22;
   offsetWidth = 10;
   offsetHeight = 22;
-  POISON_ITEM = [
+  POISON_ITEM_SWIMMING = [
     "img/4. Marcadores/Posión/Animada/1.png",
     "img/4. Marcadores/Posión/Animada/2.png",
     "img/4. Marcadores/Posión/Animada/3.png",
@@ -17,18 +17,29 @@ class PoisonItem extends DrawableObject {
     "img/4. Marcadores/Posión/Animada/7.png",
     "img/4. Marcadores/Posión/Animada/8.png",
   ];
-  constructor(x, y) {
-    super().loadImage(this.POISON_ITEM[0]);
-    this.loadImages(this.POISON_ITEM);
+
+  POISON_ITEM_GROUND = [
+    "img/4. Marcadores/Posión/ground_animated/1.png",
+    "img/4. Marcadores/Posión/ground_animated/2.png",
+    "img/4. Marcadores/Posión/ground_animated/3.png",
+    "img/4. Marcadores/Posión/ground_animated/4.png",
+    "img/4. Marcadores/Posión/ground_animated/5.png",
+    "img/4. Marcadores/Posión/ground_animated/6.png",
+    "img/4. Marcadores/Posión/ground_animated/7.png",
+    "img/4. Marcadores/Posión/ground_animated/8.png",
+  ];
+  constructor(type, x, y) {
+    super().loadImage(this[`POISON_ITEM_${type.toUpperCase()}`][0]);
+    this.loadImages(this[`POISON_ITEM_${type.toUpperCase()}`]);
     this.x = x;
     this.y = y;
     this.width = 55;
     this.height = 55;
-    this.animate();
+    this.animate(type.toUpperCase());
   }
-  animate() {
+  animate(type) {
     setInterval(() => {
-      this.playAnimation(this.POISON_ITEM);
+      this.playAnimation(this[`POISON_ITEM_${type}`]);
     }, 200);
   }
 }

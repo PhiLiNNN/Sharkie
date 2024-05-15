@@ -1,7 +1,7 @@
 backgroundObject = [];
 width = 720;
 layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
-repeaterAmount = 4; // change this number to set the length of the world
+repeaterAmount = 7; // change this number to set the length of the world
 const level1 = new Level(
   [
     new PufferFish("GREEN", 1),
@@ -14,23 +14,23 @@ const level1 = new Level(
     new PufferFish("GREEN", 1),
   ],
   [
-    new JellyRegular("YELLOW", 1, 1600, 240, 45, 160),
-    new JellyRegular("YELLOW", 1, 1600, 240, 90, 160),
-    new JellyRegular("YELLOW", 1, 1600, 240, 135, 160),
-    new JellyRegular("YELLOW", 1, 1600, 240, 180, 160),
-    new JellyRegular("YELLOW", 1, 1600, 240, 225, 160),
-    new JellyRegular("YELLOW", 1, 1600, 240, 270, 160),
-    new JellyRegular("YELLOW", 1, 1600, 240, 315, 160),
-    new JellyRegular("YELLOW", 1, 1600, 240, 360, 160),
+    new JellyRegular("YELLOW", 1, 2000, 240, 45, 160),
+    new JellyRegular("YELLOW", 1, 2000, 240, 90, 160),
+    new JellyRegular("YELLOW", 1, 2000, 240, 135, 160),
+    new JellyRegular("YELLOW", 1, 2000, 240, 180, 160),
+    new JellyRegular("YELLOW", 1, 2000, 240, 225, 160),
+    new JellyRegular("YELLOW", 1, 2000, 240, 270, 160),
+    new JellyRegular("YELLOW", 1, 2000, 240, 315, 160),
+    new JellyRegular("YELLOW", 1, 2000, 240, 360, 160),
 
-    new JellyRegular("LILA", 1, 1600, 240, 45, 100),
-    new JellyRegular("LILA", 1, 1600, 240, 90, 100),
-    new JellyRegular("LILA", 1, 1600, 240, 135, 100),
-    new JellyRegular("LILA", 1, 1600, 240, 180, 100),
-    new JellyRegular("LILA", 1, 1600, 240, 225, 100),
-    new JellyRegular("LILA", 1, 1600, 240, 270, 100),
-    new JellyRegular("LILA", 1, 1600, 240, 315, 100),
-    new JellyRegular("LILA", 1, 1600, 240, 360, 100),
+    new JellyRegular("LILA", 1, 2000, 240, 45, 100),
+    new JellyRegular("LILA", 1, 2000, 240, 90, 100),
+    new JellyRegular("LILA", 1, 2000, 240, 135, 100),
+    new JellyRegular("LILA", 1, 2000, 240, 180, 100),
+    new JellyRegular("LILA", 1, 2000, 240, 225, 100),
+    new JellyRegular("LILA", 1, 2000, 240, 270, 100),
+    new JellyRegular("LILA", 1, 2000, 240, 315, 100),
+    new JellyRegular("LILA", 1, 2000, 240, 360, 100),
   ],
   [
     new JellyDangerous("GREEN", 1, 84),
@@ -42,8 +42,20 @@ const level1 = new Level(
   new Endboss(),
   backgroundObject,
   new Border(-280),
-  new Border(2500),
-  [new PoisonItem(260, 160), new PoisonItem(360, 160), new PoisonItem(260, 360)]
+  new Border(4000),
+  [
+    new PoisonItem("swimming", 1995, 230),
+    new PoisonItem("swimming", 1200, 90),
+    new PoisonItem("swimming", 2500, 360),
+    new PoisonItem("ground", 500, 400),
+    new PoisonItem("ground", 1000, 360),
+    new PoisonItem("ground", 200, 360),
+    new PoisonItem("ground", 220, 360),
+    new PoisonItem("ground", 240, 360),
+    new PoisonItem("ground", 260, 360),
+    new PoisonItem("ground", 280, 360),
+    new PoisonItem("ground", 300, 360),
+  ]
 );
 repeatBackground();
 
