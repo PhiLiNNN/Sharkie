@@ -1,4 +1,4 @@
-class pufferFishAttack extends ThrowableObject {
+class PufferFishAttack extends ThrowableObject {
   width = 20;
   height = 20;
   offsetX = 10;

@@ -2,9 +2,10 @@ class World {
   character = new Character();
   statusBar = new StatusBar();
   poisonBar = new PoisonBar();
-  throwableObjectsCharacter = [];
-  throwableObjectsPufferFish = [];
-  throwableObjectsJellyDangerousFish = [];
+  throwableObjsCharacter = [];
+  throwablePoisonObjsCharacter = [];
+  throwableObjsPuffer = [];
+  throwableObjsJellyDangerous = [];
   level = level1;
   canvas;
   ctx;
@@ -15,17 +16,17 @@ class World {
   // interactionDistanceDangerousJellyFish = 800;
   lastHitTime = 0;
 
-  collisionDamageWithEndboss = 20;
-  collisionDamageWithPufferFish = 5;
-  collisionDamageWithDangerousJellyFish = 10;
-  collisionDamageWithRegularJellyFish = 5;
+  collisionDmgWithEndboss = 20;
+  collisionDmgWithPuffer = 5;
+  collisionDmgWithDangerousJelly = 10;
+  collisionDmgWithRegularJelly = 5;
 
-  bubbleDamageFromPufferFish = 5;
-  lightningDamageFromDangerousJelly = 5;
+  bubbleDmgFromPuffer = 5;
+  lightningDmgFromDangerousJelly = 5;
 
-  bubbleDamageToPufferFish = 100;
-  bubbleDamageToDangerousJellyFish = 100;
-  bubbleDamageToRegularJellyFish = 100;
+  bubbleDmgToPuffer = 100;
+  bubbleDmgToDangerousJelly = 100;
+  bubbleDmgToRegularJelly = 100;
 
   enemyShootingInterval = 0.01;
 
@@ -45,6 +46,7 @@ class World {
     let lastClickTime = 0;
     document.addEventListener("mousedown", (event) => {
       const currentTime = new Date().getTime();
+      document.getElementById("canvas-id").oncontextmenu = () => false;
       if (event.button === 0 && currentTime - lastClickTime >= 500) {
         this.character.playAnimationOnce(this.character.IMAGES_BUBBLE, 50);
         setTimeout(() => {
@@ -52,13 +54,31 @@ class World {
           const bubble = new SharkieAttack(
             this.character.x + xOffset,
             this.character.y + 90,
-            this.isSwimmingLeft
+            this.isSwimmingLeft,
+            false
           );
-          this.throwableObjectsCharacter.push(bubble);
+          this.throwableObjsCharacter.push(bubble);
         }, 400);
         lastClickTime = currentTime;
-      } else if (event.button === 2 && currentTime - lastClickTime >= 500) {
-        document.getElementById("canvas-id").oncontextmenu = () => false;
+      } else if (
+        event.button === 2 &&
+        currentTime - lastClickTime >= 500 &&
+        this.character.poison_energy !== 0
+      ) {
+        this.character.reducePoisonEnergy();
+        this.poisonBar.setPercentage(this.character.poison_energy);
+        this.character.playAnimationOnce(this.character.IMAGES_BUBBLE_POISON, 50);
+        setTimeout(() => {
+          const xOffset = this.isSwimmingLeft ? 10 : 140;
+          const bubble = new SharkieAttack(
+            this.character.x + xOffset,
+            this.character.y + 90,
+            this.isSwimmingLeft,
+            true
+          );
+          this.throwablePoisonObjsCharacter.push(bubble);
+        }, 400);
+        lastClickTime = currentTime;
       }
     });
   }
@@ -108,18 +128,15 @@ class World {
             this.lastHitTime = currentTime;
             this.character.hit(damage);
             this.statusBar.setPercentage(this.character.energy);
-            if (enemy instanceof JellyDangerous) {
-              this.character.hitFromDangerousJellyFish = true;
-            } else {
-              this.character.hitFromDangerousJellyFish = false;
-            }
+            if (enemy instanceof JellyDangerous) this.character.hitFromDangerousJelly = true;
+            else this.character.hitFromDangerousJelly = false;
           }
         }
       });
     };
-    checkCollisions(this.level.pufferFishes, this.collisionDamageWithPufferFish);
-    checkCollisions(this.level.dangerousJellyFishes, this.collisionDamageWithDangerousJellyFish);
-    checkCollisions(this.level.regularJellyFishes, this.collisionDamageWithRegularJellyFish);
+    checkCollisions(this.level.pufferFishes, this.collisionDmgWithPuffer);
+    checkCollisions(this.level.dangerousJellyFishes, this.collisionDmgWithDangerousJelly);
+    checkCollisions(this.level.regularJellyFishes, this.collisionDmgWithRegularJelly);
   }
 
   checkCharacterThrowableObjectCollision() {
@@ -131,9 +148,9 @@ class World {
           if (timeSinceLastHit >= 1000) {
             this.lastHitTime = currentTime;
             this.character.hit(damage);
-            if (enemyShot instanceof jellyDangerousFishAttack)
-              this.character.hitFromDangerousJellyFish = true;
-            else this.character.hitFromDangerousJellyFish = false;
+            if (enemyShot instanceof JellyDangerousFishAttack)
+              this.character.hitFromDangerousJelly = true;
+            else this.character.hitFromDangerousJelly = false;
             this.statusBar.setPercentage(this.character.energy);
             enemies.splice(idx, 1);
           }
@@ -141,32 +158,31 @@ class World {
         if (enemyShot.x < this.character.x - 100) enemies.splice(idx, 1);
       });
     };
-    checkCollisions(this.throwableObjectsPufferFish, this.bubbleDamageFromPufferFish);
-    checkCollisions(
-      this.throwableObjectsJellyDangerousFish,
-      this.lightningDamageFromDangerousJelly
-    );
+    checkCollisions(this.throwableObjsPuffer, this.bubbleDmgFromPuffer);
+    checkCollisions(this.throwableObjsJellyDangerous, this.lightningDmgFromDangerousJelly);
   }
 
   checkBubbleBubbleCollision() {
-    this.throwableObjectsPufferFish.forEach((enemyBubble, idx) => {
-      this.throwableObjectsCharacter.forEach((bubble, index) => {
-        if (enemyBubble.isColliding(bubble)) {
-          this.throwableObjectsPufferFish.splice(idx, 1);
-          this.throwableObjectsCharacter.splice(index, 1);
-        }
+    const checkAndRemoveCollision = (enemyBubbles, characterBubbles) => {
+      enemyBubbles.forEach((enemyBubble, enemyIndex) => {
+        characterBubbles.forEach((bubble, bubbleIndex) => {
+          if (enemyBubble.isColliding(bubble)) {
+            if (!(enemyBubble instanceof JellyDangerousFishAttack))
+              enemyBubbles.splice(enemyIndex, 1);
+            characterBubbles.splice(bubbleIndex, 1);
+          }
+        });
       });
-    });
-    this.throwableObjectsJellyDangerousFish.forEach((enemyBubble) => {
-      this.throwableObjectsCharacter.forEach((bubble, index) => {
-        if (enemyBubble.isColliding(bubble)) this.throwableObjectsCharacter.splice(index, 1);
-      });
-    });
+    };
+    checkAndRemoveCollision(this.throwableObjsPuffer, this.throwableObjsCharacter);
+    checkAndRemoveCollision(this.throwableObjsPuffer, this.throwablePoisonObjsCharacter);
+    checkAndRemoveCollision(this.throwableObjsJellyDangerous, this.throwableObjsCharacter);
+    checkAndRemoveCollision(this.throwableObjsJellyDangerous, this.throwablePoisonObjsCharacter);
   }
 
   checkCollisionWithBubble() {
     const bubblesToRemove = [];
-    this.throwableObjectsCharacter.forEach((bubble, bubbleIdx) => {
+    this.throwableObjsCharacter.forEach((bubble, bubbleIdx) => {
       const checkCollisions = (enemies, damage) => {
         enemies.forEach((enemy) => {
           if (bubble.isColliding(enemy) && !enemy.isDead()) {
@@ -175,9 +191,9 @@ class World {
           }
         });
       };
-      checkCollisions(this.level.pufferFishes, this.bubbleDamageToPufferFish);
-      checkCollisions(this.level.dangerousJellyFishes, this.bubbleDamageToDangerousJellyFish);
-      checkCollisions(this.level.regularJellyFishes, this.bubbleDamageToRegularJellyFish);
+      checkCollisions(this.level.pufferFishes, this.bubbleDmgToPuffer);
+      checkCollisions(this.level.dangerousJellyFishes, this.bubbleDmgToDangerousJelly);
+      checkCollisions(this.level.regularJellyFishes, this.bubbleDmgToRegularJelly);
       if (bubble.x > this.character.x + 800 || bubble.x < this.character.x - 100) {
         bubblesToRemove.push(bubbleIdx);
       }
@@ -192,15 +208,15 @@ class World {
 
         if (timeSinceLastHit >= 1000) {
           this.lastHitTime = currentTime;
-          this.level.endboss.hit(this.collisionDamageWithEndboss);
-          this.throwableObjectsCharacter.splice(bubbleIdx, 1);
+          this.level.endboss.hit(this.collisionDmgWithEndboss);
+          this.throwableObjsCharacter.splice(bubbleIdx, 1);
         }
       }
     });
 
     bubblesToRemove.sort((a, b) => b - a);
     bubblesToRemove.forEach((idx) => {
-      this.throwableObjectsCharacter.splice(idx, 1);
+      this.throwableObjsCharacter.splice(idx, 1);
     });
   }
 
@@ -236,11 +252,11 @@ class World {
   addEnemyAttackObject(enemy, fishType) {
     let newEnemy;
     if (fishType === "jellyDangerous") {
-      newEnemy = new jellyDangerousFishAttack(enemy.x, enemy.y, true);
-      this.throwableObjectsJellyDangerousFish.push(newEnemy);
+      newEnemy = new JellyDangerousFishAttack(enemy.x, enemy.y, true);
+      this.throwableObjsJellyDangerous.push(newEnemy);
     } else if (fishType === "pufferFish") {
-      newEnemy = new pufferFishAttack(enemy.x, enemy.y, true);
-      this.throwableObjectsPufferFish.push(newEnemy);
+      newEnemy = new PufferFishAttack(enemy.x, enemy.y, true);
+      this.throwableObjsPuffer.push(newEnemy);
     }
   }
 
@@ -279,9 +295,10 @@ class World {
     this.addObjectsToMap(this.level.dangerousJellyFishes);
     this.addObjectsToMap(this.level.pufferFishes);
 
-    this.addObjectsToMap(this.throwableObjectsCharacter);
-    this.addObjectsToMap(this.throwableObjectsPufferFish);
-    this.addObjectsToMap(this.throwableObjectsJellyDangerousFish);
+    this.addObjectsToMap(this.throwableObjsCharacter);
+    this.addObjectsToMap(this.throwablePoisonObjsCharacter);
+    this.addObjectsToMap(this.throwableObjsPuffer);
+    this.addObjectsToMap(this.throwableObjsJellyDangerous);
 
     this.ctx.translate(-this.camera_x, 0);
     let self = this;

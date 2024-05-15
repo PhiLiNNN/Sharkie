@@ -48,8 +48,12 @@ class MovableObject extends DrawableObject {
 
   collect() {
     this.poison_energy += 20;
-    console.log("poison_energy :>> ", this.poison_energy);
     if (this.poison_energy === 100) this.poison_energy = 100;
+  }
+
+  reducePoisonEnergy() {
+    this.poison_energy -= 20;
+    if (this.poison_energy === 0) this.poison_energy = 0;
   }
 
   isDead() {

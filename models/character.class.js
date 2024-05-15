@@ -12,7 +12,7 @@ class Character extends MovableObject {
   world;
   energy = 100;
   poison_energy = 0;
-  hitFromDangerousJellyFish = false;
+  hitFromDangerousJelly = false;
   interactionDistanceEndboss = 300;
   swimming_sound = new Audio("audio/swim.mp3");
   IMAGES_SWIMMING = [
@@ -74,6 +74,16 @@ class Character extends MovableObject {
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png",
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
   ];
+  IMAGES_BUBBLE_POISON = [
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
+  ];
 
   constructor() {
     super().loadImage("img/1.Sharkie/1.IDLE/1.png");
@@ -82,6 +92,7 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_HURT_BUBBLE);
     this.loadImages(this.IMAGES_HURT_ELECTRO);
     this.loadImages(this.IMAGES_BUBBLE);
+    this.loadImages(this.IMAGES_BUBBLE_POISON);
     this.animate();
     this.isBlowBubble = false;
   }
@@ -120,7 +131,7 @@ class Character extends MovableObject {
           this.playAnimation(this.IMAGES_DEAD);
         }
       } else if (this.isHurt()) {
-        if (this.hitFromDangerousJellyFish) {
+        if (this.hitFromDangerousJelly) {
           this.playAnimation(this.IMAGES_HURT_ELECTRO);
         } else {
           this.playAnimation(this.IMAGES_HURT_BUBBLE);

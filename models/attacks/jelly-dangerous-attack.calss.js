@@ -1,4 +1,4 @@
-class jellyDangerousFishAttack extends ThrowableObject {
+class JellyDangerousFishAttack extends ThrowableObject {
   width = 60;
   height = 30;
   offsetX = 10;

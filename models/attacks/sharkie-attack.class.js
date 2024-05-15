@@ -3,8 +3,13 @@ class SharkieAttack extends ThrowableObject {
   height = 40;
   offsetX = -30;
   offsetY = 0;
-  constructor(x, y, isSwimmingLeft) {
-    super().loadImage("img/1.Sharkie/4.Attack/Bubble trap/Bubble.png");
+  primaryAttackBubble = "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png";
+  specialAttackBubble = "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble.png";
+  constructor(x, y, isSwimmingLeft, specialAttack) {
+    super();
+    specialAttack
+      ? this.loadImage(this.specialAttackBubble)
+      : this.loadImage(this.primaryAttackBubble);
     this.x = x;
     this.y = y;
     this.blow(isSwimmingLeft, this.offsetX);
