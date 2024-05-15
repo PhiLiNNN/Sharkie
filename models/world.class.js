@@ -43,7 +43,7 @@ class World {
 
   checkBlowBubble() {
     let lastClickTime = 0;
-    document.addEventListener("click", (event) => {
+    document.addEventListener("mousedown", (event) => {
       const currentTime = new Date().getTime();
       if (event.button === 0 && currentTime - lastClickTime >= 500) {
         this.character.playAnimationOnce(this.character.IMAGES_BUBBLE, 50);
@@ -57,6 +57,8 @@ class World {
           this.throwableObjectsCharacter.push(bubble);
         }, 400);
         lastClickTime = currentTime;
+      } else if (event.button === 2 && currentTime - lastClickTime >= 500) {
+        document.getElementById("canvas-id").oncontextmenu = () => false;
       }
     });
   }
@@ -80,6 +82,20 @@ class World {
   checkCharacterCollisions() {
     this.checkCharacterEnemyCollision();
     this.checkCharacterThrowableObjectCollision();
+    this.checkCharacterItemCollision();
+  }
+
+  checkCharacterItemCollision() {
+    const checkCollisions = (items) => {
+      items.forEach((item, idx) => {
+        if (this.character.isColliding(item)) {
+          this.character.collect();
+          this.poisonBar.setPercentage(this.character.poison_energy);
+          items.splice(idx, 1);
+        }
+      });
+    };
+    checkCollisions(this.level.poisonItems);
   }
 
   checkCharacterEnemyCollision() {
@@ -92,7 +108,6 @@ class World {
             this.lastHitTime = currentTime;
             this.character.hit(damage);
             this.statusBar.setPercentage(this.character.energy);
-            this.poisonBar.setPercentage(this.character.energy);
             if (enemy instanceof JellyDangerous) {
               this.character.hitFromDangerousJellyFish = true;
             } else {
@@ -116,14 +131,10 @@ class World {
           if (timeSinceLastHit >= 1000) {
             this.lastHitTime = currentTime;
             this.character.hit(damage);
-            if (enemyShot instanceof jellyDangerousFishAttack) {
+            if (enemyShot instanceof jellyDangerousFishAttack)
               this.character.hitFromDangerousJellyFish = true;
-            } else {
-              this.character.hitFromDangerousJellyFish = false;
-            }
-
+            else this.character.hitFromDangerousJellyFish = false;
             this.statusBar.setPercentage(this.character.energy);
-            this.poisonBar.setPercentage(this.character.energy);
             enemies.splice(idx, 1);
           }
         }
@@ -155,7 +166,6 @@ class World {
 
   checkCollisionWithBubble() {
     const bubblesToRemove = [];
-
     this.throwableObjectsCharacter.forEach((bubble, bubbleIdx) => {
       const checkCollisions = (enemies, damage) => {
         enemies.forEach((enemy) => {
@@ -165,11 +175,9 @@ class World {
           }
         });
       };
-
       checkCollisions(this.level.pufferFishes, this.bubbleDamageToPufferFish);
       checkCollisions(this.level.dangerousJellyFishes, this.bubbleDamageToDangerousJellyFish);
       checkCollisions(this.level.regularJellyFishes, this.bubbleDamageToRegularJellyFish);
-
       if (bubble.x > this.character.x + 800 || bubble.x < this.character.x - 100) {
         bubblesToRemove.push(bubbleIdx);
       }
@@ -255,6 +263,8 @@ class World {
 
     this.addToMap(this.level.leftBorder);
     this.addToMap(this.level.rightBorder);
+
+    this.addObjectsToMap(this.level.poisonItems);
 
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);

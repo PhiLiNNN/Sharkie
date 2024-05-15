@@ -13,26 +13,6 @@ class MovableObject extends DrawableObject {
   deadAnimation = false;
   wordLefEnd = 0;
 
-  playAnimationOnce(arr, ms) {
-    let idx = 0;
-    const interval = setInterval(() => {
-      if (idx < arr.length) {
-        let path = arr[idx];
-        this.img = this.imageCache[path];
-        idx++;
-      } else {
-        clearInterval(interval);
-      }
-    }, ms);
-  }
-
-  playAnimation(arr) {
-    let idx = this.currentImage % arr.length;
-    let path = arr[idx];
-    this.img = this.imageCache[path];
-    this.currentImage++;
-  }
-
   moveLeft() {
     setInterval(() => {
       if (!this.isDead()) this.x -= this.speed;
@@ -64,6 +44,12 @@ class MovableObject extends DrawableObject {
     this.energy -= damage;
     if (this.energy <= 0) this.energy = 0;
     else this.lastHit = new Date().getTime();
+  }
+
+  collect() {
+    this.poison_energy += 20;
+    console.log("poison_energy :>> ", this.poison_energy);
+    if (this.poison_energy === 100) this.poison_energy = 100;
   }
 
   isDead() {

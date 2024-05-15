@@ -12,6 +12,25 @@ class DrawableObject {
     this.img.src = path;
   }
 
+  playAnimationOnce(arr, ms) {
+    let idx = 0;
+    const interval = setInterval(() => {
+      if (idx < arr.length) {
+        let path = arr[idx];
+        this.img = this.imageCache[path];
+        idx++;
+      } else {
+        clearInterval(interval);
+      }
+    }, ms);
+  }
+
+  playAnimation(arr) {
+    let idx = this.currentImage % arr.length;
+    let path = arr[idx];
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  }
   loadImages(arr) {
     arr.forEach((path) => {
       let img = new Image();
@@ -22,7 +41,7 @@ class DrawableObject {
   }
 
   drawFrame(ctx) {
-    if (this instanceof Character || this instanceof MovableObject) {
+    if (this instanceof Character || this instanceof MovableObject || this instanceof PoisonItem) {
       ctx.beginPath();
       ctx.lineWidth = "5";
       ctx.strokeStyle = "blue";
@@ -32,22 +51,16 @@ class DrawableObject {
         this.width - this.offsetWidth,
         this.height - this.offsetHeight
       );
-    }
-
-    if (this instanceof ThrowableObject) {
+    } else if (this instanceof ThrowableObject) {
       ctx.beginPath();
       ctx.lineWidth = "5";
       ctx.strokeStyle = "blue";
       ctx.rect(this.x, this.y, this.width, this.height);
     }
+
     ctx.stroke();
   }
   draw(ctx) {
-    console.log("this.img :>> ", this.x);
-    console.log("this.img :>> ", this.y);
-    console.log("this.img :>> ", this.width);
-    console.log("this.img :>> ", this.img);
-    console.log("this.img :>> ", this.height);
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 }

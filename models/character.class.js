@@ -11,6 +11,7 @@ class Character extends MovableObject {
   speed = 3;
   world;
   energy = 100;
+  poison_energy = 0;
   hitFromDangerousJellyFish = false;
   interactionDistanceEndboss = 300;
   swimming_sound = new Audio("audio/swim.mp3");

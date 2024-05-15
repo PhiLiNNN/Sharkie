@@ -7,4 +7,12 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  font-family: "LuckiestGuy";
+}
+
+@font-face {
+  font-family: "LuckiestGuy";
+  src: url("../img/5.Font/Luckiest_Guy/LuckiestGuy-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }/*# sourceMappingURL=style.css.map */

@@ -42,7 +42,8 @@ const level1 = new Level(
   new Endboss(),
   backgroundObject,
   new Border(-280),
-  new Border(2500)
+  new Border(2500),
+  [new PoisonItem(260, 160), new PoisonItem(360, 160), new PoisonItem(260, 360)]
 );
 repeatBackground();
 

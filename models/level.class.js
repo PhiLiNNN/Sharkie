@@ -4,6 +4,7 @@ class Level {
   regularJellyFishes;
   dangerousJellyFishes;
   backgroundObject;
+  poisonItems;
   leftBorder;
   rightBorder;
   level_rightEnd = 2160;
@@ -18,7 +19,8 @@ class Level {
     endboss,
     backgroundObject,
     leftBorder,
-    rightBorder
+    rightBorder,
+    poisonItems
   ) {
     this.pufferFishes = pufferFishes;
     this.regularJellyFishes = regularJellyFishes;
@@ -27,5 +29,6 @@ class Level {
     this.backgroundObject = backgroundObject;
     this.leftBorder = leftBorder;
     this.rightBorder = rightBorder;
+    this.poisonItems = poisonItems;
   }
 }
