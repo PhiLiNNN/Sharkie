@@ -1,11 +1,9 @@
 class JellyDangerous extends MovableObject {
   y;
+  x = 2300;
   height = 50;
   width = 50;
-  offsetX = 0;
-  offsetY = 0;
   offsetHeight = 8;
-  offsetWidth = 0;
   JELLY_GREEN = [
     "img/2.Enemy/2 Jelly fish/Super dangerous/GREEN1.png",
     "img/2.Enemy/2 Jelly fish/Super dangerous/GREEN2.png",
@@ -37,7 +35,6 @@ class JellyDangerous extends MovableObject {
     this.loadImages(this.JELLY_GREEN_DEAD);
     this.loadImages(this.JELLY_PINK_DEAD);
     this.y = y;
-    this.x = 2300;
     this.speed = 0.15 + Math.random() * 0.25;
     this.damage = 100;
 

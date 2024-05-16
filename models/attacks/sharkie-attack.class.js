@@ -1,8 +1,7 @@
 class SharkieAttack extends ThrowableObject {
   width = 40;
   height = 40;
-  offsetX = -30;
-  offsetY = 0;
+  offsetX = 0;
   primaryAttackBubble = "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png";
   specialAttackBubble = "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble.png";
   constructor(x, y, isSwimmingLeft, specialAttack) {

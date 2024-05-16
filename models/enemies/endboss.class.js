@@ -7,6 +7,7 @@ class Endboss extends MovableObject {
   offsetHeight = 100;
   offsetWidth = 70;
   energy = 100;
+  speed = 2.0;
   world;
   ENDBOSS_APPEARS = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -47,42 +48,64 @@ class Endboss extends MovableObject {
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png",
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png",
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
+    "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
   ];
 
-  constructor() {
+  constructor(x) {
     super().loadImage(this.ENDBOSS_APPEARS[0]);
     this.loadImages(this.ENDBOSS_SWIMMING);
     this.loadImages(this.ENDBOSS_APPEARS);
     this.loadImages(this.ENDBOSS_HURT);
     this.loadImages(this.ENDBOSS_DEAD);
     this.spawnAnimationPlayed = false;
-
-    this.x = 3500;
-
-    // this.speed = 0.15 + Math.random() * 0.25;
+    this.x = x;
     this.spawnEndboss();
+    this.moveEndboss();
   }
 
   spawnEndboss() {
     setInterval(() => {
       if (this.spawnAnimation && !this.spawnAnimationPlayed) {
         this.playAnimation(this.ENDBOSS_APPEARS);
-        setTimeout(() => {
-          this.spawnAnimationPlayed = true;
-        }, 786);
+        setTimeout(() => (this.spawnAnimationPlayed = true), 786);
       }
     }, 85);
+  }
+  moveEndboss() {
+    let moveInterval;
     setInterval(() => {
-      if (this.spawnAnimationPlayed) this.animate();
+      if (this.spawnAnimationPlayed) {
+        this.animate();
+        if (!moveInterval) {
+          moveInterval = setInterval(() => {
+            if (!this.isDead()) this.moveToCharacter();
+          }, 100);
+        }
+      }
     }, 200);
   }
-
   animate() {
     if (this.isDead()) {
       let idx = this.currentImage % this.ENDBOSS_DEAD.length;
       if (idx === this.ENDBOSS_DEAD.length - 1) this.deadAnimation = true;
       if (!this.deadAnimation) this.playAnimation(this.ENDBOSS_DEAD);
     } else if (this.isHurt()) this.playAnimation(this.ENDBOSS_HURT);
-    else this.playAnimation(this.ENDBOSS_SWIMMING);
+    else {
+      this.playAnimation(this.ENDBOSS_SWIMMING);
+    }
+  }
+
+  moveToCharacter() {
+    let dx = this.world.character.x - this.x - 100;
+    let dy = this.world.character.y - this.y - 100;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+    if (distance > 0) {
+      dx /= distance;
+      dy /= distance;
+    }
+    if (this.world.character.isDead()) return;
+
+    this.x += dx * this.speed;
+    this.y += dy * this.speed;
   }
 }

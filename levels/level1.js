@@ -4,14 +4,14 @@ layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
 repeaterAmount = 7; // change this number to set the length of the world
 const level1 = new Level(
   [
-    new PufferFish("GREEN", 1),
-    new PufferFish("RED", 3),
-    new PufferFish("GREEN", 1),
-    new PufferFish("RED", 3),
-    new PufferFish("ORANGE", 2),
-    new PufferFish("ORANGE", 2),
-    new PufferFish("RED", 3),
-    new PufferFish("GREEN", 1),
+    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
   ],
   [
     new JellyRegular("YELLOW", 1, 2000, 240, 45, 160),
@@ -22,7 +22,6 @@ const level1 = new Level(
     new JellyRegular("YELLOW", 1, 2000, 240, 270, 160),
     new JellyRegular("YELLOW", 1, 2000, 240, 315, 160),
     new JellyRegular("YELLOW", 1, 2000, 240, 360, 160),
-
     new JellyRegular("LILA", 1, 2000, 240, 45, 100),
     new JellyRegular("LILA", 1, 2000, 240, 90, 100),
     new JellyRegular("LILA", 1, 2000, 240, 135, 100),
@@ -39,7 +38,7 @@ const level1 = new Level(
     new JellyDangerous("GREEN", 1, 336),
     new JellyDangerous("PINK", 1, 420),
   ],
-  new Endboss(),
+  new Endboss(3000),
   backgroundObject,
   new Border(-280),
   new Border(4000),
@@ -49,13 +48,13 @@ const level1 = new Level(
     new PoisonItem("swimming", 2500, 360),
     new PoisonItem("ground", 500, 400),
     new PoisonItem("ground", 1000, 360),
-    new PoisonItem("ground", 200, 360),
-    new PoisonItem("ground", 260, 360),
-    new PoisonItem("ground", 220, 360),
-    new PoisonItem("ground", 240, 360),
+    new PoisonItem("ground", 200, 410),
+    new PoisonItem("ground", 260, 380),
+    new PoisonItem("ground", 320, 360),
+    new PoisonItem("ground", 400, 390),
     new PoisonItem("ground", 280, 360),
   ],
-  [new HeartItem(200, 100), new HeartItem(260, 160)]
+  [new HeartItem(1200, 290), new HeartItem(2000, 100), new HeartItem(3000, 400)]
 );
 repeatBackground();
 

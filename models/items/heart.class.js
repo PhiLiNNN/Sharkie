@@ -3,10 +3,6 @@ class HeartItem extends DrawableObject {
   height = 55;
   x;
   y;
-  offsetX = 0;
-  offsetY = 0;
-  offsetWidth = 0;
-  offsetHeight = 0;
   constructor(x, y) {
     super().loadImage("img/4. Marcadores/green/100_copia 3.png");
     this.x = x;

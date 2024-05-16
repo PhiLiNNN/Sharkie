@@ -1,8 +1,8 @@
 class JellyDangerousFishAttack extends ThrowableObject {
   width = 60;
   height = 30;
-  offsetX = 10;
-  offsetY = 0;
+  offsetX = -60;
+
   constructor(x, y, isSwimmingLeft) {
     super().loadImage("img/Explosion_2.png");
     this.x = x - 40;

@@ -1,11 +1,11 @@
 class PufferFish extends MovableObject {
-  y = 90 + Math.random() * 320;
+  x;
+  y;
   height = 40;
   width = 40;
-  offsetX = 0;
-  offsetY = 0;
   offsetHeight = 8;
-  offsetWidth = 0;
+  speed = 0.15 + Math.random() * 0.5;
+  damage = 100;
   energy = 1;
   fishType;
   ENEMY_RED = [
@@ -66,7 +66,7 @@ class PufferFish extends MovableObject {
     "img/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition5.png",
   ];
 
-  constructor(fishType, fishIndex) {
+  constructor(fishType, fishIndex, x, y) {
     super().loadImage(`img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/${fishIndex}.swim1.png`);
     this.loadImages(this[`ENEMY_${fishType.toUpperCase()}`]);
     this.loadImages(this.ENEMY_ORANGE_DEAD);
@@ -74,11 +74,8 @@ class PufferFish extends MovableObject {
     this.loadImages(this.ENEMY_RED_DEAD);
     this.loadImages(this[`ENEMY_${fishType}_TRANSITION`]);
     this.fishType = fishType;
-
-    this.x = 1000 + Math.random() * 250;
-    this.speed = 0.15 + Math.random() * 0.5;
-    this.damage = 100;
-
+    this.x = x;
+    this.y = y;
     this.animate(fishType.toUpperCase());
   }
 

@@ -1,5 +1,7 @@
 class ThrowableObject extends MovableObject {
   BUBBLESPEED = 1;
+  offsetX = 0;
+  offsetY = 0;
   offsetHeight = 0;
   offsetWidth = 0;
 

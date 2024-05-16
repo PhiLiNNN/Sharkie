@@ -1,10 +1,7 @@
 class JellyRegular extends MovableObject {
   height = 40;
   width = 40;
-  offsetX = 0;
-  offsetY = 0;
   offsetHeight = 8;
-  offsetWidth = 0;
   angle;
   speed = 0.01;
   radius;

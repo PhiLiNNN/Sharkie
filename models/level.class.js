@@ -1,8 +1,8 @@
 class Level {
   pufferFishes;
   endboss;
-  regularJellyFishes;
-  dangerousJellyFishes;
+  regularJellies;
+  dangerousJellies;
   backgroundObject;
   poisonItems;
   leftBorder;
@@ -14,8 +14,8 @@ class Level {
 
   constructor(
     pufferFishes,
-    regularJellyFishes,
-    dangerousJellyFishes,
+    regularJellies,
+    dangerousJellies,
     endboss,
     backgroundObject,
     leftBorder,
@@ -24,8 +24,8 @@ class Level {
     heartItems
   ) {
     this.pufferFishes = pufferFishes;
-    this.regularJellyFishes = regularJellyFishes;
-    this.dangerousJellyFishes = dangerousJellyFishes;
+    this.regularJellies = regularJellies;
+    this.dangerousJellies = dangerousJellies;
     this.endboss = endboss;
     this.backgroundObject = backgroundObject;
     this.leftBorder = leftBorder;

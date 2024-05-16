@@ -3,17 +3,17 @@ class Character extends MovableObject {
   width = 190;
   x = 40;
   y = 130;
-  offsetX = 35;
-  offsetY = 100;
-  offsetHeight = 150;
-  offsetWidth = 70;
+  offsetX = 60;
+  offsetY = 105;
+  offsetHeight = 160;
+  offsetWidth = 110;
   deadAnimation = false;
   speed = 3;
   world;
   energy = 100;
   poison_energy = 0;
   hitFromDangerousJelly = false;
-  interactionDistanceEndboss = 300;
+  interactionDistanceEndboss = 500;
   swimming_sound = new Audio("audio/swim.mp3");
   IMAGES_SWIMMING = [
     "img/1.Sharkie/1.IDLE/1.png",
@@ -140,9 +140,27 @@ class Character extends MovableObject {
         this.checkEntityDistance(this.world.level.endboss, this.interactionDistanceEndboss)
       ) {
         this.world.level.endboss.spawnAnimation = true;
+        this.playAnimation(this.IMAGES_SWIMMING);
       } else {
         this.playAnimation(this.IMAGES_SWIMMING);
       }
     }, 200);
+  }
+  pushCharacterBack() {
+    let startPosition = this.x;
+    let endPosition = startPosition - 200;
+    let stopPushingBack = true;
+    const intervalId = setInterval(() => {
+      if (stopPushingBack) {
+        this.x -= 3.0;
+        if (this.x <= endPosition || this.x < this.world.level.level_leftEnd) {
+          stopPushingBack = false;
+          clearInterval(intervalId);
+          if (this.isDead || this.world.level.endboss.isDead()) {
+            clearInterval(intervalId);
+          }
+        }
+      }
+    }, 10);
   }
 }
