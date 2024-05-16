@@ -3,10 +3,6 @@ class MovableObject extends DrawableObject {
   otherDirection = false;
   spawnAnimation = false;
   endAnimation = false;
-  offsetX;
-  offsetY;
-  offsetHeight;
-  offsetWidth;
   energy = 100;
   lastHit = 0;
   recovery = 0.8;
@@ -46,9 +42,14 @@ class MovableObject extends DrawableObject {
     else this.lastHit = new Date().getTime();
   }
 
-  collect() {
-    this.poison_energy += 20;
-    if (this.poison_energy === 100) this.poison_energy = 100;
+  collectItem(item) {
+    if (item === "poison") {
+      this.poison_energy += 20;
+      if (this.poison_energy === 100) this.poison_energy = 100;
+    } else if (item === "heart") {
+      this.energy += 20;
+      if (this.energy >= 100) this.energy = 100;
+    }
   }
 
   reducePoisonEnergy() {

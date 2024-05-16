@@ -1,12 +1,12 @@
 class PoisonItem extends DrawableObject {
-  width;
-  height;
+  width = 55;
+  height = 55;
   x;
   y;
-  offsetX = 5;
-  offsetY = 22;
-  offsetWidth = 10;
-  offsetHeight = 22;
+  offsetX = 0;
+  offsetY = 0;
+  offsetWidth = 0;
+  offsetHeight = 0;
   POISON_ITEM_SWIMMING = [
     "img/4. Marcadores/Posión/Animada/1.png",
     "img/4. Marcadores/Posión/Animada/2.png",
@@ -33,8 +33,6 @@ class PoisonItem extends DrawableObject {
     this.loadImages(this[`POISON_ITEM_${type.toUpperCase()}`]);
     this.x = x;
     this.y = y;
-    this.width = 55;
-    this.height = 55;
     this.animate(type.toUpperCase());
   }
   animate(type) {

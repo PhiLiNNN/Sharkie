@@ -20,7 +20,8 @@ class Level {
     backgroundObject,
     leftBorder,
     rightBorder,
-    poisonItems
+    poisonItems,
+    heartItems
   ) {
     this.pufferFishes = pufferFishes;
     this.regularJellyFishes = regularJellyFishes;
@@ -30,5 +31,6 @@ class Level {
     this.leftBorder = leftBorder;
     this.rightBorder = rightBorder;
     this.poisonItems = poisonItems;
+    this.heartItems = heartItems;
   }
 }

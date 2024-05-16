@@ -3,6 +3,10 @@ class DrawableObject {
   y;
   height;
   width;
+  offsetX = 0;
+  offsetY = 0;
+  offsetHeight = 0;
+  offsetWidth = 0;
   img;
   imageCache = {};
   currentImage = 0;

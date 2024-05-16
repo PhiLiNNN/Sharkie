@@ -106,16 +106,29 @@ class World {
   }
 
   checkCharacterItemCollision() {
-    const checkCollisions = (items) => {
+    const checkCollisions = (items, itemType) => {
       items.forEach((item, idx) => {
-        if (this.character.isColliding(item) && this.character.poison_energy !== 100) {
-          this.character.collect();
+        if (
+          this.character.isColliding(item) &&
+          itemType === "poison" &&
+          this.character.poison_energy !== 100
+        ) {
+          this.character.collectItem(itemType);
           this.poisonBar.setPercentage(this.character.poison_energy);
+          items.splice(idx, 1);
+        } else if (
+          this.character.isColliding(item) &&
+          itemType === "heart" &&
+          this.character.energy !== 100
+        ) {
+          this.character.collectItem(itemType);
+          this.statusBar.setPercentage(this.character.energy);
           items.splice(idx, 1);
         }
       });
     };
-    checkCollisions(this.level.poisonItems);
+    checkCollisions(this.level.poisonItems, "poison");
+    checkCollisions(this.level.heartItems, "heart");
   }
 
   checkCharacterEnemyCollision() {
@@ -223,7 +236,6 @@ class World {
   areEnemiesWithinSight() {
     setInterval(() => {
       this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
-
       this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellyFishes), "jellyDangerous");
     }, 1500);
   }
@@ -281,6 +293,7 @@ class World {
     this.addToMap(this.level.rightBorder);
 
     this.addObjectsToMap(this.level.poisonItems);
+    this.addObjectsToMap(this.level.heartItems);
 
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);

@@ -50,12 +50,12 @@ const level1 = new Level(
     new PoisonItem("ground", 500, 400),
     new PoisonItem("ground", 1000, 360),
     new PoisonItem("ground", 200, 360),
+    new PoisonItem("ground", 260, 360),
     new PoisonItem("ground", 220, 360),
     new PoisonItem("ground", 240, 360),
-    new PoisonItem("ground", 260, 360),
     new PoisonItem("ground", 280, 360),
-    new PoisonItem("ground", 300, 360),
-  ]
+  ],
+  [new HeartItem(200, 100), new HeartItem(260, 160)]
 );
 repeatBackground();
 
