@@ -1,9 +1,10 @@
 class JellyDangerous extends MovableObject {
-  y;
   x = 2300;
   height = 50;
   width = 50;
   offsetHeight = 8;
+  damage = 100;
+  speed = 0.15 + Math.random() * 0.25;
   JELLY_GREEN = [
     "img/2.Enemy/2 Jelly fish/Super dangerous/GREEN1.png",
     "img/2.Enemy/2 Jelly fish/Super dangerous/GREEN2.png",
@@ -35,11 +36,9 @@ class JellyDangerous extends MovableObject {
     this.loadImages(this.JELLY_GREEN_DEAD);
     this.loadImages(this.JELLY_PINK_DEAD);
     this.y = y;
-    this.speed = 0.15 + Math.random() * 0.25;
-    this.damage = 100;
-
     this.animate(fishType.toUpperCase());
   }
+
   animate(fishType) {
     const animateFunction = () => {
       if (this.isDead()) {

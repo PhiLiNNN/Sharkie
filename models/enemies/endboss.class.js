@@ -1,11 +1,11 @@
 class Endboss extends MovableObject {
-  y = -10;
-  height = 400;
-  width = 400;
+  y = 100;
+  height = 260;
+  width = 350;
   offsetX = 25;
-  offsetY = 140;
-  offsetHeight = 100;
-  offsetWidth = 70;
+  offsetY = 60;
+  offsetHeight = 110;
+  offsetWidth = 40;
   energy = 100;
   speed = 2.0;
   world;
@@ -67,6 +67,7 @@ class Endboss extends MovableObject {
     setInterval(() => {
       if (this.spawnAnimation && !this.spawnAnimationPlayed) {
         this.playAnimation(this.ENDBOSS_APPEARS);
+
         setTimeout(() => (this.spawnAnimationPlayed = true), 786);
       }
     }, 85);
@@ -96,16 +97,26 @@ class Endboss extends MovableObject {
   }
 
   moveToCharacter() {
+    if (this.world.character.isDead() || this.isDead()) return;
     let dx = this.world.character.x - this.x - 100;
     let dy = this.world.character.y - this.y - 100;
     let distance = Math.sqrt(dx * dx + dy * dy);
-    if (distance > 0) {
-      dx /= distance;
-      dy /= distance;
-    }
-    if (this.world.character.isDead()) return;
-
+    this.otherDirection = dx >= 0;
+    if (dx >= -250 && dx <= 230 && dy <= 30 && dy >= -144) this.handlerCharacterEndbossCollision();
+    dx /= distance;
+    dy /= distance;
     this.x += dx * this.speed;
     this.y += dy * this.speed;
+  }
+
+  handlerCharacterEndbossCollision() {
+    let currentTime = new Date().getTime();
+    let timeSinceLastHit = currentTime - this.world.lastHitTime;
+    if (timeSinceLastHit >= 1000) {
+      this.world.lastHitTime = currentTime;
+      this.world.character.hit(this.world.collisionDmgWithEndboss);
+      this.world.statusBar.setPercentage(this.world.character.energy);
+      this.world.character.pushCharacterBack();
+    }
   }
 }

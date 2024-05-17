@@ -38,7 +38,7 @@ const level1 = new Level(
     new JellyDangerous("GREEN", 1, 336),
     new JellyDangerous("PINK", 1, 420),
   ],
-  new Endboss(3000),
+  new Endboss(3600),
   backgroundObject,
   new Border(-280),
   new Border(4000),

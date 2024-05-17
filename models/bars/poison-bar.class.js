@@ -1,4 +1,9 @@
 class PoisonBar extends DrawableObject {
+  percentage = 0;
+  x = 10;
+  y = 40;
+  width = 190;
+  height = 60;
   POISON_BAR = [
     "img/4. Marcadores/green/poisoned bubbles/0_copia.png",
     "img/4. Marcadores/green/poisoned bubbles/20_copia.png",
@@ -8,15 +13,9 @@ class PoisonBar extends DrawableObject {
     "img/4. Marcadores/green/poisoned bubbles/100_copia.png",
   ];
 
-  percentage = 0;
-
   constructor() {
     super().loadImage(this.POISON_BAR[0]);
     this.loadImages(this.POISON_BAR);
-    this.x = 10;
-    this.y = 40;
-    this.width = 190;
-    this.height = 60;
     this.setPercentage(this.percentage);
   }
 

@@ -1,9 +1,6 @@
 class PoisonItem extends DrawableObject {
   width = 55;
   height = 55;
-
-  x;
-  y;
   POISON_ITEM_SWIMMING = [
     "img/4. Marcadores/Posión/Animada/1.png",
     "img/4. Marcadores/Posión/Animada/2.png",

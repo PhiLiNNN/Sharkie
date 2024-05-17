@@ -3,6 +3,10 @@ class MovableObject extends DrawableObject {
   otherDirection = false;
   spawnAnimation = false;
   endAnimation = false;
+  offsetX = 0;
+  offsetY = 0;
+  offsetHeight = 0;
+  offsetWidth = 0;
   energy = 100;
   lastHit = 0;
   recovery = 0.8;
@@ -26,13 +30,20 @@ class MovableObject extends DrawableObject {
       }
     }, 1000 / 60);
   }
-
+  // isColliding(obj) {
+  //   return (
+  //     this.x + this.offsetX + this.width - this.offsetdWidth >= obj.x &&
+  //     this.x + this.offsetX <= obj.x + obj.width - obj.offsetWidth &&
+  //     this.y + this.offsetY + this.height - this.offsetHeight >= obj.y + obj.offsetHeight &&
+  //     this.y + this.offsetY <= obj.y + obj.height - obj.offsetHeight + obj.offsetY
+  //   );
+  // }
   isColliding(obj) {
     return (
       this.x + this.offsetX + this.width - this.offsetWidth >= obj.x &&
-      this.x + this.offsetX <= obj.x + obj.width &&
-      this.y + this.offsetY + this.height - this.offsetHeight >= obj.y &&
-      this.y + this.offsetY <= obj.y + obj.height - obj.offsetHeight
+      this.x + this.offsetX <= obj.x + obj.width - obj.offsetWidth &&
+      this.y + this.offsetY + this.height - this.offsetHeight >= obj.y + obj.offsetHeight &&
+      this.y + this.offsetY <= obj.y + obj.height - obj.offsetHeight + obj.offsetY
     );
   }
 

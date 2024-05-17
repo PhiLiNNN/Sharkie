@@ -5,7 +5,7 @@ class JellyRegular extends MovableObject {
   angle;
   speed = 0.01;
   radius;
-
+  damage = 100;
   JELLY_LILA = [
     "img/2.Enemy/2 Jelly fish/Regular damage/LILA1.png",
     "img/2.Enemy/2 Jelly fish/Regular damage/LILA2.png",
@@ -36,11 +36,9 @@ class JellyRegular extends MovableObject {
     this.loadImages(this[`JELLY_${fishType.toUpperCase()}`]);
     this.loadImages(this.JELLY_LILA_DEAD);
     this.loadImages(this.JELLY_YELLOW_DEAD);
-
     this.x = x;
     this.y = y;
     this.angle = (angle / 360) * 2 * Math.PI;
-    this.damage = 100;
     this.radius = radius;
     this.circle();
     this.animate(fishType.toUpperCase());
@@ -52,7 +50,6 @@ class JellyRegular extends MovableObject {
         this.height = 50;
         this.width = 50;
         this.playAnimation(this[`JELLY_${fishType}_DEAD`]);
-
         this.y -= 10;
         setTimeout(animateFunction, 80);
       } else {

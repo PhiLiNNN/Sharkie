@@ -102,7 +102,7 @@ class World {
 
   checkCharacterCollisions() {
     this.checkCharacterEnemyCollision();
-    this.checkCharacterEndbossCollision();
+    // this.checkCharacterEndbossCollision();
     this.checkCharacterThrowableObjectCollision();
     this.checkCharacterItemCollision();
   }
@@ -154,18 +154,19 @@ class World {
     checkCollisions(this.level.regularJellies, this.collisionDmgWithRegularJelly);
   }
 
-  checkCharacterEndbossCollision() {
-    if (this.character.isColliding(this.level.endboss) && !this.level.endboss.isDead()) {
-      let currentTime = new Date().getTime();
-      let timeSinceLastHit = currentTime - this.lastHitTime;
-      if (timeSinceLastHit >= 1000) {
-        this.lastHitTime = currentTime;
-        this.character.hit(this.collisionDmgWithEndboss);
-        this.statusBar.setPercentage(this.character.energy);
-        this.character.pushCharacterBack();
-      }
-    }
-  }
+  // checkCharacterEndbossCollision() {
+  //   if (this.character.isColliding(this.level.endboss) && !this.level.endboss.isDead()) {
+  //     let currentTime = new Date().getTime();
+  //     let timeSinceLastHit = currentTime - this.lastHitTime;
+  //     if (timeSinceLastHit >= 1000) {
+  //       this.lastHitTime = currentTime;
+  //       this.character.hit(this.collisionDmgWithEndboss);
+  //       this.statusBar.setPercentage(this.character.energy);
+  //       this.character.pushCharacterBack();
+  //     }
+  //   }
+  // }
+
   checkCharacterThrowableObjectCollision() {
     this.checkCharEnemyShotCollision(this.throwableObjsPuffer, this.bubbleDmgFromPuffer);
     this.checkCharEnemyShotCollision(
@@ -190,10 +191,12 @@ class World {
       if (enemyShot.x < this.character.x - 100) enemies.splice(idx, 1);
     });
   }
+
   isCharHitByJellyDangerousFish(enemyShot) {
     if (enemyShot instanceof JellyDangerousFishAttack) this.character.hitFromDangerousJelly = true;
     else this.character.hitFromDangerousJelly = false;
   }
+
   checkBubbleBubbleCollision() {
     const checkCollisions = (enemyBubbles, characterBubbles) => {
       enemyBubbles.forEach((enemyBubble, enemyIndex) => {
@@ -282,6 +285,7 @@ class World {
       this.level.endboss.spawnAnimation
     );
   }
+
   removeBubbles(arr, allBubbles) {
     arr.sort((a, b) => b - a);
     arr.forEach((idx) => {

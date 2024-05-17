@@ -6,13 +6,14 @@ class Character extends MovableObject {
   offsetX = 60;
   offsetY = 105;
   offsetHeight = 160;
-  offsetWidth = 110;
+  offsetWidth = 130;
   deadAnimation = false;
   speed = 3;
   world;
   energy = 100;
   poison_energy = 0;
   hitFromDangerousJelly = false;
+  stopPushingBack = true;
   interactionDistanceEndboss = 500;
   swimming_sound = new Audio("audio/swim.mp3");
   IMAGES_SWIMMING = [
@@ -49,7 +50,6 @@ class Character extends MovableObject {
     "img/1.Sharkie/6.dead/1.Poisoned/11.png",
     "img/1.Sharkie/6.dead/1.Poisoned/12.png",
   ];
-
   IMAGES_HURT_BUBBLE = [
     "img/1.Sharkie/5.Hurt/1.Poisoned/1.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/2.png",
@@ -57,13 +57,11 @@ class Character extends MovableObject {
     "img/1.Sharkie/5.Hurt/1.Poisoned/4.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/5.png",
   ];
-
   IMAGES_HURT_ELECTRO = [
     "img/1.Sharkie/5.Hurt/2.Electric shock/1.png",
     "img/1.Sharkie/5.Hurt/2.Electric shock/2.png",
     "img/1.Sharkie/5.Hurt/2.Electric shock/3.png",
   ];
-
   IMAGES_BUBBLE = [
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
@@ -146,21 +144,35 @@ class Character extends MovableObject {
       }
     }, 200);
   }
+
   pushCharacterBack() {
-    let startPosition = this.x;
-    let endPosition = startPosition - 200;
-    let stopPushingBack = true;
+    let startPos = this.x;
+    let endPosLeft = startPos - 200;
+    let endPosRight = startPos + 200;
+    this.stopPushingBack = true;
     const intervalId = setInterval(() => {
-      if (stopPushingBack) {
-        this.x -= 3.0;
-        if (this.x <= endPosition || this.x < this.world.level.level_leftEnd) {
-          stopPushingBack = false;
-          clearInterval(intervalId);
-          if (this.isDead || this.world.level.endboss.isDead()) {
-            clearInterval(intervalId);
-          }
-        }
+      if (this.stopPushingBack) {
+        const dir = this.world.level.endboss.otherDirection ? 1 : -1;
+        const endPos = this.world.level.endboss.otherDirection ? endPosRight : endPosLeft;
+        this.pushCharacter(dir, endPos, intervalId);
       }
     }, 10);
+  }
+
+  pushCharacter(dir, endPos, intervalId) {
+    this.x += dir * 3.0;
+    if (this.isBeyondRightBoundary(dir, endPos) || this.isBeyondLeftBoundary(dir, endPos)) {
+      this.stopPushingBack = false;
+      clearInterval(intervalId);
+      if (this.isDead || this.world.level.endboss.isDead()) clearInterval(intervalId);
+    }
+  }
+
+  isBeyondRightBoundary(dir, endPos) {
+    return dir > 0 && (this.x >= endPos || this.x > this.world.level.level_rightEnd);
+  }
+
+  isBeyondLeftBoundary(dir, endPos) {
+    return dir < 0 && (this.x <= endPos || this.x < this.world.level.level_leftEnd);
   }
 }
