@@ -4,14 +4,14 @@ layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
 repeaterAmount = 7; // change this number to set the length of the world
 const level1 = new Level(
   [
-    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    // new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    // new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    // new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    // new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    // new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    // new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    // new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    // new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
   ],
   [
     new JellyRegular("YELLOW", 1, 2000, 240, 45, 160),
@@ -38,7 +38,7 @@ const level1 = new Level(
     new JellyDangerous("GREEN", 1, 336),
     new JellyDangerous("PINK", 1, 420),
   ],
-  new Endboss(3600),
+  new Endboss(360),
   backgroundObject,
   new Border(-280),
   new Border(4000),
