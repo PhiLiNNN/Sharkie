@@ -7,7 +7,7 @@ class Endboss extends MovableObject {
   offsetHeight = 110;
   offsetWidth = 40;
   energy = 100;
-  speed = 2.0;
+  speed = 3.0;
   world;
   ENDBOSS_APPEARS = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -73,27 +73,30 @@ class Endboss extends MovableObject {
   }
 
   spawnEndboss() {
-    setInterval(() => {
+    let updateSpawnAnimation = setInterval(() => {
       if (this.spawnAnimation && !this.spawnAnimationPlayed) {
         this.playAnimation(this.ENDBOSS_APPEARS);
 
         setTimeout(() => (this.spawnAnimationPlayed = true), 786);
       }
     }, 85);
+    intervalIds.push(updateSpawnAnimation);
   }
 
   moveEndboss() {
-    let moveInterval;
-    setInterval(() => {
+    let updateMovToCha;
+    let updateMoveEndboss = setInterval(() => {
       if (this.spawnAnimationPlayed) {
         this.animate();
-        if (!moveInterval) {
-          moveInterval = setInterval(() => {
+        if (!updateMovToCha) {
+          updateMovToCha = setInterval(() => {
             if (!this.isDead()) this.moveToCharacter();
           }, 100);
+          intervalIds.push(updateMovToCha);
         }
       }
     }, 200);
+    intervalIds.push(updateMoveEndboss);
   }
 
   animate() {

@@ -3,31 +3,50 @@ class MovableObject extends DrawableObject {
   otherDirection = false;
   spawnAnimation = false;
   endAnimation = false;
-
+  currentY;
   energy = 100;
+  bubbleSpeed = 1;
   lastHit = 0;
   recovery = 0.8;
   deadAnimation = false;
   wordLefEnd = 0;
+  moveUp = true;
+  moveDown = false;
 
   moveLeft() {
-    setInterval(() => {
+    let updateMovLeft = setInterval(() => {
       if (!this.isDead()) this.x -= this.speed;
     }, 1000 / 60);
+    intervalIds.push(updateMovLeft);
+  }
+
+  moveUpAndDown() {
+    let updateMovUpAndDown = setInterval(() => {
+      if (!this.isDead()) {
+        if (this.moveUp || this.moveDown) {
+          this.y += (this.moveUp ? -1 : 1) * this.speed;
+          if (Math.abs(this.y - this.currentY) >= 30) {
+            this.moveUp = !this.moveUp;
+            this.moveDown = !this.moveDown;
+          }
+        }
+      }
+    }, 1000 / 60);
+    intervalIds.push(updateMovUpAndDown);
   }
 
   circle() {
     const centerX = this.x;
     const centerY = this.y;
-    setInterval(() => {
+    let updateMovCircle = setInterval(() => {
       if (!this.isDead()) {
         this.angle += this.speed;
         this.x = centerX + Math.cos(this.angle) * this.radius;
         this.y = centerY + Math.sin(this.angle) * this.radius;
       }
     }, 1000 / 60);
+    intervalIds.push(updateMovCircle);
   }
-  // isColliding(obj) {
 
   isColliding(obj) {
     return (

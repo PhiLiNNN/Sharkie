@@ -2,60 +2,65 @@ backgroundObject = [];
 width = 720;
 layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
 repeaterAmount = 7; // change this number to set the length of the world
-const level1 = new Level(
-  [
-    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-    new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-  ],
-  [
-    new JellyRegular("YELLOW", 1, 2000, 240, 45, 160),
-    new JellyRegular("YELLOW", 1, 2000, 240, 90, 160),
-    new JellyRegular("YELLOW", 1, 2000, 240, 135, 160),
-    new JellyRegular("YELLOW", 1, 2000, 240, 180, 160),
-    new JellyRegular("YELLOW", 1, 2000, 240, 225, 160),
-    new JellyRegular("YELLOW", 1, 2000, 240, 270, 160),
-    new JellyRegular("YELLOW", 1, 2000, 240, 315, 160),
-    new JellyRegular("YELLOW", 1, 2000, 240, 360, 160),
-    new JellyRegular("LILA", 1, 2000, 240, 45, 100),
-    new JellyRegular("LILA", 1, 2000, 240, 90, 100),
-    new JellyRegular("LILA", 1, 2000, 240, 135, 100),
-    new JellyRegular("LILA", 1, 2000, 240, 180, 100),
-    new JellyRegular("LILA", 1, 2000, 240, 225, 100),
-    new JellyRegular("LILA", 1, 2000, 240, 270, 100),
-    new JellyRegular("LILA", 1, 2000, 240, 315, 100),
-    new JellyRegular("LILA", 1, 2000, 240, 360, 100),
-  ],
-  [
-    new JellyDangerous("GREEN", 1, 2300, 84),
-    new JellyDangerous("PINK", 1, 2300, 168),
-    new JellyDangerous("GREEN", 1, 2300, 252),
-    new JellyDangerous("GREEN", 1, 2300, 336),
-    new JellyDangerous("PINK", 1, 2300, 420),
-  ],
-  new Endboss(3600),
-  backgroundObject,
-  new Border(-280),
-  new Border(4000),
-  [
-    new PoisonItem("swimming", 1995, 230),
-    new PoisonItem("swimming", 1200, 90),
-    new PoisonItem("swimming", 2500, 360),
-    new PoisonItem("ground", 500, 400),
-    new PoisonItem("ground", 1000, 360),
-    new PoisonItem("ground", 200, 410),
-    new PoisonItem("ground", 260, 380),
-    new PoisonItem("ground", 320, 360),
-    new PoisonItem("ground", 400, 390),
-    new PoisonItem("ground", 280, 360),
-  ],
-  [new HeartItem(1200, 290), new HeartItem(2000, 100), new HeartItem(3000, 400)]
-);
+let y = 230;
+let level1;
+function initLevel() {
+  level1 = new Level(
+    [
+      new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+      new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+      new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+      new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+      new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+      new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+      new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+      new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+    ],
+    [
+      new JellyRegular("YELLOW", 1, 2000, 240, 45, 160),
+      new JellyRegular("YELLOW", 1, 2000, 240, 90, 160),
+      new JellyRegular("YELLOW", 1, 2000, 240, 135, 160),
+      new JellyRegular("YELLOW", 1, 2000, 240, 180, 160),
+      new JellyRegular("YELLOW", 1, 2000, 240, 225, 160),
+      new JellyRegular("YELLOW", 1, 2000, 240, 270, 160),
+      new JellyRegular("YELLOW", 1, 2000, 240, 315, 160),
+      new JellyRegular("YELLOW", 1, 2000, 240, 360, 160),
+      new JellyRegular("LILA", 1, 2000, 240, 45, 100),
+      new JellyRegular("LILA", 1, 2000, 240, 90, 100),
+      new JellyRegular("LILA", 1, 2000, 240, 135, 100),
+      new JellyRegular("LILA", 1, 2000, 240, 180, 100),
+      new JellyRegular("LILA", 1, 2000, 240, 225, 100),
+      new JellyRegular("LILA", 1, 2000, 240, 270, 100),
+      new JellyRegular("LILA", 1, 2000, 240, 315, 100),
+      new JellyRegular("LILA", 1, 2000, 240, 360, 100),
+    ],
+    [
+      new JellyDangerous("GREEN", 1, 2300, 90, false),
+      new JellyDangerous("PINK", 1, 2300, 168, true),
+      new JellyDangerous("GREEN", 1, 2300, 252, true),
+      new JellyDangerous("GREEN", 1, 2300, 336, true),
+      new JellyDangerous("PINK", 1, 2300, 420, false),
+    ],
+    new Endboss(3600),
+    backgroundObject,
+    new Border(-280),
+    new Border(4000),
+    [
+      new PoisonItem("swimming", 1995, 230),
+      new PoisonItem("swimming", 1200, 90),
+      new PoisonItem("swimming", 2500, 360),
+      new PoisonItem("ground", 500, 400),
+      new PoisonItem("ground", 1000, 360),
+      new PoisonItem("ground", 200, 410),
+      new PoisonItem("ground", 260, 380),
+      new PoisonItem("ground", 320, 360),
+      new PoisonItem("ground", 400, 390),
+      new PoisonItem("ground", 280, 360),
+    ],
+    [new HeartItem(1200, 290), new HeartItem(2000, 100), new HeartItem(3000, 400)]
+  );
+}
+
 repeatBackground();
 
 /**

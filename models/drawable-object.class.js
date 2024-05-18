@@ -18,13 +18,13 @@ class DrawableObject {
 
   playAnimationOnce(arr, ms) {
     let idx = 0;
-    const interval = setInterval(() => {
+    const updateAnimation = setInterval(() => {
       if (idx < arr.length) {
         let path = arr[idx];
         this.img = this.imageCache[path];
         idx++;
       } else {
-        clearInterval(interval);
+        clearInterval(updateAnimation);
       }
     }, ms);
   }
@@ -64,6 +64,7 @@ class DrawableObject {
 
     ctx.stroke();
   }
+
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }

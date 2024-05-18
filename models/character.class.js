@@ -3,13 +3,15 @@ class Character extends MovableObject {
   width = 190;
   x = 40;
   y = 130;
+
   offsetX = 60;
   offsetY = 105;
   offsetHeight = 160;
   offsetWidth = 130;
   deadAnimation = false;
-  speed = 3;
+  speed = 4;
   world;
+  bubbleSpeed = 10;
   energy = 100;
   poison_energy = 0;
   hitFromDangerousJelly = false;
@@ -96,14 +98,14 @@ class Character extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    let updateBtns = setInterval(() => {
       this.swimming_sound.pause();
       let targetCameraX = this.world.camera_x;
-
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_rightEnd && !this.isDead()) {
         this.x += this.speed;
         this.otherDirection = false;
         targetCameraX = -this.x;
+
         // this.swimming_sound.play();
       }
       if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd && !this.isDead()) {
@@ -122,8 +124,9 @@ class Character extends MovableObject {
       }
       this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.02;
     }, 25);
+    intervalIds.push(updateBtns);
 
-    setInterval(() => {
+    let updateCharacter = setInterval(() => {
       if (this.isDead()) {
         let idx = this.currentImage % this.IMAGES_DEAD.length;
         if (idx === this.IMAGES_DEAD.length - 1) {
@@ -147,6 +150,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_SWIMMING);
       }
     }, 200);
+    intervalIds.push(updateCharacter);
   }
 
   pushCharacterBack() {
@@ -154,11 +158,11 @@ class Character extends MovableObject {
     let endPosLeft = startPos - 200;
     let endPosRight = startPos + 200;
     this.stopPushingBack = true;
-    const intervalId = setInterval(() => {
+    const pushCharInt = setInterval(() => {
       if (this.stopPushingBack) {
         const dir = this.world.level.endboss.otherDirection ? 1 : -1;
         const endPos = this.world.level.endboss.otherDirection ? endPosRight : endPosLeft;
-        this.pushCharacter(dir, endPos, intervalId);
+        this.pushCharacter(dir, endPos, pushCharInt);
       }
     }, 10);
   }

@@ -2,12 +2,38 @@ canvas {
   background: black;
 }
 
+html,
 body {
+  height: 100%;
+  margin: 0;
+}
+html h1,
+body h1 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+body {
+  background-image: url("../img/7.screen_bg/Screenshot 2024-05-18 224309.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
   font-family: "LuckiestGuy";
+}
+body h1 {
+  font-size: 46px;
+  color: white;
+  letter-spacing: 6px;
+}
+body canvas {
+  border-radius: 20px;
+  box-shadow: 0 0 20px white;
+  border: 2px solid white;
 }
 
 @font-face {
@@ -15,4 +41,42 @@ body {
   src: url("../img/5.Font/Luckiest_Guy/LuckiestGuy-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
-}/*# sourceMappingURL=style.css.map */
+}
+@media only screen and (max-width: 920px) {
+  body canvas {
+    width: 100%;
+    box-shadow: none;
+    border: none;
+  }
+}
+@media only screen and (max-height: 600px) {
+  body h1 {
+    margin: 0;
+    padding: 0;
+  }
+  body canvas {
+    box-shadow: none;
+    border: none;
+    height: 100vh;
+  }
+}
+@media only screen and (max-height: 480px) and (max-width: 920px) {
+  body canvas {
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+  }
+}
+@media only screen and (max-height: 480px) {
+  body h1 {
+    display: none;
+  }
+  body canvas {
+    box-shadow: none;
+    border: none;
+    height: 100vh;
+  }
+  body button {
+    display: none;
+  }
+} /*# sourceMappingURL=style.css.map */

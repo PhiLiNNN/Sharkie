@@ -30,8 +30,9 @@ class PoisonItem extends DrawableObject {
     this.animate(type.toUpperCase());
   }
   animate(type) {
-    setInterval(() => {
+    let updatePoisonItem = setInterval(() => {
       this.playAnimation(this[`POISON_ITEM_${type}`]);
     }, Math.random() * (300 - 200) + 200);
+    intervalIds.push(updatePoisonItem);
   }
 }

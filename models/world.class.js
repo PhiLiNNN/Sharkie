@@ -88,17 +88,17 @@ class World {
   }
 
   checkAllPossibleCollisions() {
-    setInterval(() => {
+    let updateCollisionInt = setInterval(() => {
       this.checkCharacterCollisions();
       this.checkCollisionWithBubble();
       this.handlerCollisionWithPoisonBubble();
       this.checkBubbleBubbleCollision();
     }, 25);
+    intervalIds.push(updateCollisionInt);
   }
 
   checkCharacterCollisions() {
     this.checkCharacterEnemyCollision();
-    // this.checkCharacterEndbossCollision();
     this.checkCharacterThrowableObjectCollision();
     this.checkCharacterItemCollision();
   }
@@ -288,12 +288,13 @@ class World {
   }
 
   areEnemiesWithinSight() {
-    setInterval(() => {
+    let updateEnemyVisibility = setInterval(() => {
       if (this.character.x > 40)
         this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
       if (this.character.x > 1000)
         this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellies), "jellyDangerous");
     }, 900);
+    intervalIds.push(updateEnemyVisibility);
   }
 
   getAliveEnemies(enemies) {
@@ -412,9 +413,10 @@ class World {
   }
 
   checkSwimDirection() {
-    setInterval(() => {
+    let updateSwimDir = setInterval(() => {
       if (this.keyboard.RIGHT) this.isSwimmingLeft = false;
       if (this.keyboard.LEFT) this.isSwimmingLeft = true;
     }, 25);
+    intervalIds.push(updateSwimDir);
   }
 }
