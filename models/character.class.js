@@ -103,13 +103,13 @@ class Character extends MovableObject {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_rightEnd && !this.isDead()) {
         this.x += this.speed;
         this.otherDirection = false;
-        targetCameraX = -this.x + 100;
+        targetCameraX = -this.x;
         // this.swimming_sound.play();
       }
       if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd && !this.isDead()) {
         this.x -= this.speed;
         this.otherDirection = true;
-        targetCameraX = -this.x + 600;
+        targetCameraX = -this.x + 800;
       }
 
       if (this.world.keyboard.UP && this.y > this.world.level.level_topEnd && !this.isDead()) {
@@ -120,7 +120,7 @@ class Character extends MovableObject {
         this.y += this.speed;
         // this.swimming_sound.play();
       }
-      this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.05;
+      this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.02;
     }, 25);
 
     setInterval(() => {

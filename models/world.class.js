@@ -12,8 +12,6 @@ class World {
   keyboard;
   isSwimmingLeft;
   camera_x = 0;
-  // interactionDistancePufferFish = 500;
-  // interactionDistanceDangerousJellyFish = 800;
   lastHitTime = 0;
 
   collisionDmgWithEndboss = 20;
@@ -27,8 +25,6 @@ class World {
   bubbleDmgToPuffer = 100;
   bubbleDmgToDangerousJelly = 100;
   bubbleDmgToRegularJelly = 100;
-
-  enemyShootingInterval = 0.01;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -143,8 +139,7 @@ class World {
             this.lastHitTime = currentTime;
             this.character.hit(damage);
             this.statusBar.setPercentage(this.character.energy);
-            if (enemy instanceof JellyDangerous) this.character.hitFromDangerousJelly = true;
-            else this.character.hitFromDangerousJelly = false;
+            this.isCharColWithJellyDangerousFish(enemy);
           }
         }
       });
@@ -154,19 +149,10 @@ class World {
     checkCollisions(this.level.regularJellies, this.collisionDmgWithRegularJelly);
   }
 
-  // checkCharacterEndbossCollision() {
-  //   if (this.character.isColliding(this.level.endboss) && !this.level.endboss.isDead()) {
-  //     let currentTime = new Date().getTime();
-  //     let timeSinceLastHit = currentTime - this.lastHitTime;
-  //     if (timeSinceLastHit >= 1000) {
-  //       this.lastHitTime = currentTime;
-  //       this.character.hit(this.collisionDmgWithEndboss);
-  //       this.statusBar.setPercentage(this.character.energy);
-  //       this.character.pushCharacterBack();
-  //     }
-  //   }
-  // }
-
+  isCharColWithJellyDangerousFish(enemy) {
+    if (enemy instanceof JellyDangerous) this.character.hitFromDangerousJelly = true;
+    else this.character.hitFromDangerousJelly = false;
+  }
   checkCharacterThrowableObjectCollision() {
     this.checkCharEnemyShotCollision(this.throwableObjsPuffer, this.bubbleDmgFromPuffer);
     this.checkCharEnemyShotCollision(
@@ -188,8 +174,7 @@ class World {
           enemies.splice(idx, 1);
         }
       }
-
-      if (enemyShot.x < this.character.x - 100) enemies.splice(idx, 1);
+      if (this.isOutsideCharacterRange(enemyShot)) enemies.splice(idx, 1);
     });
   }
 
@@ -275,13 +260,15 @@ class World {
     }
   }
 
-  isOutsideCharacterRange(bubble) {
-    console.log("this.camara_x :>> ", this.level.leftBorder.x);
+  isOutsideCharacterRange(shot) {
+    const rightScreenBorder = 880 - Math.abs(this.character.x + this.camera_x);
+    const leftScreenBorder = Math.abs(this.character.x + this.camera_x);
+    const rightLimit = shot instanceof JellyDangerousFishAttack ? 1300 : rightScreenBorder;
     return (
-      bubble.x > this.character.x + 800 ||
-      bubble.x < this.character.x - 800 ||
-      bubble.x < this.level.leftBorder.x + this.level.leftBorder.width ||
-      bubble.x > this.level.rightBorder.x
+      shot.x > this.character.x + rightLimit ||
+      shot.x < this.character.x - leftScreenBorder ||
+      shot.x < this.level.leftBorder.x + this.level.leftBorder.width ||
+      shot.x > this.level.rightBorder.x
     );
   }
 
@@ -302,9 +289,11 @@ class World {
 
   areEnemiesWithinSight() {
     setInterval(() => {
-      this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
-      this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellies), "jellyDangerous");
-    }, 1500);
+      if (this.character.x > 40)
+        this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
+      if (this.character.x > 1000)
+        this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellies), "jellyDangerous");
+    }, 900);
   }
 
   getAliveEnemies(enemies) {
@@ -317,13 +306,9 @@ class World {
       const randomEnemy = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
       this.setRightAnimation(randomEnemy);
       setTimeout(() => this.addEnemyAttackObject(randomEnemy, fishType), 700);
-      setTimeout(addEnemyAttack, this.getRandomInterval());
+      addEnemyAttack;
     };
     addEnemyAttack();
-  }
-
-  getRandomInterval() {
-    return (Math.random() * 1000) / this.enemyShootingInterval;
   }
 
   addEnemyAttackObject(enemy, fishType) {

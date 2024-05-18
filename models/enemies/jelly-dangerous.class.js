@@ -1,5 +1,4 @@
 class JellyDangerous extends MovableObject {
-  x = 2300;
   height = 50;
   width = 50;
   offsetHeight = 8;
@@ -30,12 +29,13 @@ class JellyDangerous extends MovableObject {
     "img/2.Enemy/2 Jelly fish/Dead/Pink/P4.png",
   ];
 
-  constructor(fishType, fishIndex, y) {
+  constructor(fishType, fishIndex, x, y) {
     super().loadImage(`img/2.Enemy/2 Jelly fish/Super dangerous/${fishType}${fishIndex}.png`);
     this.loadImages(this[`JELLY_${fishType.toUpperCase()}`]);
     this.loadImages(this.JELLY_GREEN_DEAD);
     this.loadImages(this.JELLY_PINK_DEAD);
     this.y = y;
+    this.x = x;
     this.animate(fishType.toUpperCase());
   }
 
