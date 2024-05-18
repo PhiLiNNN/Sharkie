@@ -1,6 +1,6 @@
 class Endboss extends MovableObject {
-  y = 100;
-  height = 260;
+  y = -10;
+  height = 350;
   width = 350;
   offsetX = 25;
   offsetY = 60;
@@ -50,6 +50,14 @@ class Endboss extends MovableObject {
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
   ];
+  ENDBOSS_ATTACK = [
+    "img/2.Enemy/3 Final Enemy/Attack/1.png",
+    "img/2.Enemy/3 Final Enemy/Attack/2.png",
+    "img/2.Enemy/3 Final Enemy/Attack/3.png",
+    "img/2.Enemy/3 Final Enemy/Attack/4.png",
+    "img/2.Enemy/3 Final Enemy/Attack/5.png",
+    "img/2.Enemy/3 Final Enemy/Attack/6.png",
+  ];
 
   constructor(x) {
     super().loadImage(this.ENDBOSS_APPEARS[0]);
@@ -57,6 +65,7 @@ class Endboss extends MovableObject {
     this.loadImages(this.ENDBOSS_APPEARS);
     this.loadImages(this.ENDBOSS_HURT);
     this.loadImages(this.ENDBOSS_DEAD);
+    this.loadImages(this.ENDBOSS_ATTACK);
     this.spawnAnimationPlayed = false;
     this.x = x;
     this.spawnEndboss();
@@ -72,6 +81,7 @@ class Endboss extends MovableObject {
       }
     }, 85);
   }
+
   moveEndboss() {
     let moveInterval;
     setInterval(() => {
@@ -85,6 +95,7 @@ class Endboss extends MovableObject {
       }
     }, 200);
   }
+
   animate() {
     if (this.isDead()) {
       let idx = this.currentImage % this.ENDBOSS_DEAD.length;
@@ -102,7 +113,7 @@ class Endboss extends MovableObject {
     let dy = this.world.character.y - this.y - 100;
     let distance = Math.sqrt(dx * dx + dy * dy);
     this.otherDirection = dx >= 0;
-    if (dx >= -250 && dx <= 230 && dy <= 30 && dy >= -144) this.handlerCharacterEndbossCollision();
+    if (dx >= -270 && dx <= 230 && dy <= 100 && dy >= -110) this.handlerCharacterEndbossCollision();
     dx /= distance;
     dy /= distance;
     this.x += dx * this.speed;
@@ -114,9 +125,12 @@ class Endboss extends MovableObject {
     let timeSinceLastHit = currentTime - this.world.lastHitTime;
     if (timeSinceLastHit >= 1000) {
       this.world.lastHitTime = currentTime;
-      this.world.character.hit(this.world.collisionDmgWithEndboss);
-      this.world.statusBar.setPercentage(this.world.character.energy);
-      this.world.character.pushCharacterBack();
+      this.playAnimationOnce(this.ENDBOSS_ATTACK, 100);
+      setTimeout(() => {
+        this.world.character.pushCharacterBack();
+        this.world.character.hit(this.world.collisionDmgWithEndboss);
+        this.world.statusBar.setPercentage(this.world.character.energy);
+      }, 400);
     }
   }
 }

@@ -188,6 +188,7 @@ class World {
           enemies.splice(idx, 1);
         }
       }
+
       if (enemyShot.x < this.character.x - 100) enemies.splice(idx, 1);
     });
   }
@@ -275,7 +276,13 @@ class World {
   }
 
   isOutsideCharacterRange(bubble) {
-    return bubble.x > this.character.x + 800 || bubble.x < this.character.x - 100;
+    console.log("this.camara_x :>> ", this.level.leftBorder.x);
+    return (
+      bubble.x > this.character.x + 800 ||
+      bubble.x < this.character.x - 800 ||
+      bubble.x < this.level.leftBorder.x + this.level.leftBorder.width ||
+      bubble.x > this.level.rightBorder.x
+    );
   }
 
   isCollidingWithEndBoss(bubble) {
