@@ -57,7 +57,15 @@ function initLevel() {
       new PoisonItem("ground", 400, 390),
       new PoisonItem("ground", 280, 360),
     ],
-    [new HeartItem(1200, 290), new HeartItem(2000, 100), new HeartItem(3000, 400)]
+    [new HeartItem(1200, 290), new HeartItem(2000, 100), new HeartItem(3000, 400)],
+    [
+      new MobileButton("left", 10, 430),
+      new MobileButton("right", 110, 430),
+      new MobileButton("down", 60, 430),
+      new MobileButton("up", 60, 380),
+      new MobileButton("primary", 800, 430),
+      new MobileButton("secondary", 850, 430),
+    ]
   );
 }
 

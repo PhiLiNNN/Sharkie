@@ -23,6 +23,21 @@ body {
     box-shadow: 0 0 20px white;
     border: 2px solid white;
   }
+  button {
+    position: relative;
+    z-index: 999;
+    background: white;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background: #ddd;
+    }
+  }
   background-image: url("../img/7.screen_bg/Screenshot 2024-05-18 224309.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -41,7 +56,7 @@ body {
   font-style: normal;
 }
 
-@media only screen and (max-width: 920px) {
+@media only screen and (max-width: 925px) {
   body canvas {
     width: 100%;
     box-shadow: none;

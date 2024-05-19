@@ -38,45 +38,86 @@ class World {
     this.areEnemiesWithinSight();
   }
 
+  executeAttack(arr, bool) {
+    setTimeout(() => {
+      const xOffset = this.isSwimmingLeft ? 10 : 140;
+      const bubble = new SharkieAttack(
+        this.character.x + xOffset,
+        this.character.y + 90,
+        this.isSwimmingLeft,
+        bool
+      );
+      arr.push(bubble);
+    }, 400);
+  }
+
   checkBlowBubble() {
     let lastClickTime = 0;
+    this.handlerDesktopBubbles(lastClickTime);
+    this.handlerMobileBubbles(lastClickTime);
+  }
+
+  handlerMobileBubbles(lastClickTime) {
+    setInterval(() => {
+      const currentTime = new Date().getTime();
+      if (this.isMobilePrimaryAttackActionReady(currentTime, lastClickTime)) {
+        this.executePrimaryAttack();
+        lastClickTime = currentTime;
+        keyboard.PRIMARY = false;
+      } else if (this.isMobileSecondaryAttackActionReady(currentTime, lastClickTime)) {
+        this.executeSecondaryAttack();
+        lastClickTime = currentTime;
+        keyboard.SECONDARY = false;
+      }
+    }, 25);
+  }
+
+  handlerDesktopBubbles(lastClickTime) {
     document.addEventListener("mousedown", (event) => {
       const currentTime = new Date().getTime();
       document.getElementById("canvas-id").oncontextmenu = () => false;
-      if (event.button === 0 && currentTime - lastClickTime >= 500) {
-        this.character.playAnimationOnce(this.character.IMAGES_BUBBLE, 50);
-        setTimeout(() => {
-          const xOffset = this.isSwimmingLeft ? 10 : 140;
-          const bubble = new SharkieAttack(
-            this.character.x + xOffset,
-            this.character.y + 90,
-            this.isSwimmingLeft,
-            false
-          );
-          this.throwableObjsCharacter.push(bubble);
-        }, 400);
+      if (this.isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime)) {
+        this.executePrimaryAttack();
         lastClickTime = currentTime;
-      } else if (
-        event.button === 2 &&
-        currentTime - lastClickTime >= 500 &&
-        this.character.poison_energy !== 0
-      ) {
-        this.character.reducePoisonEnergy();
-        this.poisonBar.setPercentage(this.character.poison_energy);
-        this.character.playAnimationOnce(this.character.IMAGES_BUBBLE_POISON, 50);
-        setTimeout(() => {
-          const xOffset = this.isSwimmingLeft ? 10 : 140;
-          const bubble = new SharkieAttack(
-            this.character.x + xOffset,
-            this.character.y + 90,
-            this.isSwimmingLeft,
-            true
-          );
-          this.throwablePoisonObjsCharacter.push(bubble);
-        }, 400);
+      } else if (this.isDesktopSecondaryAttackActionReady(event, currentTime, lastClickTime)) {
+        this.executeSecondaryAttack();
         lastClickTime = currentTime;
       }
     });
+  }
+
+  executePrimaryAttack() {
+    this.character.playAnimationOnce(this.character.IMAGES_BUBBLE, 50);
+    this.executeAttack(this.throwableObjsCharacter, false);
+  }
+  executeSecondaryAttack() {
+    this.character.reducePoisonEnergy();
+    this.poisonBar.setPercentage(this.character.poison_energy);
+    this.character.playAnimationOnce(this.character.IMAGES_BUBBLE_POISON, 50);
+    this.executeAttack(this.throwablePoisonObjsCharacter, true);
+  }
+
+  isDesktopSecondaryAttackActionReady(event, currentTime, lastClickTime) {
+    return (
+      event.button === 2 &&
+      currentTime - lastClickTime >= 500 &&
+      this.character.poison_energy !== 0 &&
+      !pauseGame
+    );
+  }
+  isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime) {
+    return event.button === 0 && currentTime - lastClickTime >= 500 && !pauseGame;
+  }
+  isMobileSecondaryAttackActionReady(currentTime, lastClickTime) {
+    return (
+      keyboard.SECONDARY &&
+      currentTime - lastClickTime >= 500 &&
+      this.character.poison_energy !== 0 &&
+      !pauseGame
+    );
+  }
+  isMobilePrimaryAttackActionReady(currentTime, lastClickTime) {
+    return keyboard.PRIMARY && currentTime - lastClickTime >= 500 && !pauseGame;
   }
 
   /**
@@ -349,6 +390,7 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
     this.addToMap(this.poisonBar);
+    this.addObjectsToMap(this.level.keys);
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
