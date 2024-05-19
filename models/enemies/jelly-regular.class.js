@@ -7,32 +7,32 @@ class JellyRegular extends MovableObject {
   radius;
   damage = 100;
   JELLY_LILA = [
-    "img/2.Enemy/2 Jelly fish/Regular damage/LILA1.png",
-    "img/2.Enemy/2 Jelly fish/Regular damage/LILA2.png",
-    "img/2.Enemy/2 Jelly fish/Regular damage/LILA3.png",
-    "img/2.Enemy/2 Jelly fish/Regular damage/LILA4.png",
+    "./img/2.Enemy/2 Jelly fish/Regular damage/LILA1.png",
+    "./img/2.Enemy/2 Jelly fish/Regular damage/LILA2.png",
+    "./img/2.Enemy/2 Jelly fish/Regular damage/LILA3.png",
+    "./img/2.Enemy/2 Jelly fish/Regular damage/LILA4.png",
   ];
   JELLY_YELLOW = [
-    "img/2.Enemy/2 Jelly fish/Regular damage/YELLOW1.png",
-    "img/2.Enemy/2 Jelly fish/Regular damage/YELLOW2.png",
-    "img/2.Enemy/2 Jelly fish/Regular damage/YELLOW3.png",
-    "img/2.Enemy/2 Jelly fish/Regular damage/YELLOW4.png",
+    "./img/2.Enemy/2 Jelly fish/Regular damage/YELLOW1.png",
+    "./img/2.Enemy/2 Jelly fish/Regular damage/YELLOW2.png",
+    "./img/2.Enemy/2 Jelly fish/Regular damage/YELLOW3.png",
+    "./img/2.Enemy/2 Jelly fish/Regular damage/YELLOW4.png",
   ];
   JELLY_LILA_DEAD = [
-    "img/2.Enemy/2 Jelly fish/Dead/lila/L1.png",
-    "img/2.Enemy/2 Jelly fish/Dead/lila/L2.png",
-    "img/2.Enemy/2 Jelly fish/Dead/lila/L3.png",
-    "img/2.Enemy/2 Jelly fish/Dead/lila/L4.png",
+    "./img/2.Enemy/2 Jelly fish/Dead/lila/L1.png",
+    "./img/2.Enemy/2 Jelly fish/Dead/lila/L2.png",
+    "./img/2.Enemy/2 Jelly fish/Dead/lila/L3.png",
+    "./img/2.Enemy/2 Jelly fish/Dead/lila/L4.png",
   ];
   JELLY_YELLOW_DEAD = [
-    "img/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png",
-    "img/2.Enemy/2 Jelly fish/Dead/Yellow/y2.png",
-    "img/2.Enemy/2 Jelly fish/Dead/Yellow/y3.png",
-    "img/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png",
+    "./img/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png",
+    "./img/2.Enemy/2 Jelly fish/Dead/Yellow/y2.png",
+    "./img/2.Enemy/2 Jelly fish/Dead/Yellow/y3.png",
+    "./img/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png",
   ];
 
   constructor(fishType, fishIndex, x, y, angle, radius) {
-    super().loadImage(`img/2.Enemy/2 Jelly fish/Regular damage/${fishType}${fishIndex}.png`);
+    super().loadImage(`./img/2.Enemy/2 Jelly fish/Regular damage/${fishType}${fishIndex}.png`);
     this.loadImages(this[`JELLY_${fishType.toUpperCase()}`]);
     this.loadImages(this.JELLY_LILA_DEAD);
     this.loadImages(this.JELLY_YELLOW_DEAD);

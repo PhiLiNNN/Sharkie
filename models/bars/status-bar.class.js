@@ -5,12 +5,12 @@ class StatusBar extends DrawableObject {
   height = 60;
   percentage = 100;
   IMAGES = [
-    "img/4. Marcadores/orange/0_copia.png",
-    "img/4. Marcadores/orange/20_copia.png",
-    "img/4. Marcadores/orange/40_copia.png",
-    "img/4. Marcadores/orange/60_copia.png",
-    "img/4. Marcadores/orange/80_copia.png",
-    "img/4. Marcadores/orange/100_copia.png",
+    "./img/4. Marcadores/orange/0_copia.png",
+    "./img/4. Marcadores/orange/20_copia.png",
+    "./img/4. Marcadores/orange/40_copia.png",
+    "./img/4. Marcadores/orange/60_copia.png",
+    "./img/4. Marcadores/orange/80_copia.png",
+    "./img/4. Marcadores/orange/100_copia.png",
   ];
 
   constructor() {

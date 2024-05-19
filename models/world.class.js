@@ -90,6 +90,7 @@ class World {
     this.character.playAnimationOnce(this.character.IMAGES_BUBBLE, 50);
     this.executeAttack(this.throwableObjsCharacter, false);
   }
+
   executeSecondaryAttack() {
     this.character.reducePoisonEnergy();
     this.poisonBar.setPercentage(this.character.poison_energy);
@@ -105,9 +106,11 @@ class World {
       !pauseGame
     );
   }
+
   isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime) {
     return event.button === 0 && currentTime - lastClickTime >= 500 && !pauseGame;
   }
+
   isMobileSecondaryAttackActionReady(currentTime, lastClickTime) {
     return (
       keyboard.SECONDARY &&
@@ -116,6 +119,7 @@ class World {
       !pauseGame
     );
   }
+
   isMobilePrimaryAttackActionReady(currentTime, lastClickTime) {
     return keyboard.PRIMARY && currentTime - lastClickTime >= 500 && !pauseGame;
   }
@@ -194,6 +198,7 @@ class World {
     if (enemy instanceof JellyDangerous) this.character.hitFromDangerousJelly = true;
     else this.character.hitFromDangerousJelly = false;
   }
+
   checkCharacterThrowableObjectCollision() {
     this.checkCharEnemyShotCollision(this.throwableObjsPuffer, this.bubbleDmgFromPuffer);
     this.checkCharEnemyShotCollision(
@@ -330,9 +335,9 @@ class World {
 
   areEnemiesWithinSight() {
     let updateEnemyVisibility = setInterval(() => {
-      if (this.character.x > 40 && !pauseGame)
+      if (this.character.x > 40 && !pauseGame && !this.level.endboss.isDead())
         this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
-      if (this.character.x > 1000 && !pauseGame)
+      if (this.character.x > 1000 && !pauseGame && !this.level.endboss.isDead())
         this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellies), "jellyDangerous");
     }, 900);
     intervalIds.push(updateEnemyVisibility);
@@ -390,7 +395,7 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
     this.addToMap(this.poisonBar);
-    this.addObjectsToMap(this.level.keys);
+    if (window.innerHeight < 600) this.addObjectsToMap(this.level.keys);
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);

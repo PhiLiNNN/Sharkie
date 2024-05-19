@@ -5,12 +5,12 @@ class PoisonBar extends DrawableObject {
   width = 190;
   height = 60;
   POISON_BAR = [
-    "img/4. Marcadores/green/poisoned bubbles/0_copia.png",
-    "img/4. Marcadores/green/poisoned bubbles/20_copia.png",
-    "img/4. Marcadores/green/poisoned bubbles/40_copia.png",
-    "img/4. Marcadores/green/poisoned bubbles/60_copia.png",
-    "img/4. Marcadores/green/poisoned bubbles/80_copia.png",
-    "img/4. Marcadores/green/poisoned bubbles/100_copia.png",
+    "./img/4. Marcadores/green/poisoned bubbles/0_copia.png",
+    "./img/4. Marcadores/green/poisoned bubbles/20_copia.png",
+    "./img/4. Marcadores/green/poisoned bubbles/40_copia.png",
+    "./img/4. Marcadores/green/poisoned bubbles/60_copia.png",
+    "./img/4. Marcadores/green/poisoned bubbles/80_copia.png",
+    "./img/4. Marcadores/green/poisoned bubbles/100_copia.png",
   ];
 
   constructor() {

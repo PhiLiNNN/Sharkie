@@ -9,7 +9,7 @@ class Character extends MovableObject {
   offsetHeight = 160;
   offsetWidth = 130;
   deadAnimation = false;
-  speed = 4;
+  speed = 0.6;
   world;
   bubbleSpeed = 10;
   energy = 100;
@@ -116,7 +116,7 @@ class Character extends MovableObject {
         if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd && !this.isDead()) {
           this.x -= this.speed;
           this.otherDirection = true;
-          targetCameraX = -this.x + 800;
+          targetCameraX = -this.x + 700;
         }
 
         if (this.world.keyboard.UP && this.y > this.world.level.level_topEnd && !this.isDead()) {
@@ -131,9 +131,9 @@ class Character extends MovableObject {
           this.y += this.speed;
           // this.swimming_sound.play();
         }
-        this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.02;
+        this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.01;
       }
-    }, 25);
+    }, 1);
     intervalIds.push(updateBtns);
 
     let updateCharacter = setInterval(() => {

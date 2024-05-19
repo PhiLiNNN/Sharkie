@@ -4,14 +4,7 @@ let world;
 let intervalIds = [];
 let keyboard = new Keyboard();
 let pauseGame = false;
-// const buttons = [
-//   new MobileButton("left", 10, 430),
-//   new MobileButton("right", 110, 430),
-//   new MobileButton("up", 60, 430),
-//   new MobileButton("down", 60, 380),
-//   new MobileButton("primary", 800, 430),
-//   new MobileButton("secondary", 850, 430),
-// ];
+let onMobile = false;
 
 function init() {
   canvas = document.getElementById("canvas-id");
@@ -28,15 +21,23 @@ function handleKeyPress(e, isPressed) {
 function openPopup() {
   pauseGame = true;
 }
-function pause() {
+
+function resumeGame() {
   pauseGame = false;
-  // intervalIds.forEach(clearInterval);
 }
+
+function clearIntervalIds() {
+  intervalIds.forEach(clearInterval);
+}
+
 function startGame() {
   initLevel();
   world = new World(canvas, keyboard);
   canvas.addEventListener("touchstart", handleTouchStart);
   canvas.addEventListener("touchend", handleTouchEnd);
+  setInterval(() => {
+    window.innerHeight < 600 ? (onMobile = true) : (onMobile = false);
+  }, 100);
 }
 
 function setStoppableInterval(fn, time) {
@@ -83,24 +84,26 @@ function isButtonTouched(button, x, y) {
 }
 
 function handleButtonAction(button, isPressed) {
-  switch (button) {
-    case world.level.keys[0]:
-      keyboard.LEFT = isPressed;
-      break;
-    case world.level.keys[1]:
-      keyboard.RIGHT = isPressed;
-      break;
-    case world.level.keys[2]:
-      keyboard.DOWN = isPressed;
-      break;
-    case world.level.keys[3]:
-      keyboard.UP = isPressed;
-      break;
-    case world.level.keys[4]:
-      keyboard.PRIMARY = isPressed;
-      break;
-    case world.level.keys[5]:
-      keyboard.SECONDARY = isPressed;
-      break;
+  if (onMobile) {
+    switch (button) {
+      case world.level.keys[0]:
+        keyboard.LEFT = isPressed;
+        break;
+      case world.level.keys[1]:
+        keyboard.RIGHT = isPressed;
+        break;
+      case world.level.keys[2]:
+        keyboard.DOWN = isPressed;
+        break;
+      case world.level.keys[3]:
+        keyboard.UP = isPressed;
+        break;
+      case world.level.keys[4]:
+        keyboard.PRIMARY = isPressed;
+        break;
+      case world.level.keys[5]:
+        keyboard.SECONDARY = isPressed;
+        break;
+    }
   }
 }
