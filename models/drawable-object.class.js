@@ -19,13 +19,11 @@ class DrawableObject {
   playAnimationOnce(arr, ms) {
     let idx = 0;
     const updateAnimation = setInterval(() => {
-      if (idx < arr.length) {
+      if (idx < arr.length && !pauseGame) {
         let path = arr[idx];
         this.img = this.imageCache[path];
         idx++;
-      } else {
-        clearInterval(updateAnimation);
-      }
+      } else clearInterval(updateAnimation);
     }, ms);
   }
 

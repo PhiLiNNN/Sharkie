@@ -289,9 +289,9 @@ class World {
 
   areEnemiesWithinSight() {
     let updateEnemyVisibility = setInterval(() => {
-      if (this.character.x > 40)
+      if (this.character.x > 40 && !pauseGame)
         this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
-      if (this.character.x > 1000)
+      if (this.character.x > 1000 && !pauseGame)
         this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellies), "jellyDangerous");
     }, 900);
     intervalIds.push(updateEnemyVisibility);

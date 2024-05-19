@@ -11,6 +11,7 @@ class ThrowableObject extends MovableObject {
     }, 1);
     intervalIds.push(updateBlowAnimation);
   }
+
   lightningShot(isSwimmingLeft, offsetX, shotSpeed) {
     let updateShotAnimation = setInterval(() => {
       if (isSwimmingLeft) {

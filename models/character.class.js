@@ -99,35 +99,45 @@ class Character extends MovableObject {
 
   animate() {
     let updateBtns = setInterval(() => {
-      this.swimming_sound.pause();
-      let targetCameraX = this.world.camera_x;
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_rightEnd && !this.isDead()) {
-        this.x += this.speed;
-        this.otherDirection = false;
-        targetCameraX = -this.x;
+      if (!pauseGame) {
+        this.swimming_sound.pause();
+        let targetCameraX = this.world.camera_x;
+        if (
+          this.world.keyboard.RIGHT &&
+          this.x < this.world.level.level_rightEnd &&
+          !this.isDead()
+        ) {
+          this.x += this.speed;
+          this.otherDirection = false;
+          targetCameraX = -this.x;
 
-        // this.swimming_sound.play();
-      }
-      if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd && !this.isDead()) {
-        this.x -= this.speed;
-        this.otherDirection = true;
-        targetCameraX = -this.x + 800;
-      }
+          // this.swimming_sound.play();
+        }
+        if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd && !this.isDead()) {
+          this.x -= this.speed;
+          this.otherDirection = true;
+          targetCameraX = -this.x + 800;
+        }
 
-      if (this.world.keyboard.UP && this.y > this.world.level.level_topEnd && !this.isDead()) {
-        this.y -= this.speed;
-        // this.swimming_sound.play();
+        if (this.world.keyboard.UP && this.y > this.world.level.level_topEnd && !this.isDead()) {
+          this.y -= this.speed;
+          // this.swimming_sound.play();
+        }
+        if (
+          this.world.keyboard.DOWN &&
+          this.y < this.world.level.level_bottomEnd &&
+          !this.isDead()
+        ) {
+          this.y += this.speed;
+          // this.swimming_sound.play();
+        }
+        this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.02;
       }
-      if (this.world.keyboard.DOWN && this.y < this.world.level.level_bottomEnd && !this.isDead()) {
-        this.y += this.speed;
-        // this.swimming_sound.play();
-      }
-      this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.02;
     }, 25);
     intervalIds.push(updateBtns);
 
     let updateCharacter = setInterval(() => {
-      if (this.isDead()) {
+      if (this.isDead() && !pauseGame) {
         let idx = this.currentImage % this.IMAGES_DEAD.length;
         if (idx === this.IMAGES_DEAD.length - 1) {
           this.deadAnimation = true;
@@ -159,7 +169,7 @@ class Character extends MovableObject {
     let endPosRight = startPos + 200;
     this.stopPushingBack = true;
     const pushCharInt = setInterval(() => {
-      if (this.stopPushingBack) {
+      if (this.stopPushingBack && !pauseGame) {
         const dir = this.world.level.endboss.otherDirection ? 1 : -1;
         const endPos = this.world.level.endboss.otherDirection ? endPosRight : endPosLeft;
         this.pushCharacter(dir, endPos, pushCharInt);

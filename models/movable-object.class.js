@@ -15,14 +15,14 @@ class MovableObject extends DrawableObject {
 
   moveLeft() {
     let updateMovLeft = setInterval(() => {
-      if (!this.isDead()) this.x -= this.speed;
+      if (!pauseGame && !this.isDead()) this.x -= this.speed;
     }, 1000 / 60);
     intervalIds.push(updateMovLeft);
   }
 
   moveUpAndDown() {
     let updateMovUpAndDown = setInterval(() => {
-      if (!this.isDead()) {
+      if (!this.isDead() && !pauseGame) {
         if (this.moveUp || this.moveDown) {
           this.y += (this.moveUp ? -1 : 1) * this.speed;
           if (Math.abs(this.y - this.currentY) >= 30) {
@@ -39,7 +39,7 @@ class MovableObject extends DrawableObject {
     const centerX = this.x;
     const centerY = this.y;
     let updateMovCircle = setInterval(() => {
-      if (!this.isDead()) {
+      if (!this.isDead() && !pauseGame) {
         this.angle += this.speed;
         this.x = centerX + Math.cos(this.angle) * this.radius;
         this.y = centerY + Math.sin(this.angle) * this.radius;

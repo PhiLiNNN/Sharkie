@@ -86,11 +86,11 @@ class Endboss extends MovableObject {
   moveEndboss() {
     let updateMovToCha;
     let updateMoveEndboss = setInterval(() => {
-      if (this.spawnAnimationPlayed) {
+      if (this.spawnAnimationPlayed && !pauseGame) {
         this.animate();
         if (!updateMovToCha) {
           updateMovToCha = setInterval(() => {
-            if (!this.isDead()) this.moveToCharacter();
+            if (!this.isDead() && !pauseGame) this.moveToCharacter();
           }, 100);
           intervalIds.push(updateMovToCha);
         }
