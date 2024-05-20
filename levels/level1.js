@@ -7,15 +7,105 @@ let level1;
 function initLevel() {
   level1 = new Level(
     [
-      new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-      new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-      new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-      new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-      new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-      new PufferFish("ORANGE", 2, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-      new PufferFish("RED", 3, 1000 + Math.random() * 250, 90 + Math.random() * 320),
-      new PufferFish("GREEN", 1, 1000 + Math.random() * 250, 90 + Math.random() * 320),
+      new PufferFish(
+        "GREEN",
+        1,
+        1000 + Math.random() * 250,
+        90 + Math.random() * 320,
+        0.15 + Math.random() * 0.5
+      ),
+      new PufferFish(
+        "RED",
+        3,
+        1000 + Math.random() * 250,
+        90 + Math.random() * 320,
+        0.15 + Math.random() * 0.5
+      ),
+      new PufferFish(
+        "GREEN",
+        1,
+        1000 + Math.random() * 250,
+        90 + Math.random() * 320,
+        0.15 + Math.random() * 0.5
+      ),
+      new PufferFish(
+        "RED",
+        3,
+        1000 + Math.random() * 250,
+        90 + Math.random() * 320,
+        0.15 + Math.random() * 0.5
+      ),
+      new PufferFish(
+        "ORANGE",
+        2,
+        1000 + Math.random() * 250,
+        90 + Math.random() * 320,
+        0.15 + Math.random() * 0.5
+      ),
+      new PufferFish(
+        "ORANGE",
+        2,
+        1000 + Math.random() * 250,
+        90 + Math.random() * 320,
+        0.15 + Math.random() * 0.5
+      ),
+      new PufferFish(
+        "RED",
+        3,
+        1000 + Math.random() * 250,
+        90 + Math.random() * 320,
+        0.15 + Math.random() * 0.5
+      ),
+      new PufferFish(
+        "GREEN",
+        1,
+        1000 + Math.random() * 250,
+        90 + Math.random() * 320,
+        0.15 + Math.random() * 0.5
+      ),
+
+      new PufferFish("RED", 3, 3500, 90, 0.2),
+      new PufferFish("GREEN", 1, 3520, 127, 0.2),
+      new PufferFish("RED", 3, 3540, 163, 0.2),
+      new PufferFish("GREEN", 1, 3560, 200, 0.2),
+      new PufferFish("RED", 3, 3580, 238, 0.2),
+      new PufferFish("GREEN", 1, 3600, 275, 0.2),
+      new PufferFish("RED", 3, 3620, 312, 0.2),
+      new PufferFish("RED", 3, 3640, 348, 0.2),
+      new PufferFish("RED", 3, 3660, 385, 0.2),
+      new PufferFish("GREEN", 1, 3680, 420, 0.2),
+
+      new PufferFish("RED", 3, 3880, 90, 0.2),
+      new PufferFish("GREEN", 1, 3860, 127, 0.2),
+      new PufferFish("RED", 3, 3840, 163, 0.2),
+      new PufferFish("GREEN", 1, 3820, 200, 0.2),
+      new PufferFish("RED", 3, 3800, 238, 0.2),
+      new PufferFish("GREEN", 1, 3780, 275, 0.2),
+      new PufferFish("RED", 3, 3760, 312, 0.2),
+      new PufferFish("RED", 3, 3740, 348, 0.2),
+      new PufferFish("GREEN", 1, 3720, 385, 0.2),
+
+      new PufferFish("GREEN", 1, 3920, 127, 0.2),
+      new PufferFish("RED", 3, 3940, 163, 0.2),
+      new PufferFish("GREEN", 1, 3960, 200, 0.2),
+      new PufferFish("RED", 3, 3980, 238, 0.2),
+      new PufferFish("GREEN", 1, 4000, 275, 0.2),
+      new PufferFish("RED", 3, 4020, 312, 0.2),
+      new PufferFish("RED", 3, 4040, 348, 0.2),
+      new PufferFish("RED", 3, 4060, 385, 0.2),
+      new PufferFish("GREEN", 1, 4080, 420, 0.2),
+
+      new PufferFish("RED", 3, 4260, 90, 0.2),
+      new PufferFish("GREEN", 1, 4240, 127, 0.2),
+      new PufferFish("RED", 3, 4220, 163, 0.2),
+      new PufferFish("GREEN", 1, 4200, 200, 0.2),
+      new PufferFish("RED", 3, 4180, 238, 0.2),
+      new PufferFish("GREEN", 1, 4160, 275, 0.2),
+      new PufferFish("RED", 3, 4140, 312, 0.2),
+      new PufferFish("RED", 3, 4120, 348, 0.2),
+      new PufferFish("RED", 3, 4100, 385, 0.2),
     ],
+
     [
       new JellyRegular("YELLOW", 1, 2000, 240, 45, 160),
       new JellyRegular("YELLOW", 1, 2000, 240, 90, 160),
@@ -35,16 +125,28 @@ function initLevel() {
       new JellyRegular("LILA", 1, 2000, 240, 360, 100),
     ],
     [
-      new JellyDangerous("GREEN", 1, 2300, 90, false),
-      new JellyDangerous("PINK", 1, 2300, 168, true),
-      new JellyDangerous("GREEN", 1, 2300, 252, true),
-      new JellyDangerous("GREEN", 1, 2300, 336, true),
-      new JellyDangerous("PINK", 1, 2300, 420, false),
+      new JellyDangerous("GREEN", 1, 2300, 90, 0, false),
+      new JellyDangerous("PINK", 1, 2300, 168, 0, true),
+      new JellyDangerous("GREEN", 1, 2300, 252, 0, true),
+      new JellyDangerous("GREEN", 1, 2300, 336, 0, true),
+      new JellyDangerous("PINK", 1, 2300, 420, 0, false),
+
+      new JellyDangerous("PINK", 1, 3680, 100, 0.2, false),
+      new JellyDangerous("PINK", 1, 3680, 200, 0.2, false),
+      new JellyDangerous("PINK", 1, 3680, 300, 0.2, false),
+
+      new JellyDangerous("PINK", 1, 3880, 200, 0.2, false),
+      new JellyDangerous("PINK", 1, 3880, 300, 0.2, false),
+      new JellyDangerous("PINK", 1, 3880, 400, 0.2, false),
+
+      new JellyDangerous("PINK", 1, 4080, 100, 0.2, false),
+      new JellyDangerous("PINK", 1, 4080, 200, 0.2, false),
+      new JellyDangerous("PINK", 1, 4080, 300, 0.2, false),
     ],
-    new Endboss(3600),
+    new Endboss(4500),
     backgroundObject,
     new Border(-280),
-    new Border(4000),
+    new Border(5000),
     [
       new PoisonItem("swimming", 1995, 230),
       new PoisonItem("swimming", 1200, 90),
@@ -57,15 +159,7 @@ function initLevel() {
       new PoisonItem("ground", 400, 390),
       new PoisonItem("ground", 280, 360),
     ],
-    [new HeartItem(1200, 290), new HeartItem(2000, 100), new HeartItem(3000, 400)],
-    [
-      new MobileButton("left", 10, 430),
-      new MobileButton("right", 110, 430),
-      new MobileButton("down", 60, 430),
-      new MobileButton("up", 60, 380),
-      new MobileButton("primary", 800, 430),
-      new MobileButton("secondary", 850, 430),
-    ]
+    [new HeartItem(1200, 290), new HeartItem(2000, 100), new HeartItem(3000, 400)]
   );
 }
 

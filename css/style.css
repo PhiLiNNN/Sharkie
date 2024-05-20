@@ -1,7 +1,3 @@
-canvas {
-  background: black;
-}
-
 html,
 body {
   height: 100%;
@@ -11,6 +7,12 @@ html h1,
 body h1 {
   margin-block-start: 0;
   margin-block-end: 0;
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  font-size: 46px;
+  color: white;
+  letter-spacing: 6px;
 }
 
 body {
@@ -25,29 +27,168 @@ body {
   justify-content: center;
   font-family: "LuckiestGuy";
 }
-body h1 {
-  font-size: 46px;
-  color: white;
-  letter-spacing: 6px;
+
+.control-panel-container {
+  position: absolute;
+  display: flex;
+  bottom: 10px;
+  justify-content: space-between;
+  align-items: end;
+  width: 100%;
 }
-body canvas {
+
+.canvas-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.canvas-container canvas {
+  background: rgba(0, 0, 0, 0.46);
   border-radius: 20px;
   box-shadow: 0 0 20px white;
   border: 2px solid white;
 }
-body button {
-  position: relative;
-  z-index: 999;
-  background: white;
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
+.canvas-container .move-key {
+  margin-left: 60px;
+  display: flex;
+}
+.canvas-container .up-key {
+  display: flex;
+  justify-content: center;
+  padding-left: 10px;
+}
+.canvas-container .left-down-right-key {
+  padding-left: 10px;
+}
+.canvas-container .attack-keys {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+  padding-right: 10px;
+}
+
+.canvas-container img {
+  width: 40px;
+  height: 40px;
+}
+
+.menu {
+  background-image: url("../img/3. Background/Mesa de trabajo 1.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  background-attachment: fixed;
+  position: absolute;
+  display: flex;
+  width: 920px;
+  height: 460px;
+  border-radius: 20px;
+  aspect-ratio: 2/1;
+  justify-content: center;
+  align-items: end;
+  gap: 20px;
+  padding-bottom: 20px;
+  z-index: 910;
+}
+.menu img {
+  width: clamp(100px, 100%, 180px);
+  height: 50px;
   cursor: pointer;
 }
-body button:hover {
-  background: #ddd;
+
+.game-over-container {
+  position: absolute;
+  z-index: 900;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  align-items: center;
+}
+.game-over-container .game-over-img {
+  padding-inline: 36px;
+  width: clamp(100px, 100%, 500px);
+  height: 50px;
+  cursor: pointer;
+}
+.game-over-container .game-over-menu {
+  display: flex;
+  align-items: center;
+}
+.game-over-container .game-over-menu .restart-img,
+.game-over-container .game-over-menu .back-to-manu-img {
+  padding-inline: 36px;
+  width: clamp(100px, 100%, 180px);
+  height: 50px;
+  cursor: pointer;
+}
+.game-over-container .difficulty-img {
+  width: clamp(100px, 100%, 180px);
+  height: 50px;
+  cursor: pointer;
+}
+
+.difficulty-popup-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 920;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.difficulty-popup-container .popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7882352941);
+  height: 50vh;
+  border-radius: 20px;
+  width: 50vw;
+  gap: 16px;
+}
+.difficulty-popup-container .popup img {
+  width: clamp(100px, 100%, 180px);
+  height: 50px;
+  cursor: pointer;
+}
+
+.touchCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+
+.container {
+  cursor: pointer;
+}
+
+.container input {
+  display: none;
+}
+
+.container svg {
+  overflow: visible;
+}
+
+.path {
+  fill: none;
+  stroke: #531a82;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+  stroke-dasharray: 241 9999999;
+  stroke-dashoffset: 0;
+}
+
+.container input:checked ~ svg .path {
+  stroke: #7fffe0;
+  stroke-dasharray: 70.5096664429 9999999;
+  stroke-dashoffset: -262.2723388672;
 }
 
 @font-face {
@@ -56,41 +197,27 @@ body button:hover {
   font-weight: normal;
   font-style: normal;
 }
-@media only screen and (max-width: 925px) {
+@media only screen and (max-width: 920px) {
   body canvas {
     width: 100%;
     box-shadow: none;
     border: none;
   }
-}
-@media only screen and (max-height: 600px) {
-  body h1 {
-    margin: 0;
-    padding: 0;
-  }
-  body canvas {
-    box-shadow: none;
-    border: none;
-    height: 100vh;
-  }
-}
-@media only screen and (max-height: 480px) and (max-width: 920px) {
-  body canvas {
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
+  body .menu {
+    width: 100%;
+    height: auto;
   }
 }
 @media only screen and (max-height: 480px) {
-  body h1 {
-    display: none;
-  }
   body canvas {
     box-shadow: none;
     border: none;
     height: 100vh;
   }
-  body button {
-    display: none;
+  body .menu {
+    height: 100vh;
   }
+}
+.d-none {
+  display: none;
 }/*# sourceMappingURL=style.css.map */

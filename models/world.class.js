@@ -9,27 +9,26 @@ class World {
   level = level1;
   canvas;
   ctx;
-  keyboard;
+  keyboard = new Keyboard();
   isSwimmingLeft;
   camera_x = 0;
   lastHitTime = 0;
 
   collisionDmgWithEndboss = 20;
-  collisionDmgWithPuffer = 5;
-  collisionDmgWithDangerousJelly = 10;
-  collisionDmgWithRegularJelly = 5;
+  collisionDmgWithPuffer = 10;
+  collisionDmgWithDangerousJelly = 15;
+  collisionDmgWithRegularJelly = 10;
 
-  bubbleDmgFromPuffer = 5;
-  lightningDmgFromDangerousJelly = 5;
+  bubbleDmgFromPuffer = 8;
+  lightningDmgFromDangerousJelly = 12;
 
   bubbleDmgToPuffer = 100;
   bubbleDmgToDangerousJelly = 100;
   bubbleDmgToRegularJelly = 100;
 
-  constructor(canvas, keyboard) {
+  constructor(canvas) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
-    this.keyboard = keyboard;
     this.draw();
     this.setWorld();
     this.checkSwimDirection(9);
@@ -63,11 +62,11 @@ class World {
       if (this.isMobilePrimaryAttackActionReady(currentTime, lastClickTime)) {
         this.executePrimaryAttack();
         lastClickTime = currentTime;
-        keyboard.PRIMARY = false;
+        this.keyboard.PRIMARY = false;
       } else if (this.isMobileSecondaryAttackActionReady(currentTime, lastClickTime)) {
         this.executeSecondaryAttack();
         lastClickTime = currentTime;
-        keyboard.SECONDARY = false;
+        this.keyboard.SECONDARY = false;
       }
     }, 25);
   }
@@ -113,7 +112,7 @@ class World {
 
   isMobileSecondaryAttackActionReady(currentTime, lastClickTime) {
     return (
-      keyboard.SECONDARY &&
+      this.keyboard.SECONDARY &&
       currentTime - lastClickTime >= 500 &&
       this.character.poison_energy !== 0 &&
       !pauseGame
@@ -121,7 +120,7 @@ class World {
   }
 
   isMobilePrimaryAttackActionReady(currentTime, lastClickTime) {
-    return keyboard.PRIMARY && currentTime - lastClickTime >= 500 && !pauseGame;
+    return this.keyboard.PRIMARY && currentTime - lastClickTime >= 500 && !pauseGame;
   }
 
   /**
@@ -339,7 +338,7 @@ class World {
         this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
       if (this.character.x > 1000 && !pauseGame && !this.level.endboss.isDead())
         this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellies), "jellyDangerous");
-    }, 900);
+    }, 200);
     intervalIds.push(updateEnemyVisibility);
   }
 
@@ -395,7 +394,6 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusBar);
     this.addToMap(this.poisonBar);
-    if (window.innerHeight < 600) this.addObjectsToMap(this.level.keys);
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);

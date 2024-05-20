@@ -3,7 +3,6 @@ class Character extends MovableObject {
   width = 190;
   x = 40;
   y = 130;
-
   offsetX = 60;
   offsetY = 105;
   offsetHeight = 160;
@@ -12,7 +11,7 @@ class Character extends MovableObject {
   speed = 0.6;
   world;
   bubbleSpeed = 10;
-  energy = 100;
+  energy = gameDifficulty;
   poison_energy = 0;
   hitFromDangerousJelly = false;
   stopPushingBack = true;
@@ -137,13 +136,16 @@ class Character extends MovableObject {
     intervalIds.push(updateBtns);
 
     let updateCharacter = setInterval(() => {
-      if (this.isDead() && !pauseGame) {
+      if (this.isDead()) {
         let idx = this.currentImage % this.IMAGES_DEAD.length;
         if (idx === this.IMAGES_DEAD.length - 1) {
           this.deadAnimation = true;
         }
         if (!this.deadAnimation) {
           this.playAnimation(this.IMAGES_DEAD);
+          toggleVisibility("game-over-id", false);
+          toggleVisibility("exit-gameAfterDead-btn-id", false);
+          pauseGame = true;
         }
       } else if (this.isHurt()) {
         if (this.hitFromDangerousJelly) {

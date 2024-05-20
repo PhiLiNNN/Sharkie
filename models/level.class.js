@@ -7,11 +7,10 @@ class Level {
   poisonItems;
   leftBorder;
   rightBorder;
-  level_rightEnd = 3800;
+  level_rightEnd = 4800;
   level_leftEnd = 0;
   level_topEnd = 0;
   level_bottomEnd = 320;
-  keys;
 
   constructor(
     pufferFishes,
@@ -22,8 +21,7 @@ class Level {
     leftBorder,
     rightBorder,
     poisonItems,
-    heartItems,
-    keys
+    heartItems
   ) {
     this.pufferFishes = pufferFishes;
     this.regularJellies = regularJellies;
@@ -34,6 +32,5 @@ class Level {
     this.rightBorder = rightBorder;
     this.poisonItems = poisonItems;
     this.heartItems = heartItems;
-    this.keys = keys;
   }
 }

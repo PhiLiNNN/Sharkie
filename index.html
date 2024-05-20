@@ -19,7 +19,6 @@
     <script src="./models/world.class.js"></script>
     <script src="./models/background-object.class.js"></script>
     <script src="./models/border.class.js"></script>
-    <script src="./models/mobile-btns.class.js"></script>
     <script src="./models/throwable-object.class.js"></script>
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/attacks/pufferfish-attack.class.js"></script>
@@ -31,10 +30,89 @@
     <title>Sharkie</title>
   </head>
   <body onload="init()">
-    <h1>Sharkie</h1>
-    <canvas id="canvas-id" width="920" height="480"> </canvas>
-    <button onclick="startGame()">startGame</button>
-    <button onclick="resumeGame()">resumeGame</button>
-    <button onclick="clearIntervalIds()">clearIntervalIds</button>
+    <div class="canvas-container">
+      <canvas id="canvas-id" width="920" height="480"> </canvas>
+      <h1>Sharkie</h1>
+      <div id="menu-id" class="menu">
+        <img
+          id="difficulty-btn-id"
+          class="difficulty-img"
+          src="./img/6.Botones/Difficulty/2.png"
+          alt=""
+          onclick="difficulty()" />
+        <img id="start-btn-id" src="./img/6.Botones/Start/2.png" onclick="startGame()" />
+        <img
+          id="continue-btn-id"
+          class="d-none"
+          src="img/6.Botones/Continue/2.png"
+          onclick="continueGame()" />
+        <img
+          id="exit-game-btn-id"
+          class="d-none"
+          src="img/6.Botones/ExitGame/2.png"
+          onclick="openStartMenu()" />
+
+        <div id="touch-checkbox-id" class="touchCheckbox">
+          <p>Are you using a touch device?</p>
+          <label class="container">
+            <input id="mobile-checkbox" type="checkbox" onclick="turnOnMobilePanel()" />
+            <svg viewBox="0 0 64 64" height="2em" width="2em">
+              <path
+                d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                pathLength="575.0541381835938"
+                class="path"></path>
+            </svg>
+          </label>
+        </div>
+      </div>
+      <div id="game-over-id" class="game-over-container d-none">
+        <img class="game-over-img" src="./img/6.Botones/Tittles/Game Over/Recurso 12.png" alt="" />
+        <div class="game-over-menu">
+          <img
+            class="restart-img"
+            src="./img/6.Botones/Try again/Recurso 17.png"
+            onclick="startGame()" />
+          <img
+            id="exit-gameAfterDead-btn-id"
+            class="back-to-manu-img d-none"
+            src="img/6.Botones/ExitGame/2.png"
+            onclick="openStartMenu()" />
+        </div>
+      </div>
+      <div
+        id="setting-popup-id"
+        class="difficulty-popup-container d-none"
+        onclick="closeDifficultySettings(event)">
+        <div class="popup" onclick="stopPropagation(event)">
+          <img
+            id="easy-id"
+            src="./img/6.Botones/GameMode/easy2.png"
+            onclick="difficultySettings('easy')" />
+          <img
+            id="hard-id"
+            src="./img/6.Botones/GameMode/hard2.png"
+            onclick="difficultySettings('hard')" />
+        </div>
+      </div>
+      <div class="key-info-container">
+        <img src="" alt="" />
+      </div>
+      <div id="control-panel-id" class="control-panel-container d-none">
+        <div class="move-keys">
+          <div class="up-key">
+            <img id="up-id" src="./img/6.Botones/Key/up_key.png" alt="" />
+          </div>
+          <div class="left-down-right-key">
+            <img id="left-id" src="./img/6.Botones/Key/left_key.png" alt="" />
+            <img id="down-id" src="./img/6.Botones/Key/down_key.png" alt="" />
+            <img id="right-id" src="./img/6.Botones/Key/right_key.png" alt="" />
+          </div>
+        </div>
+        <div class="attack-keys">
+          <img id="primary-id" src="./img/6.Botones/Key/primary_attack.png" alt="" />
+          <img id="secondary-id" src="./img/6.Botones/Key/secondary_attack.png" alt="" />
+        </div>
+      </div>
+    </div>
   </body>
 </html>

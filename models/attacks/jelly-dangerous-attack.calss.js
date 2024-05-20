@@ -5,7 +5,7 @@ class JellyDangerousFishAttack extends ThrowableObject {
   offsetY = 0;
   offsetHeight = 5;
   offsetWidth = 0;
-  shotSpeed = 1;
+  shotSpeed = dangerousShotSpeed;
 
   constructor(x, y, isSwimmingLeft) {
     super().loadImage("img/Explosion_2.png");
