@@ -1,7 +1,18 @@
 $game-bg: rgba(0, 0, 0, 0.46);
-
+@font-face {
+  font-family: "LuckiestGuy";
+  src: url("../img/5.Font/Luckiest_Guy/LuckiestGuy-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 html,
 body {
+  height: 100%;
+  margin: 0;
+  p {
+    margin-block-end: 0;
+    margin-block-start: 0;
+  }
   h1 {
     margin-block-start: 0;
     margin-block-end: 0;
@@ -12,8 +23,6 @@ body {
     color: white;
     letter-spacing: 6px;
   }
-  height: 100%;
-  margin: 0;
 }
 
 body {
@@ -40,14 +49,7 @@ body {
     box-shadow: 0 0 20px white;
     border: 2px solid white;
   }
-  .control-panel-container {
-    position: absolute;
-    display: flex;
-    bottom: 10px;
-    justify-content: space-between;
-    align-items: end;
-    width: 100%;
-  }
+
   .move-key {
     margin-left: 60px;
     display: flex;
@@ -74,7 +76,7 @@ body {
 .menu {
   background-image: url("../img/3. Background/Mesa de trabajo 1.png");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 1040px 520px;
   background-position: center;
   background-attachment: fixed;
   position: absolute;
@@ -85,7 +87,7 @@ body {
   aspect-ratio: 2 / 1;
   justify-content: center;
   align-items: end;
-  gap: 20px;
+  gap: 16px;
   padding-bottom: 20px;
   z-index: 910;
   img {
@@ -121,12 +123,12 @@ body {
       cursor: pointer;
     }
   }
-
-  .difficulty-img {
-    width: clamp(100px, 100%, 180px);
-    height: 50px;
-    cursor: pointer;
-  }
+}
+.difficulty-img {
+  width: clamp(100px, 100%, 180px);
+  height: 50px;
+  padding-left: 16px;
+  cursor: pointer;
 }
 .difficulty-popup-container {
   position: absolute;
@@ -153,10 +155,15 @@ body {
   }
 }
 .touchCheckbox {
+  padding-right: 16px;
+  height: 50px;
   display: flex;
   align-items: center;
   gap: 12px;
   color: white;
+}
+.touchCheckbox p {
+  text-wrap: wrap;
 }
 .container {
   cursor: pointer;
@@ -181,18 +188,36 @@ body {
   stroke-dashoffset: 0;
 }
 
+.touchCheckbox svg {
+  height: 1.5em;
+  width: 1.5em;
+}
+
 .container input:checked ~ svg .path {
   stroke: #7fffe0;
   stroke-dasharray: 70.5096664428711 9999999;
   stroke-dashoffset: -262.2723388671875;
 }
-@font-face {
-  font-family: "LuckiestGuy";
-  src: url("../img/5.Font/Luckiest_Guy/LuckiestGuy-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+.control-panel-container {
+  position: absolute;
+  display: flex;
+  bottom: 10px;
+  justify-content: space-between;
+  align-items: end;
+  width: 100%;
 }
-
+.turn-device {
+  display: none;
+  position: absolute;
+  background: black;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  color: white;
+  z-index: 1000;
+}
 @media only screen and (max-width: 920px) {
   body {
     canvas {
@@ -201,9 +226,23 @@ body {
       border: none;
     }
     .menu {
+      background-size: contain;
       width: 100%;
       height: auto;
     }
+    .game-over-container {
+      .game-over-img {
+        padding-inline: 0;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 667px) and (min-height: 667px) {
+  .turn-device {
+    display: flex;
+  }
+  .canvas-container {
+    display: none;
   }
 }
 
@@ -219,18 +258,23 @@ body {
     }
   }
 }
-// @media only screen and (max-height: 480px) and (max-width: 920px) {
-//   body {
-//     canvas {
-//       box-shadow: none;
-//       border: none;
-//       border-radius: 0;
-//     }
-//     .menu-popup {
-//       height: 100vh;
-//     }
-//   }
-// }
+@media only screen and (max-height: 480px) and (max-width: 920px) {
+  body {
+    canvas {
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+      height: 100vh;
+      width: 100%;
+    }
+    .menu {
+      background-size: 100% 100%;
+      height: 100vh;
+      width: 100%;
+      aspect-ratio: unset;
+    }
+  }
+}
 
 .d-none {
   display: none;

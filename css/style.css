@@ -1,7 +1,18 @@
+@font-face {
+  font-family: "LuckiestGuy";
+  src: url("../img/5.Font/Luckiest_Guy/LuckiestGuy-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 html,
 body {
   height: 100%;
   margin: 0;
+}
+html p,
+body p {
+  margin-block-end: 0;
+  margin-block-start: 0;
 }
 html h1,
 body h1 {
@@ -40,14 +51,6 @@ body {
   box-shadow: 0 0 20px white;
   border: 2px solid white;
 }
-.canvas-container .control-panel-container {
-  position: absolute;
-  display: flex;
-  bottom: 10px;
-  justify-content: space-between;
-  align-items: end;
-  width: 100%;
-}
 .canvas-container .move-key {
   margin-left: 60px;
   display: flex;
@@ -75,7 +78,7 @@ body {
 .menu {
   background-image: url("../img/3. Background/Mesa de trabajo 1.png");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 1040px 520px;
   background-position: center;
   background-attachment: fixed;
   position: absolute;
@@ -86,7 +89,7 @@ body {
   aspect-ratio: 2/1;
   justify-content: center;
   align-items: end;
-  gap: 20px;
+  gap: 16px;
   padding-bottom: 20px;
   z-index: 910;
 }
@@ -123,9 +126,11 @@ body {
   height: 50px;
   cursor: pointer;
 }
-.game-over-container .difficulty-img {
+
+.difficulty-img {
   width: clamp(100px, 100%, 180px);
   height: 50px;
+  padding-left: 16px;
   cursor: pointer;
 }
 
@@ -155,10 +160,16 @@ body {
 }
 
 .touchCheckbox {
+  padding-right: 16px;
+  height: 50px;
   display: flex;
   align-items: center;
   gap: 12px;
   color: white;
+}
+
+.touchCheckbox p {
+  text-wrap: wrap;
 }
 
 .container {
@@ -184,18 +195,39 @@ body {
   stroke-dashoffset: 0;
 }
 
+.touchCheckbox svg {
+  height: 1.5em;
+  width: 1.5em;
+}
+
 .container input:checked ~ svg .path {
   stroke: #7fffe0;
   stroke-dasharray: 70.5096664429 9999999;
   stroke-dashoffset: -262.2723388672;
 }
 
-@font-face {
-  font-family: "LuckiestGuy";
-  src: url("../img/5.Font/Luckiest_Guy/LuckiestGuy-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+.control-panel-container {
+  position: absolute;
+  display: flex;
+  bottom: 10px;
+  justify-content: space-between;
+  align-items: end;
+  width: 100%;
 }
+
+.turn-device {
+  display: none;
+  position: absolute;
+  background: black;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  color: white;
+  z-index: 1000;
+}
+
 @media only screen and (max-width: 920px) {
   body canvas {
     width: 100%;
@@ -203,8 +235,20 @@ body {
     border: none;
   }
   body .menu {
+    background-size: contain;
     width: 100%;
     height: auto;
+  }
+  body .game-over-container .game-over-img {
+    padding-inline: 0;
+  }
+}
+@media only screen and (max-width: 667px) and (min-height: 667px) {
+  .turn-device {
+    display: flex;
+  }
+  .canvas-container {
+    display: none;
   }
 }
 @media only screen and (max-height: 480px) {
@@ -215,6 +259,21 @@ body {
   }
   body .menu {
     height: 100vh;
+  }
+}
+@media only screen and (max-height: 480px) and (max-width: 920px) {
+  body canvas {
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    height: 100vh;
+    width: 100%;
+  }
+  body .menu {
+    background-size: 100% 100%;
+    height: 100vh;
+    width: 100%;
+    aspect-ratio: unset;
   }
 }
 .d-none {
