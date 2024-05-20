@@ -55,7 +55,8 @@
           onclick="openStartMenu()" />
 
         <div id="touch-checkbox-id" class="touchCheckbox">
-          <p>Are you using a touch device?</p>
+          <p class="msg">Are you using a touch device?</p>
+          <p class="msg-mobile">Using touch??</p>
           <label class="container">
             <input id="mobile-checkbox" type="checkbox" onclick="turnOnMobilePanel()" />
             <svg viewBox="0 0 64 64">
@@ -67,6 +68,21 @@
           </label>
         </div>
       </div>
+
+      <div id="you-win-id" class="you-win-container d-none">
+        <img class="you-win-img" src="./img/6.Botones/Try again/Mesa de trabajo 20.png" alt="" />
+        <div class="game-over-menu">
+          <img
+            class="restart-img"
+            src="./img/6.Botones/Try again/Recurso 17.png"
+            onclick="startGame()" />
+          <img
+            class="back-to-manu-img d-none"
+            src="img/6.Botones/ExitGame/2.png"
+            onclick="openStartMenu()" />
+        </div>
+      </div>
+
       <div id="game-over-id" class="game-over-container d-none">
         <img class="game-over-img" src="./img/6.Botones/Tittles/Game Over/Recurso 12.png" alt="" />
         <div class="game-over-menu">

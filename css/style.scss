@@ -97,14 +97,6 @@ body {
   }
 }
 .game-over-container {
-  position: absolute;
-  z-index: 900;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 24px;
-  align-items: center;
   .game-over-img {
     padding-inline: 36px;
     width: clamp(100px, 100%, 500px);
@@ -124,6 +116,28 @@ body {
     }
   }
 }
+.game-over-container,
+.you-win-container {
+  position: absolute;
+  z-index: 900;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  align-items: center;
+}
+
+.you-win-container {
+  .you-win-img {
+    position: absolute;
+    width: clamp(100px, 100%, 500px);
+    width: 920px;
+    height: 480px;
+    z-index: 930;
+  }
+}
+
 .difficulty-img {
   width: clamp(100px, 100%, 180px);
   height: 50px;
@@ -159,6 +173,7 @@ body {
   height: 50px;
   display: flex;
   align-items: center;
+  text-align: center;
   gap: 12px;
   color: white;
 }
@@ -207,7 +222,6 @@ body {
   width: 100%;
 }
 .turn-device {
-  display: none;
   position: absolute;
   background: black;
   width: 100vw;
@@ -217,6 +231,10 @@ body {
   font-size: 32px;
   color: white;
   z-index: 1000;
+}
+.turn-device,
+.msg-mobile {
+  display: none;
 }
 @media only screen and (max-width: 920px) {
   body {
@@ -237,6 +255,21 @@ body {
     }
   }
 }
+@media only screen and (max-width: 500px) {
+  .msg {
+    display: none;
+  }
+  .msg-mobile {
+    display: block;
+  }
+  .touchCheckbox {
+    flex-direction: column;
+    height: auto;
+    gap: 6px;
+    font-size: 12px;
+  }
+}
+
 @media only screen and (max-width: 667px) and (min-height: 667px) {
   .turn-device {
     display: flex;

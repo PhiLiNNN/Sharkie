@@ -6,7 +6,7 @@ class Endboss extends MovableObject {
   offsetY = 60;
   offsetHeight = 110;
   offsetWidth = 40;
-  energy = 100;
+  energy = 10;
   speed = 5.0;
   world;
   ENDBOSS_APPEARS = [
@@ -76,7 +76,6 @@ class Endboss extends MovableObject {
     let updateSpawnAnimation = setInterval(() => {
       if (this.spawnAnimation && !this.spawnAnimationPlayed) {
         this.playAnimation(this.ENDBOSS_APPEARS);
-
         setTimeout(() => (this.spawnAnimationPlayed = true), 786);
       }
     }, 85);
@@ -103,7 +102,10 @@ class Endboss extends MovableObject {
     if (this.isDead()) {
       let idx = this.currentImage % this.ENDBOSS_DEAD.length;
       if (idx === this.ENDBOSS_DEAD.length - 1) this.deadAnimation = true;
-      if (!this.deadAnimation) this.playAnimation(this.ENDBOSS_DEAD);
+      if (!this.deadAnimation) {
+        toggleVisibility("you-win-id", false);
+        this.playAnimation(this.ENDBOSS_DEAD);
+      }
 
       setTimeout(() => {
         const updateSinkToGround = setInterval(() => {

@@ -7,62 +7,62 @@ let level1;
 function initLevel() {
   level1 = new Level(
     [
-      new PufferFish(
-        "GREEN",
-        1,
-        1000 + Math.random() * 250,
-        90 + Math.random() * 320,
-        0.15 + Math.random() * 0.5
-      ),
-      new PufferFish(
-        "RED",
-        3,
-        1000 + Math.random() * 250,
-        90 + Math.random() * 320,
-        0.15 + Math.random() * 0.5
-      ),
-      new PufferFish(
-        "GREEN",
-        1,
-        1000 + Math.random() * 250,
-        90 + Math.random() * 320,
-        0.15 + Math.random() * 0.5
-      ),
-      new PufferFish(
-        "RED",
-        3,
-        1000 + Math.random() * 250,
-        90 + Math.random() * 320,
-        0.15 + Math.random() * 0.5
-      ),
-      new PufferFish(
-        "ORANGE",
-        2,
-        1000 + Math.random() * 250,
-        90 + Math.random() * 320,
-        0.15 + Math.random() * 0.5
-      ),
-      new PufferFish(
-        "ORANGE",
-        2,
-        1000 + Math.random() * 250,
-        90 + Math.random() * 320,
-        0.15 + Math.random() * 0.5
-      ),
-      new PufferFish(
-        "RED",
-        3,
-        1000 + Math.random() * 250,
-        90 + Math.random() * 320,
-        0.15 + Math.random() * 0.5
-      ),
-      new PufferFish(
-        "GREEN",
-        1,
-        1000 + Math.random() * 250,
-        90 + Math.random() * 320,
-        0.15 + Math.random() * 0.5
-      ),
+      // new PufferFish(
+      //   "GREEN",
+      //   1,
+      //   1000 + Math.random() * 250,
+      //   90 + Math.random() * 320,
+      //   0.15 + Math.random() * 0.5
+      // ),
+      // new PufferFish(
+      //   "RED",
+      //   3,
+      //   1000 + Math.random() * 250,
+      //   90 + Math.random() * 320,
+      //   0.15 + Math.random() * 0.5
+      // ),
+      // new PufferFish(
+      //   "GREEN",
+      //   1,
+      //   1000 + Math.random() * 250,
+      //   90 + Math.random() * 320,
+      //   0.15 + Math.random() * 0.5
+      // ),
+      // new PufferFish(
+      //   "RED",
+      //   3,
+      //   1000 + Math.random() * 250,
+      //   90 + Math.random() * 320,
+      //   0.15 + Math.random() * 0.5
+      // ),
+      // new PufferFish(
+      //   "ORANGE",
+      //   2,
+      //   1000 + Math.random() * 250,
+      //   90 + Math.random() * 320,
+      //   0.15 + Math.random() * 0.5
+      // ),
+      // new PufferFish(
+      //   "ORANGE",
+      //   2,
+      //   1000 + Math.random() * 250,
+      //   90 + Math.random() * 320,
+      //   0.15 + Math.random() * 0.5
+      // ),
+      // new PufferFish(
+      //   "RED",
+      //   3,
+      //   1000 + Math.random() * 250,
+      //   90 + Math.random() * 320,
+      //   0.15 + Math.random() * 0.5
+      // ),
+      // new PufferFish(
+      //   "GREEN",
+      //   1,
+      //   1000 + Math.random() * 250,
+      //   90 + Math.random() * 320,
+      //   0.15 + Math.random() * 0.5
+      // ),
 
       new PufferFish("RED", 3, 3500, 90, 0.2),
       new PufferFish("GREEN", 1, 3520, 127, 0.2),
@@ -143,7 +143,8 @@ function initLevel() {
       new JellyDangerous("PINK", 1, 4080, 200, 0.2, false),
       new JellyDangerous("PINK", 1, 4080, 300, 0.2, false),
     ],
-    new Endboss(4500),
+    // new Endboss(4500),
+    new Endboss(500),
     backgroundObject,
     new Border(-280),
     new Border(5000),
