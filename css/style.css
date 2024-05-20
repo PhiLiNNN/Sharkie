@@ -28,15 +28,6 @@ body {
   font-family: "LuckiestGuy";
 }
 
-.control-panel-container {
-  position: absolute;
-  display: flex;
-  bottom: 10px;
-  justify-content: space-between;
-  align-items: end;
-  width: 100%;
-}
-
 .canvas-container {
   position: relative;
   display: flex;
@@ -48,6 +39,14 @@ body {
   border-radius: 20px;
   box-shadow: 0 0 20px white;
   border: 2px solid white;
+}
+.canvas-container .control-panel-container {
+  position: absolute;
+  display: flex;
+  bottom: 10px;
+  justify-content: space-between;
+  align-items: end;
+  width: 100%;
 }
 .canvas-container .move-key {
   margin-left: 60px;

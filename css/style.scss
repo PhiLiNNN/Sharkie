@@ -29,14 +29,6 @@ body {
   font-family: "LuckiestGuy";
 }
 
-.control-panel-container {
-  position: absolute;
-  display: flex;
-  bottom: 10px;
-  justify-content: space-between;
-  align-items: end;
-  width: 100%;
-}
 .canvas-container {
   position: relative;
   display: flex;
@@ -48,7 +40,14 @@ body {
     box-shadow: 0 0 20px white;
     border: 2px solid white;
   }
-
+  .control-panel-container {
+    position: absolute;
+    display: flex;
+    bottom: 10px;
+    justify-content: space-between;
+    align-items: end;
+    width: 100%;
+  }
   .move-key {
     margin-left: 60px;
     display: flex;
