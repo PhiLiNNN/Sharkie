@@ -6,8 +6,9 @@ class Endboss extends MovableObject {
   offsetY = 60;
   offsetHeight = 110;
   offsetWidth = 40;
-  energy = 10;
+  energy = 100;
   speed = 5.0;
+  deadImgCounter = 0;
   world;
   ENDBOSS_APPEARS = [
     "./img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -100,28 +101,37 @@ class Endboss extends MovableObject {
 
   animate() {
     if (this.isDead()) {
-      let idx = this.currentImage % this.ENDBOSS_DEAD.length;
-      if (idx === this.ENDBOSS_DEAD.length - 1) this.deadAnimation = true;
-      if (!this.deadAnimation) {
-        toggleVisibility("you-win-id", false);
-        this.playAnimation(this.ENDBOSS_DEAD);
-      }
-
-      setTimeout(() => {
-        const updateSinkToGround = setInterval(() => {
-          this.y += 0.03;
-          if (this.y >= 220) {
-            this.y = 220;
-            clearInterval(updateSinkToGround);
-          }
-        }, 20);
-      }, 300);
+      this.playDeadAnimation();
+      this.showWinScreen();
+      this.letEndbossSinkToGround();
     } else if (this.isHurt()) this.playAnimation(this.ENDBOSS_HURT);
-    else {
-      this.playAnimation(this.ENDBOSS_SWIMMING);
-    }
+    else this.playAnimation(this.ENDBOSS_SWIMMING);
   }
 
+  showWinScreen() {
+    toggleVisibility("you-win-id", false);
+    setTimeout(() => toggleVisibility("you-win-id", true, "visible"), 200);
+  }
+
+  playDeadAnimation() {
+    if (this.deadImgCounter < this.ENDBOSS_DEAD.length) {
+      let path = this.ENDBOSS_DEAD[this.deadImgCounter];
+      this.img = this.imageCache[path];
+      this.deadImgCounter++;
+    } else pauseGame = true;
+  }
+
+  letEndbossSinkToGround() {
+    setInterval(() => {
+      const updateSinkToGround = setInterval(() => {
+        this.y += 0.05;
+        if (this.y >= 220) {
+          this.y = 220;
+          clearInterval(updateSinkToGround);
+        }
+      }, 20);
+    }, 300);
+  }
   moveToCharacter() {
     if (this.world.character.isDead() || this.isDead()) return;
     let dx = this.world.character.x - this.x - 100;

@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -30,10 +31,10 @@
     <title>Sharkie</title>
   </head>
   <body onload="init()">
+    <h1>Sharkie</h1>
     <div class="turn-device">Turn your Device</div>
     <div class="canvas-container">
       <canvas id="canvas-id" width="920" height="480"> </canvas>
-      <h1>Sharkie</h1>
 
       <div id="menu-id" class="menu">
         <img
@@ -73,12 +74,8 @@
         <img class="you-win-img" src="./img/6.Botones/Try again/Mesa de trabajo 20.png" alt="" />
         <div class="game-over-menu">
           <img
-            class="restart-img"
-            src="./img/6.Botones/Try again/Recurso 17.png"
-            onclick="startGame()" />
-          <img
-            class="back-to-manu-img d-none"
-            src="img/6.Botones/ExitGame/2.png"
+            class="back-to-menu-img"
+            src="./img/6.Botones/Back/2png.png"
             onclick="openStartMenu()" />
         </div>
       </div>
@@ -92,7 +89,7 @@
             onclick="startGame()" />
           <img
             id="exit-gameAfterDead-btn-id"
-            class="back-to-manu-img d-none"
+            class="back-to-menu-img d-none"
             src="img/6.Botones/ExitGame/2.png"
             onclick="openStartMenu()" />
         </div>
@@ -127,6 +124,11 @@
           <img id="primary-id" src="./img/6.Botones/Key/primary_attack.png" alt="" />
           <img id="secondary-id" src="./img/6.Botones/Key/secondary_attack.png" alt="" />
         </div>
+      </div>
+      <div class="hud-panel">
+        <img src="./img/6.Botones/OpenMenu/2.png" alt="" />
+        <img src="./img/6.Botones/OpenMenu/2.png" alt="" />
+        <img id="mobile-menu-icon" class="d-none" src="./img/6.Botones/OpenMenu/2.png" alt="" />
       </div>
     </div>
   </body>

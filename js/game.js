@@ -3,7 +3,6 @@ let ctx;
 let world;
 let intervalIds = [];
 let pauseGame = false;
-let onMobile = false;
 let gameDifficulty = 100;
 let dangerousShotSpeed = 1.0;
 let pufferShotSpeed = 1.0;
@@ -59,6 +58,8 @@ function openStartMenu() {
   toggleVisibility("menu-id", false);
   toggleVisibility("game-over-id", true);
   toggleVisibility("touch-checkbox-id", false);
+  toggleVisibility("you-win-id", true);
+  toggleVisibility("you-win-id", false, "visible");
 }
 
 function startGame() {
@@ -92,18 +93,22 @@ function difficultySettings(difficultyLevel) {
     dangerousShotSpeed = 1.0;
     pufferShotSpeed = 1.0;
   }
-
   closeDifficultySettings();
 }
 
 function turnOnMobilePanel() {
   const checkbox = document.getElementById("mobile-checkbox");
-  onMobile = checkbox.checked;
-  onMobile
-    ? toggleVisibility("control-panel-id", false)
-    : toggleVisibility("control-panel-id", true);
+  checkbox.checked ? showMobileButtons() : hideMobileButtons();
+}
 
-  console.log("onMobile:", onMobile);
+function showMobileButtons() {
+  toggleVisibility("control-panel-id", false);
+  toggleVisibility("mobile-menu-icon", false);
+}
+
+function hideMobileButtons() {
+  toggleVisibility("control-panel-id", true);
+  toggleVisibility("mobile-menu-icon", true);
 }
 
 function toggleVisibility(id, show, classList = "d-none") {

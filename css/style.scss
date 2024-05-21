@@ -44,6 +44,7 @@ body {
   justify-content: center;
   align-items: center;
   canvas {
+    user-select: none;
     background: $game-bg;
     border-radius: 20px;
     box-shadow: 0 0 20px white;
@@ -108,7 +109,7 @@ body {
     align-items: center;
 
     .restart-img,
-    .back-to-manu-img {
+    .back-to-menu-img {
       padding-inline: 36px;
       width: clamp(100px, 100%, 180px);
       height: 50px;
@@ -129,6 +130,8 @@ body {
 }
 
 .you-win-container {
+  opacity: 0;
+  transition: opacity 1.5s ease;
   .you-win-img {
     position: absolute;
     width: clamp(100px, 100%, 500px);
@@ -136,6 +139,17 @@ body {
     height: 480px;
     z-index: 930;
   }
+  .game-over-menu {
+    .back-to-menu-img {
+      position: absolute;
+      width: 200px;
+      z-index: 930;
+    }
+  }
+}
+
+.you-win-container.visible {
+  opacity: 1;
 }
 
 .difficulty-img {
@@ -220,6 +234,14 @@ body {
   justify-content: space-between;
   align-items: end;
   width: 100%;
+}
+.hud-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  img {
+    margin-right: 8px;
+  }
 }
 .turn-device {
   position: absolute;

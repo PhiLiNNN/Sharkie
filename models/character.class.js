@@ -143,10 +143,10 @@ class Character extends MovableObject {
         }
         if (!this.deadAnimation) {
           this.playAnimation(this.IMAGES_DEAD);
-          toggleVisibility("game-over-id", false);
-          toggleVisibility("exit-gameAfterDead-btn-id", false);
           pauseGame = true;
         }
+        toggleVisibility("game-over-id", false);
+        toggleVisibility("exit-gameAfterDead-btn-id", false);
       } else if (this.isHurt()) {
         if (this.hitFromDangerousJelly) {
           this.playAnimation(this.IMAGES_HURT_ELECTRO);
