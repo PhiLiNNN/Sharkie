@@ -31,42 +31,54 @@
     <title>Sharkie</title>
   </head>
   <body onload="init()">
-    <h1>Sharkie</h1>
     <div class="turn-device">Turn your Device</div>
     <div class="canvas-container">
       <canvas id="canvas-id" width="920" height="480"> </canvas>
 
       <div id="menu-id" class="menu">
-        <img
-          id="difficulty-btn-id"
-          class="difficulty-img"
-          src="./img/6.Botones/Difficulty/2.png"
-          alt=""
-          onclick="difficulty()" />
-        <img id="start-btn-id" src="./img/6.Botones/Start/2.png" onclick="startGame()" />
-        <img
-          id="continue-btn-id"
-          class="d-none"
-          src="img/6.Botones/Continue/2.png"
-          onclick="continueGame()" />
-        <img
-          id="exit-game-btn-id"
-          class="d-none"
-          src="img/6.Botones/ExitGame/2.png"
-          onclick="openStartMenu()" />
+        <div class="headline">
+          <h1>Sharkie</h1>
+        </div>
 
-        <div id="touch-checkbox-id" class="touchCheckbox">
-          <p class="msg">Are you using a touch device?</p>
-          <p class="msg-mobile">Using touch??</p>
-          <label class="container">
-            <input id="mobile-checkbox" type="checkbox" onclick="turnOnMobilePanel()" />
-            <svg viewBox="0 0 64 64">
-              <path
-                d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
-                pathLength="575.0541381835938"
-                class="path"></path>
-            </svg>
-          </label>
+        <div class="bottom-menu">
+          <div id="touch-checkbox-id" class="touchCheckbox">
+            <p class="msg">Are you using a touch device?</p>
+            <p class="msg-mobile">Using touch??</p>
+            <label class="container">
+              <input id="mobile-checkbox" type="checkbox" onclick="turnOnMobilePanel()" />
+              <svg viewBox="0 0 64 64">
+                <path
+                  d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                  pathLength="575.0541381835938"
+                  class="path"></path>
+              </svg>
+            </label>
+          </div>
+          <div class="bottom-menu-bts">
+            <img
+              id=""
+              class="difficulty-img"
+              src="./img/6.Botones/Instructions/2.png"
+              alt=""
+              onclick="instructions()" />
+            <img
+              id="difficulty-btn-id"
+              class="difficulty-img"
+              src="./img/6.Botones/Difficulty/2.png"
+              alt=""
+              onclick="difficulty()" />
+            <img id="start-btn-id" src="./img/6.Botones/Start/2.png" onclick="startGame()" />
+            <img
+              id="continue-btn-id"
+              class="d-none"
+              src="img/6.Botones/Continue/2.png"
+              onclick="continueGame()" />
+            <img
+              id="exit-game-btn-id"
+              class="d-none"
+              src="img/6.Botones/ExitGame/2.png"
+              onclick="openStartMenu()" />
+          </div>
         </div>
       </div>
 
@@ -95,10 +107,70 @@
         </div>
       </div>
       <div
+        id="instructions-popup-id"
+        class="instructions-popup-container d-none"
+        onclick="closeInstructions()">
+        <div class="popup" onclick="stopPropagation(event)">
+          <img
+            class="close-btn"
+            src="./img/6.Botones/Close/2.png"
+            alt=""
+            onclick="closeInstructions()" />
+          <div class="instructions">
+            <img src="./img/6.Botones/Instructions_new3.png" alt="" />
+            <h2>Sharkie’s Underwater Adventure</h2>
+            <p>
+              In the depths of the ocean, a small but brave shark named Sharkie swims through the
+              water, determined to clear the way of various foes. The underwater world is filled
+              with dangers, and Sharkie must navigate through them to survive and reach his goal.
+            </p>
+            <p>Sharkie’s adversaries include:</p>
+            <ul>
+              <li>
+                Pufferfish: These spiky fish can be pushed away with bubbles, but Sharkie must be
+                careful not to get too close. They can also shoot bubbles back at Sharkie. If
+                Sharkie’s bubbles collide with the pufferfish’s bubbles, both bubbles burst.
+              </li>
+              <li>
+                Normal Jellyfish: Harmless in appearance, they still pose a threat if Sharkie
+                doesn't stay alert.
+              </li>
+              <li>
+                Electrifying Jellyfish: These are the most dangerous of all. A single touch will
+                deliver a deadly electric shock, and they also shoot lightning bolts that can burst
+                Sharkie’s bubbles. Avoiding their attacks is crucial.
+              </li>
+            </ul>
+            <p>
+              As Sharkie progresses, he must face the final boss – a gigantic, evil shark intent on
+              devouring him with powerful bite attacks. This colossal foe is immune to normal bubble
+              attacks.
+            </p>
+            <p>
+              However, Sharkie has a secret weapon: scattered around the map are poison bottles. By
+              collecting these bottles, Sharkie can fill his Poison Status Bar, enabling him to
+              unleash poisonous attacks against the giant shark. After each poison hit, the boss
+              enters a brief cooldown period during which he cannot be harmed. Sharkie must
+              carefully time his attacks and manage his poison supply wisely. If the poison runs
+              out, Sharkie will need to find more poison bottles to continue the fight.
+            </p>
+            <p>
+              Can Sharkie overcome all the challenges and defeat the terrifying giant shark to
+              reclaim his ocean home?
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
         id="setting-popup-id"
         class="difficulty-popup-container d-none"
         onclick="closeDifficultySettings(event)">
         <div class="popup" onclick="stopPropagation(event)">
+          <img
+            class="close-btn"
+            src="./img/6.Botones/Close/2.png"
+            alt=""
+            onclick="closeDifficultySettings()" />
           <img
             id="easy-id"
             src="./img/6.Botones/GameMode/easy2.png"
@@ -126,9 +198,22 @@
         </div>
       </div>
       <div class="hud-panel">
-        <img src="./img/6.Botones/OpenMenu/2.png" alt="" />
-        <img src="./img/6.Botones/OpenMenu/2.png" alt="" />
-        <img id="mobile-menu-icon" class="d-none" src="./img/6.Botones/OpenMenu/2.png" alt="" />
+        <img
+          id="pause-menu-icon"
+          src="./img/6.Botones/OpenMenu/pause2.png"
+          alt=""
+          onclick="togglePauseGame()" />
+        <img
+          id="sound-menu-icon"
+          src="./img/6.Botones/OpenMenu/sound2.png"
+          alt=""
+          onclick="toggleSound()" />
+        <img
+          id="mobile-menu-icon"
+          class="d-none"
+          src="./img/6.Botones/OpenMenu/2.png"
+          alt=""
+          onclick="openMenu()" />
       </div>
     </div>
   </body>

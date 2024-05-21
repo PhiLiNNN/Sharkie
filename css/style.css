@@ -4,6 +4,34 @@
   font-weight: normal;
   font-style: normal;
 }
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(219, 214, 214);
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  -webkit-transition: background-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(219, 214, 214);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
 html,
 body {
   height: 100%;
@@ -22,8 +50,13 @@ body h1 {
   top: 0;
   z-index: 999;
   font-size: 46px;
-  color: white;
+  color: rgb(238, 234, 234);
   letter-spacing: 6px;
+}
+
+.headline {
+  display: flex;
+  justify-content: center;
 }
 
 body {
@@ -79,24 +112,33 @@ body {
 }
 
 .menu {
+  position: absolute;
   background-image: url("../img/3. Background/Mesa de trabajo 1.png");
   background-repeat: no-repeat;
   background-size: 1040px 520px;
   background-position: center;
   background-attachment: fixed;
-  position: absolute;
-  display: flex;
-  width: 920px;
-  height: 460px;
   border-radius: 20px;
   aspect-ratio: 2/1;
-  justify-content: center;
-  align-items: end;
-  gap: 16px;
   padding-bottom: 20px;
+  width: 920px;
+  height: 460px;
   z-index: 910;
 }
-.menu img {
+.menu .bottom-menu {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.menu .bottom-menu .bottom-menu-bts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.menu .bottom-menu .bottom-menu-bts img {
   width: clamp(100px, 100%, 180px);
   height: 50px;
   cursor: pointer;
@@ -156,11 +198,11 @@ body {
 .difficulty-img {
   width: clamp(100px, 100%, 180px);
   height: 50px;
-  padding-left: 16px;
   cursor: pointer;
 }
 
-.difficulty-popup-container {
+.difficulty-popup-container,
+.instructions-popup-container {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -169,49 +211,95 @@ body {
   justify-content: center;
   align-items: center;
 }
-.difficulty-popup-container .popup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.difficulty-popup-container .popup,
+.instructions-popup-container .popup {
+  position: relative;
   background: rgba(0, 0, 0, 0.7882352941);
-  height: 50vh;
+  width: 700px;
+  height: auto;
+  aspect-ratio: 2/1;
   border-radius: 20px;
-  width: 50vw;
   gap: 16px;
 }
-.difficulty-popup-container .popup img {
+.difficulty-popup-container .popup img,
+.instructions-popup-container .popup img {
   width: clamp(100px, 100%, 180px);
   height: 50px;
   cursor: pointer;
 }
 
+.difficulty-popup-container .popup {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+}
+.difficulty-popup-container .popup .close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+}
+
+.instructions-popup-container .popup {
+  background: #000000;
+  width: 700px;
+  overflow-y: auto;
+}
+.instructions-popup-container .popup .close-btn {
+  position: sticky;
+  top: 16px;
+  left: 100%;
+  margin-right: 16px;
+  width: 30px;
+  height: 30px;
+}
+.instructions-popup-container .popup .instructions {
+  padding: 16px 32px;
+  color: rgb(238, 234, 234);
+  text-wrap: wrap;
+  letter-spacing: 1px;
+}
+.instructions-popup-container .popup .instructions img {
+  height: 300px;
+  width: 100%;
+}
+.instructions-popup-container .popup .instructions p,
+.instructions-popup-container .popup .instructions li,
+.instructions-popup-container .popup .instructions h2 {
+  color: rgb(219, 214, 214);
+}
+
 .touchCheckbox {
-  padding-right: 16px;
+  width: 100%;
   height: 50px;
   display: flex;
   align-items: center;
+  justify-content: end;
   text-align: center;
   gap: 12px;
-  color: white;
+  color: rgb(238, 234, 234);
 }
-
-.touchCheckbox p {
+.touchCheckbox .touchCheckbox p {
   text-wrap: wrap;
 }
-
-.container {
+.touchCheckbox .container {
   cursor: pointer;
 }
-
-.container input {
+.touchCheckbox .container input {
   display: none;
 }
-
-.container svg {
+.touchCheckbox .container input:checked ~ svg .path {
+  stroke: rgb(219, 214, 214);
+  stroke-dasharray: 70.5096664429 9999999;
+  stroke-dashoffset: -262.2723388672;
+}
+.touchCheckbox .container svg {
   overflow: visible;
 }
-
-.path {
+.touchCheckbox .path {
   fill: none;
   stroke: #531a82;
   stroke-width: 6;
@@ -221,16 +309,9 @@ body {
   stroke-dasharray: 241 9999999;
   stroke-dashoffset: 0;
 }
-
 .touchCheckbox svg {
   height: 1.5em;
   width: 1.5em;
-}
-
-.container input:checked ~ svg .path {
-  stroke: #7fffe0;
-  stroke-dasharray: 70.5096664429 9999999;
-  stroke-dashoffset: -262.2723388672;
 }
 
 .control-panel-container {
@@ -248,7 +329,7 @@ body {
   right: 10px;
 }
 .hud-panel img {
-  margin-right: 8px;
+  margin-left: 8px;
 }
 
 .turn-device {
@@ -259,7 +340,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 32px;
-  color: white;
+  color: rgb(238, 234, 234);
   z-index: 1000;
 }
 
@@ -268,8 +349,8 @@ body {
   display: none;
 }
 
-@media only screen and (max-width: 920px) {
-  body canvas {
+@media only screen and (max-width: 922px) {
+  body .canvas-container canvas {
     width: 100%;
     box-shadow: none;
     border: none;
@@ -281,6 +362,11 @@ body {
   }
   body .game-over-container .game-over-img {
     padding-inline: 0;
+  }
+}
+@media only screen and (max-width: 877px) {
+  body .canvas-container .instructions-popup-container .popup {
+    width: 90vw;
   }
 }
 @media only screen and (max-width: 500px) {
@@ -306,27 +392,36 @@ body {
   }
 }
 @media only screen and (max-height: 480px) {
-  body canvas {
+  body .canvas-container canvas {
     box-shadow: none;
     border: none;
     height: 100vh;
   }
-  body .menu {
+  body .canvas-container .menu {
     height: 100vh;
   }
+  body .canvas-container .instructions-popup-container .popup {
+    height: 100vh;
+    aspect-ratio: unset;
+  }
 }
-@media only screen and (max-height: 480px) and (max-width: 920px) {
-  body canvas {
+@media only screen and (max-height: 480px) and (max-width: 922px) {
+  body .canvas-container canvas {
     box-shadow: none;
     border: none;
     border-radius: 0;
     height: 100vh;
     width: 100%;
   }
-  body .menu {
+  body .canvas-container .menu {
     background-size: 100% 100%;
     height: 100vh;
     width: 100%;
+    aspect-ratio: unset;
+  }
+  body .canvas-container .instructions-popup-container .popup {
+    width: 100vw;
+    border-radius: 0;
     aspect-ratio: unset;
   }
 }

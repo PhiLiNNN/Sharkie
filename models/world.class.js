@@ -72,7 +72,7 @@ class World {
   }
 
   handlerDesktopBubbles(lastClickTime) {
-    document.addEventListener("mousedown", (event) => {
+    this.canvas.addEventListener("mousedown", (event) => {
       const currentTime = new Date().getTime();
       document.getElementById("canvas-id").oncontextmenu = () => false;
       if (this.isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime)) {
@@ -153,7 +153,8 @@ class World {
         if (
           this.character.isColliding(item) &&
           itemType === "poison" &&
-          this.character.poison_energy !== 100
+          this.character.poison_energy !== 100 &&
+          !pauseGame
         ) {
           this.character.collectItem(itemType);
           this.poisonBar.setPercentage(this.character.poison_energy);
@@ -161,7 +162,8 @@ class World {
         } else if (
           this.character.isColliding(item) &&
           itemType === "heart" &&
-          this.character.energy !== 100
+          this.character.energy !== 100 &&
+          !pauseGame
         ) {
           this.character.collectItem(itemType);
           this.statusBar.setPercentage(this.character.energy);
@@ -176,7 +178,7 @@ class World {
   checkCharacterEnemyCollision() {
     const checkCollisions = (enemies, damage) => {
       enemies.forEach((enemy) => {
-        if (this.character.isColliding(enemy) && !enemy.isDead()) {
+        if (this.character.isColliding(enemy) && !enemy.isDead() && !pauseGame) {
           let currentTime = new Date().getTime();
           let timeSinceLastHit = currentTime - this.lastHitTime;
           if (timeSinceLastHit >= 1000) {
@@ -208,7 +210,7 @@ class World {
 
   checkCharEnemyShotCollision(enemies, damage) {
     enemies.forEach((enemyShot, idx) => {
-      if (this.character.isColliding(enemyShot)) {
+      if (this.character.isColliding(enemyShot) && !pauseGame) {
         let currentTime = new Date().getTime();
         let timeSinceLastHit = currentTime - this.lastHitTime;
         if (timeSinceLastHit >= 1000) {

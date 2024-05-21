@@ -3,6 +3,7 @@ let ctx;
 let world;
 let intervalIds = [];
 let pauseGame = false;
+let sound = true;
 let gameDifficulty = 100;
 let dangerousShotSpeed = 1.0;
 let pufferShotSpeed = 1.0;
@@ -74,6 +75,9 @@ function startGame() {
 function difficulty() {
   toggleVisibility("setting-popup-id", false);
 }
+function instructions() {
+  toggleVisibility("instructions-popup-id", false);
+}
 
 function stopPropagation(event) {
   event.stopPropagation();
@@ -81,6 +85,9 @@ function stopPropagation(event) {
 
 function closeDifficultySettings() {
   toggleVisibility("setting-popup-id", true);
+}
+function closeInstructions() {
+  toggleVisibility("instructions-popup-id", true);
 }
 
 function difficultySettings(difficultyLevel) {
@@ -123,4 +130,18 @@ function closeMenu() {
 function setStoppableInterval(fn, time) {
   let id = setInterval(fn, time);
   intervalIds.push(id);
+}
+
+function toggleSound() {
+  const soundEl = document.getElementById("sound-menu-icon");
+  sound = !sound;
+  if (sound === false) soundEl.src = "./img/6.Botones/OpenMenu/soundOff2.png";
+  else soundEl.src = "./img/6.Botones/OpenMenu/sound2.png";
+}
+
+function togglePauseGame() {
+  pauseGame = !pauseGame;
+  const pauseEl = document.getElementById("pause-menu-icon");
+  if (pauseGame === true) pauseEl.src = "./img/6.Botones/OpenMenu/play2.png";
+  else pauseEl.src = "./img/6.Botones/OpenMenu/pause2.png";
 }
