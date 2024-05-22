@@ -59,36 +59,53 @@ class Character extends MovableObject {
 
   handleMovement() {
     this.isSwimming = false;
-    if (!pauseGame) {
-      let targetCameraX = this.world.camera_x;
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_rightEnd && !this.isDead()) {
-        this.x += this.speed;
-        this.otherDirection = false;
-        targetCameraX = -this.x;
-        this.isSwimming = true;
-        this.currentTime = new Date().getTime();
-      }
-      if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd && !this.isDead()) {
-        this.x -= this.speed;
-        this.otherDirection = true;
-        targetCameraX = -this.x + 700;
-        this.isSwimming = true;
-        this.currentTime = new Date().getTime();
-      }
-
-      if (this.world.keyboard.UP && this.y > this.world.level.level_topEnd && !this.isDead()) {
-        this.y -= this.speed;
-        this.isSwimming = true;
-        this.currentTime = new Date().getTime();
-      }
-      if (this.world.keyboard.DOWN && this.y < this.world.level.level_bottomEnd && !this.isDead()) {
-        this.y += this.speed;
-        this.isSwimming = true;
-        this.currentTime = new Date().getTime();
-      }
-      this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.01;
+    if (!pauseGame && !this.isDead()) {
+      this.moveCharacterRight();
+      this.moveCharacterLeft();
+      this.moveCharacterUp();
+      this.moveCharacterDown();
+      this.updateCamera();
     }
   }
+
+  moveCharacterRight() {
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_rightEnd) {
+      this.x += this.speed;
+      this.otherDirection = false;
+      this.isSwimming = true;
+      this.currentTime = new Date().getTime();
+    }
+  }
+
+  moveCharacterLeft() {
+    if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd) {
+      this.x -= this.speed;
+      this.otherDirection = true;
+      this.isSwimming = true;
+      this.currentTime = new Date().getTime();
+    }
+  }
+
+  moveCharacterUp() {
+    if (this.world.keyboard.UP && this.y > this.world.level.level_topEnd) {
+      this.y -= this.speed;
+      this.isSwimming = true;
+      this.currentTime = new Date().getTime();
+    }
+  }
+
+  moveCharacterDown() {
+    if (this.world.keyboard.DOWN && this.y < this.world.level.level_bottomEnd) {
+      this.y += this.speed;
+      this.isSwimming = true;
+      this.currentTime = new Date().getTime();
+    }
+  }
+  updateCamera() {
+    let targetCameraX = this.otherDirection ? -this.x + 700 : -this.x;
+    this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.01;
+  }
+
   updateCharacterAnimation() {
     if (this.isDead()) this.handleDeadAnimation();
     else if (this.isHurt()) this.handleHurtAnimation();
