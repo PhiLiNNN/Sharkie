@@ -7,7 +7,7 @@ class Level {
   poisonItems;
   leftBorder;
   rightBorder;
-  level_rightEnd = 4800;
+  level_rightEnd = 5300;
   level_leftEnd = 0;
   level_topEnd = 0;
   level_bottomEnd = 320;

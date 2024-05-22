@@ -148,6 +148,7 @@ class Endboss extends MovableObject {
   handlerCharacterEndbossCollision() {
     let currentTime = new Date().getTime();
     let timeSinceLastHit = currentTime - this.world.lastHitTime;
+    this.world.character.currentTime = currentTime;
     if (timeSinceLastHit >= 1000) {
       this.world.lastHitTime = currentTime;
       this.playAnimationOnce(this.ENDBOSS_ATTACK, 100);

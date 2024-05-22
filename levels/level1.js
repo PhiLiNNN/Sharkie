@@ -143,10 +143,10 @@ function initLevel() {
       new JellyDangerous("PINK", 1, 4080, 200, 0.2, false),
       new JellyDangerous("PINK", 1, 4080, 300, 0.2, false),
     ],
-    new Endboss(4500),
+    new Endboss(5000),
     backgroundObject,
     new Border(-280),
-    new Border(5000),
+    new Border(5500),
     [
       new PoisonItem("swimming", 1995, 230),
       new PoisonItem("swimming", 1200, 90),

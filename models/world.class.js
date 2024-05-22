@@ -74,6 +74,7 @@ class World {
   handlerDesktopBubbles(lastClickTime) {
     this.canvas.addEventListener("mousedown", (event) => {
       const currentTime = new Date().getTime();
+      this.character.currentTime = currentTime;
       document.getElementById("canvas-id").oncontextmenu = () => false;
       if (this.isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime)) {
         this.executePrimaryAttack();
@@ -181,6 +182,7 @@ class World {
         if (this.character.isColliding(enemy) && !enemy.isDead() && !pauseGame) {
           let currentTime = new Date().getTime();
           let timeSinceLastHit = currentTime - this.lastHitTime;
+          this.character.currentTime = currentTime;
           if (timeSinceLastHit >= 1000) {
             this.lastHitTime = currentTime;
             this.character.hit(damage);
@@ -213,6 +215,7 @@ class World {
       if (this.character.isColliding(enemyShot) && !pauseGame) {
         let currentTime = new Date().getTime();
         let timeSinceLastHit = currentTime - this.lastHitTime;
+        this.character.currentTime = currentTime;
         if (timeSinceLastHit >= 1000) {
           this.lastHitTime = currentTime;
           this.character.hit(damage);
@@ -340,7 +343,7 @@ class World {
         this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
       if (this.character.x > 1000 && !pauseGame && !this.level.endboss.isDead())
         this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellies), "jellyDangerous");
-    }, 200);
+    }, 400);
     intervalIds.push(updateEnemyVisibility);
   }
 
