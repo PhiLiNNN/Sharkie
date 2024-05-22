@@ -14,14 +14,14 @@ $text-color: rgb(219, 214, 214);
   background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: $text-color;
+  background-color: #7fffe0;
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
   transition: background-color 200ms ease-in-out;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: $text-color;
+  background-color: #7fffe0;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -40,6 +40,7 @@ body {
   h1 {
     margin-block-start: 0;
     margin-block-end: 0;
+    margin-top: 24px;
     position: absolute;
     top: 0;
     z-index: 999;
@@ -96,6 +97,26 @@ body {
     gap: 10px;
     margin-bottom: 4px;
     padding-right: 10px;
+  }
+  .you-win-container {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    z-index: 930;
+    position: absolute;
+    .you-win-img {
+      width: 920px;
+      height: 480px;
+    }
+    .back-to-menu {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .back-to-menu-img {
+      width: 280px;
+      height: 60px;
+    }
   }
 }
 .canvas-container img {
@@ -154,8 +175,7 @@ body {
     }
   }
 }
-.game-over-container,
-.you-win-container {
+.game-over-container {
   position: absolute;
   z-index: 900;
   width: 100%;
@@ -164,25 +184,6 @@ body {
   justify-content: center;
   gap: 24px;
   align-items: center;
-}
-
-.you-win-container {
-  opacity: 0;
-  transition: opacity 1.5s ease;
-  .you-win-img {
-    position: absolute;
-    width: clamp(100px, 100%, 500px);
-    width: 920px;
-    height: 480px;
-    z-index: 930;
-  }
-  .game-over-menu {
-    .back-to-menu-img {
-      position: absolute;
-      width: 200px;
-      z-index: 930;
-    }
-  }
 }
 
 .you-win-container.visible {
@@ -211,21 +212,30 @@ body {
     height: auto;
     aspect-ratio: 2/1;
     border-radius: 20px;
-    gap: 16px;
-    img {
-      width: clamp(100px, 100%, 180px);
-      height: 50px;
-      cursor: pointer;
+    color: $text-color;
+    text-wrap: wrap;
+    letter-spacing: 1px;
+    overflow-y: auto;
+    .setting-menu {
+      gap: 16px;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+      img {
+        width: clamp(100px, 100%, 180px);
+        height: 50px;
+        cursor: pointer;
+      }
+    }
+    .hard-info-text {
+      text-align: center;
     }
   }
 }
 .difficulty-popup-container {
   .popup {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 500px;
+    padding: 48px 16px;
     .close-btn {
       position: absolute;
       top: 16px;
@@ -235,12 +245,10 @@ body {
     }
   }
 }
-
 .instructions-popup-container {
   .popup {
     background: #000000;
-    width: 700px;
-    overflow-y: auto;
+    width: 750px;
     .close-btn {
       position: sticky;
       top: 16px;
@@ -251,17 +259,9 @@ body {
     }
     .instructions {
       padding: 16px 32px;
-      color: $primary;
-      text-wrap: wrap;
-      letter-spacing: 1px;
       img {
         height: 300px;
         width: 100%;
-      }
-      p,
-      li,
-      h2 {
-        color: $text-color;
       }
     }
   }
@@ -347,6 +347,13 @@ body {
         box-shadow: none;
         border: none;
       }
+      .you-win-container {
+        .you-win-img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 1.91/1;
+        }
+      }
     }
     .menu {
       background-size: contain;
@@ -412,6 +419,13 @@ body {
           aspect-ratio: unset;
         }
       }
+      .you-win-container {
+        .you-win-img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 1.91/1;
+        }
+      }
     }
   }
 }
@@ -438,6 +452,14 @@ body {
           width: 100vw;
           border-radius: 0;
           aspect-ratio: unset;
+        }
+      }
+      .you-win-container {
+        border-radius: 0;
+        .you-win-img {
+          width: 100%;
+          height: 100vh;
+          aspect-ratio: auto;
         }
       }
     }

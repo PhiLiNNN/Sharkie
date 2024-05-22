@@ -6,36 +6,11 @@ class JellyRegular extends MovableObject {
   speed = 0.01;
   radius;
   damage = 100;
-  JELLY_LILA = [
-    "./img/2.Enemy/2 Jelly fish/Regular damage/LILA1.png",
-    "./img/2.Enemy/2 Jelly fish/Regular damage/LILA2.png",
-    "./img/2.Enemy/2 Jelly fish/Regular damage/LILA3.png",
-    "./img/2.Enemy/2 Jelly fish/Regular damage/LILA4.png",
-  ];
-  JELLY_YELLOW = [
-    "./img/2.Enemy/2 Jelly fish/Regular damage/YELLOW1.png",
-    "./img/2.Enemy/2 Jelly fish/Regular damage/YELLOW2.png",
-    "./img/2.Enemy/2 Jelly fish/Regular damage/YELLOW3.png",
-    "./img/2.Enemy/2 Jelly fish/Regular damage/YELLOW4.png",
-  ];
-  JELLY_LILA_DEAD = [
-    "./img/2.Enemy/2 Jelly fish/Dead/Lila/L1.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Lila/L2.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Lila/L3.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png",
-  ];
-  JELLY_YELLOW_DEAD = [
-    "./img/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Yellow/y2.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Yellow/y3.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png",
-  ];
-
   constructor(fishType, fishIndex, x, y, angle, radius) {
     super().loadImage(`./img/2.Enemy/2 Jelly fish/Regular damage/${fishType}${fishIndex}.png`);
-    this.loadImages(this[`JELLY_${fishType.toUpperCase()}`]);
-    this.loadImages(this.JELLY_LILA_DEAD);
-    this.loadImages(this.JELLY_YELLOW_DEAD);
+    this.loadImages(this.getFishImages(fishType.toUpperCase()));
+    this.loadImages(JELLY_LILA_DEAD);
+    this.loadImages(JELLY_YELLOW_DEAD);
     this.x = x;
     this.y = y;
     this.angle = (angle / 360) * 2 * Math.PI;
@@ -43,17 +18,25 @@ class JellyRegular extends MovableObject {
     this.circle();
     this.animate(fishType.toUpperCase());
   }
+  getFishImages(fishType) {
+    if (fishType === "LILA") return JELLY_LILA;
+    else if (fishType === "YELLOW") return JELLY_YELLOW;
+  }
 
+  getFishDeadImages(fishType) {
+    if (fishType === "LILA") return JELLY_LILA_DEAD;
+    else if (fishType === "YELLOW") return JELLY_YELLOW_DEAD;
+  }
   animate(fishType) {
     const animateFunction = () => {
       if (this.isDead()) {
         this.height = 50;
         this.width = 50;
-        this.playAnimation(this[`JELLY_${fishType}_DEAD`]);
+        this.playAnimation(this.getFishDeadImages(fishType.toUpperCase()));
         this.y -= 10;
         setTimeout(animateFunction, 80);
       } else {
-        this.playAnimation(this[`JELLY_${fishType}`]);
+        this.playAnimation(this.getFishImages(fishType.toUpperCase()));
         setTimeout(animateFunction, 200);
       }
     };

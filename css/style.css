@@ -13,7 +13,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(219, 214, 214);
+  background-color: #7fffe0;
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
@@ -22,7 +22,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(219, 214, 214);
+  background-color: #7fffe0;
 }
 
 input:-webkit-autofill,
@@ -46,6 +46,7 @@ html h1,
 body h1 {
   margin-block-start: 0;
   margin-block-end: 0;
+  margin-top: 24px;
   position: absolute;
   top: 0;
   z-index: 999;
@@ -105,6 +106,26 @@ body {
   margin-bottom: 4px;
   padding-right: 10px;
 }
+.canvas-container .you-win-container {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  z-index: 930;
+  position: absolute;
+}
+.canvas-container .you-win-container .you-win-img {
+  width: 920px;
+  height: 480px;
+}
+.canvas-container .you-win-container .back-to-menu {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.canvas-container .you-win-container .back-to-menu-img {
+  width: 280px;
+  height: 60px;
+}
 
 .canvas-container img {
   width: 40px;
@@ -162,8 +183,7 @@ body {
   cursor: pointer;
 }
 
-.game-over-container,
-.you-win-container {
+.game-over-container {
   position: absolute;
   z-index: 900;
   width: 100%;
@@ -172,23 +192,6 @@ body {
   justify-content: center;
   gap: 24px;
   align-items: center;
-}
-
-.you-win-container {
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-.you-win-container .you-win-img {
-  position: absolute;
-  width: clamp(100px, 100%, 500px);
-  width: 920px;
-  height: 480px;
-  z-index: 930;
-}
-.you-win-container .game-over-menu .back-to-menu-img {
-  position: absolute;
-  width: 200px;
-  z-index: 930;
 }
 
 .you-win-container.visible {
@@ -219,21 +222,32 @@ body {
   height: auto;
   aspect-ratio: 2/1;
   border-radius: 20px;
-  gap: 16px;
+  color: rgb(219, 214, 214);
+  text-wrap: wrap;
+  letter-spacing: 1px;
+  overflow-y: auto;
 }
-.difficulty-popup-container .popup img,
-.instructions-popup-container .popup img {
+.difficulty-popup-container .popup .setting-menu,
+.instructions-popup-container .popup .setting-menu {
+  gap: 16px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.difficulty-popup-container .popup .setting-menu img,
+.instructions-popup-container .popup .setting-menu img {
   width: clamp(100px, 100%, 180px);
   height: 50px;
   cursor: pointer;
 }
+.difficulty-popup-container .popup .hard-info-text,
+.instructions-popup-container .popup .hard-info-text {
+  text-align: center;
+}
 
 .difficulty-popup-container .popup {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 500px;
+  padding: 48px 16px;
 }
 .difficulty-popup-container .popup .close-btn {
   position: absolute;
@@ -245,8 +259,7 @@ body {
 
 .instructions-popup-container .popup {
   background: #000000;
-  width: 700px;
-  overflow-y: auto;
+  width: 750px;
 }
 .instructions-popup-container .popup .close-btn {
   position: sticky;
@@ -258,18 +271,10 @@ body {
 }
 .instructions-popup-container .popup .instructions {
   padding: 16px 32px;
-  color: rgb(238, 234, 234);
-  text-wrap: wrap;
-  letter-spacing: 1px;
 }
 .instructions-popup-container .popup .instructions img {
   height: 300px;
   width: 100%;
-}
-.instructions-popup-container .popup .instructions p,
-.instructions-popup-container .popup .instructions li,
-.instructions-popup-container .popup .instructions h2 {
-  color: rgb(219, 214, 214);
 }
 
 .touchCheckbox {
@@ -355,6 +360,11 @@ body {
     box-shadow: none;
     border: none;
   }
+  body .canvas-container .you-win-container .you-win-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.91/1;
+  }
   body .menu {
     background-size: contain;
     width: 100%;
@@ -404,6 +414,11 @@ body {
     height: 100vh;
     aspect-ratio: unset;
   }
+  body .canvas-container .you-win-container .you-win-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.91/1;
+  }
 }
 @media only screen and (max-height: 480px) and (max-width: 922px) {
   body .canvas-container canvas {
@@ -423,6 +438,14 @@ body {
     width: 100vw;
     border-radius: 0;
     aspect-ratio: unset;
+  }
+  body .canvas-container .you-win-container {
+    border-radius: 0;
+  }
+  body .canvas-container .you-win-container .you-win-img {
+    width: 100%;
+    height: 100vh;
+    aspect-ratio: auto;
   }
 }
 .d-none {

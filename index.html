@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
     <script src="./models/assets/animations/character.js"></script>
+    <script src="./models/assets/animations/endboss.js"></script>
+    <script src="./models/assets/animations/jelly-dangerous.js"></script>
+    <script src="./models/assets/animations/jelly-regular.js"></script>
+    <script src="./models/assets/animations/puffer-fish.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
     <script src="./models/enemies/puffer-fish.class.js"></script>
@@ -84,7 +88,7 @@
 
       <div id="you-win-id" class="you-win-container d-none">
         <img class="you-win-img" src="./img/6.Botones/Try again/Mesa de trabajo 20.png" alt="" />
-        <div class="game-over-menu">
+        <div class="back-to-menu">
           <img
             class="back-to-menu-img"
             src="./img/6.Botones/Back/2png.png"
@@ -171,14 +175,33 @@
             src="./img/6.Botones/Close/2.png"
             alt=""
             onclick="closeDifficultySettings()" />
-          <img
-            id="easy-id"
-            src="./img/6.Botones/GameMode/easy2.png"
-            onclick="difficultySettings('easy')" />
-          <img
-            id="hard-id"
-            src="./img/6.Botones/GameMode/hard2.png"
-            onclick="difficultySettings('hard')" />
+          <div class="setting-menu">
+            <img
+              id="easy-id"
+              src="./img/6.Botones/GameMode/easy2.png"
+              onclick="difficultySettings('easy')" />
+            <img
+              id="hard-id"
+              src="./img/6.Botones/GameMode/hard2.png"
+              onclick="difficultySettings('hard')" />
+          </div>
+          <div class="hard-info-text">
+            <h3>Are you up for the hard Challenge?</h3>
+            <p>
+              In this mode, Sharkie lives on the edge. Every move counts, every decision matters.
+              Once Sharkie is hit or collides with an obstacle, it's game over. No second chances,
+              no room for error.
+            </p>
+            <p>
+              The ocean is unforgiving in hard mode. There are no regeneration hearts scattered
+              across the map to replenish Sharkie's health. It's just Sharkie against the odds,
+              navigating through a sea of peril.
+            </p>
+            <p>
+              Are you ready to test your skills and see if you can guide Sharkie through this
+              relentless underwater adventure?
+            </p>
+          </div>
         </div>
       </div>
       <div id="control-panel-id" class="control-panel-container d-none">
@@ -199,7 +222,7 @@
       </div>
       <div class="hud-panel">
         <img
-          id="pause-menu-icon"
+          id="pause-menu-icon-id"
           src="./img/6.Botones/OpenMenu/pause2.png"
           alt=""
           onclick="togglePauseGame()" />
@@ -210,7 +233,6 @@
           onclick="toggleSound()" />
         <img
           id="mobile-menu-icon"
-          class="d-none"
           src="./img/6.Botones/OpenMenu/2.png"
           alt=""
           onclick="openMenu()" />

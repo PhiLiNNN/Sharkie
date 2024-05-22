@@ -4,6 +4,18 @@ layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
 repeaterAmount = 7; // change this number to set the length of the world
 let y = 230;
 let level1;
+
+function showHeartItems() {
+  if (heartItems)
+    return [
+      new HeartItem(1200, 290),
+      new HeartItem(2200, 200),
+      new HeartItem(3000, 400),
+      new HeartItem(4000, 300),
+    ];
+  return [];
+}
+
 function initLevel() {
   level1 = new Level(
     [
@@ -64,46 +76,46 @@ function initLevel() {
         0.15 + Math.random() * 0.5
       ),
 
-      new PufferFish("RED", 3, 3500, 90, 0.2),
+      new PufferFish("ORANGE", 3, 3500, 90, 0.2),
       new PufferFish("GREEN", 1, 3520, 127, 0.2),
       new PufferFish("RED", 3, 3540, 163, 0.2),
       new PufferFish("GREEN", 1, 3560, 200, 0.2),
       new PufferFish("RED", 3, 3580, 238, 0.2),
       new PufferFish("GREEN", 1, 3600, 275, 0.2),
       new PufferFish("RED", 3, 3620, 312, 0.2),
-      new PufferFish("RED", 3, 3640, 348, 0.2),
+      new PufferFish("ORANGE", 3, 3640, 348, 0.2),
       new PufferFish("RED", 3, 3660, 385, 0.2),
       new PufferFish("GREEN", 1, 3680, 420, 0.2),
 
       new PufferFish("RED", 3, 3880, 90, 0.2),
       new PufferFish("GREEN", 1, 3860, 127, 0.2),
-      new PufferFish("RED", 3, 3840, 163, 0.2),
+      new PufferFish("ORANGE", 3, 3840, 163, 0.2),
       new PufferFish("GREEN", 1, 3820, 200, 0.2),
       new PufferFish("RED", 3, 3800, 238, 0.2),
       new PufferFish("GREEN", 1, 3780, 275, 0.2),
-      new PufferFish("RED", 3, 3760, 312, 0.2),
+      new PufferFish("ORANGE", 3, 3760, 312, 0.2),
       new PufferFish("RED", 3, 3740, 348, 0.2),
-      new PufferFish("GREEN", 1, 3720, 385, 0.2),
+      new PufferFish("ORANGE", 1, 3720, 385, 0.2),
 
       new PufferFish("GREEN", 1, 3920, 127, 0.2),
       new PufferFish("RED", 3, 3940, 163, 0.2),
-      new PufferFish("GREEN", 1, 3960, 200, 0.2),
+      new PufferFish("ORANGE", 1, 3960, 200, 0.2),
       new PufferFish("RED", 3, 3980, 238, 0.2),
-      new PufferFish("GREEN", 1, 4000, 275, 0.2),
-      new PufferFish("RED", 3, 4020, 312, 0.2),
+      new PufferFish("ORANGE", 1, 4000, 275, 0.2),
+      new PufferFish("ORANGE", 3, 4020, 312, 0.2),
       new PufferFish("RED", 3, 4040, 348, 0.2),
       new PufferFish("RED", 3, 4060, 385, 0.2),
-      new PufferFish("GREEN", 1, 4080, 420, 0.2),
+      new PufferFish("ORANGE", 1, 4080, 420, 0.2),
 
       new PufferFish("RED", 3, 4260, 90, 0.2),
       new PufferFish("GREEN", 1, 4240, 127, 0.2),
       new PufferFish("RED", 3, 4220, 163, 0.2),
-      new PufferFish("GREEN", 1, 4200, 200, 0.2),
+      new PufferFish("ORANGE", 1, 4200, 200, 0.2),
       new PufferFish("RED", 3, 4180, 238, 0.2),
       new PufferFish("GREEN", 1, 4160, 275, 0.2),
-      new PufferFish("RED", 3, 4140, 312, 0.2),
+      new PufferFish("ORANGE", 3, 4140, 312, 0.2),
       new PufferFish("RED", 3, 4120, 348, 0.2),
-      new PufferFish("RED", 3, 4100, 385, 0.2),
+      new PufferFish("ORANGE", 3, 4100, 385, 0.2),
     ],
 
     [
@@ -143,23 +155,24 @@ function initLevel() {
       new JellyDangerous("PINK", 1, 4080, 200, 0.2, false),
       new JellyDangerous("PINK", 1, 4080, 300, 0.2, false),
     ],
-    new Endboss(5000),
+    new Endboss(600),
     backgroundObject,
     new Border(-280),
     new Border(5500),
     [
-      new PoisonItem("swimming", 1995, 230),
       new PoisonItem("swimming", 1200, 90),
-      new PoisonItem("swimming", 2500, 360),
-      new PoisonItem("ground", 500, 400),
-      new PoisonItem("ground", 1000, 360),
+      new PoisonItem("swimming", 1995, 230),
+      new PoisonItem("swimming", 4500, 180),
+      new PoisonItem("swimming", 3800, 224),
       new PoisonItem("ground", 200, 410),
-      new PoisonItem("ground", 260, 380),
-      new PoisonItem("ground", 320, 360),
-      new PoisonItem("ground", 400, 390),
-      new PoisonItem("ground", 280, 360),
+      new PoisonItem("ground", 500, 400),
+      new PoisonItem("ground", 2800, 360),
+      new PoisonItem("ground", 1000, 360),
+      new PoisonItem("ground", 4000, 380),
+      new PoisonItem("ground", 4200, 360),
+      new PoisonItem("ground", 4600, 390),
     ],
-    [new HeartItem(1200, 290), new HeartItem(2000, 100), new HeartItem(3000, 400)]
+    showHeartItems()
   );
 }
 

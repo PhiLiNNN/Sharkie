@@ -6,67 +6,18 @@ class Endboss extends MovableObject {
   offsetY = 60;
   offsetHeight = 110;
   offsetWidth = 40;
-  energy = 100;
+  energy = 1;
   speed = 5.0;
   deadImgCounter = 0;
   world;
-  ENDBOSS_APPEARS = [
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/2.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/3.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/4.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/5.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/6.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/7.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/8.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/9.png",
-    "./img/2.Enemy/3 Final Enemy/1.Introduce/10.png",
-  ];
-  ENDBOSS_SWIMMING = [
-    "./img/2.Enemy/3 Final Enemy/2.floating/1.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/2.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/3.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/4.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/5.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/6.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/7.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/8.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/9.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/10.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/11.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/12.png",
-    "./img/2.Enemy/3 Final Enemy/2.floating/13.png",
-  ];
-  ENDBOSS_HURT = [
-    "./img/2.Enemy/3 Final Enemy/Hurt/1.png",
-    "./img/2.Enemy/3 Final Enemy/Hurt/2.png",
-    "./img/2.Enemy/3 Final Enemy/Hurt/3.png",
-    "./img/2.Enemy/3 Final Enemy/Hurt/4.png",
-  ];
-  ENDBOSS_DEAD = [
-    "./img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png",
-    "./img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png",
-    "./img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png",
-    "./img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png",
-    "./img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
-    "./img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
-  ];
-  ENDBOSS_ATTACK = [
-    "./img/2.Enemy/3 Final Enemy/Attack/1.png",
-    "./img/2.Enemy/3 Final Enemy/Attack/2.png",
-    "./img/2.Enemy/3 Final Enemy/Attack/3.png",
-    "./img/2.Enemy/3 Final Enemy/Attack/4.png",
-    "./img/2.Enemy/3 Final Enemy/Attack/5.png",
-    "./img/2.Enemy/3 Final Enemy/Attack/6.png",
-  ];
 
   constructor(x) {
-    super().loadImage(this.ENDBOSS_APPEARS[0]);
-    this.loadImages(this.ENDBOSS_SWIMMING);
-    this.loadImages(this.ENDBOSS_APPEARS);
-    this.loadImages(this.ENDBOSS_HURT);
-    this.loadImages(this.ENDBOSS_DEAD);
-    this.loadImages(this.ENDBOSS_ATTACK);
+    super().loadImage(ENDBOSS_APPEARS[0]);
+    this.loadImages(ENDBOSS_SWIMMING);
+    this.loadImages(ENDBOSS_APPEARS);
+    this.loadImages(ENDBOSS_HURT);
+    this.loadImages(ENDBOSS_DEAD);
+    this.loadImages(ENDBOSS_ATTACK);
     this.spawnAnimationPlayed = false;
     this.x = x;
     this.spawnEndboss();
@@ -76,7 +27,7 @@ class Endboss extends MovableObject {
   spawnEndboss() {
     let updateSpawnAnimation = setInterval(() => {
       if (this.spawnAnimation && !this.spawnAnimationPlayed) {
-        this.playAnimation(this.ENDBOSS_APPEARS);
+        this.playAnimation(ENDBOSS_APPEARS);
         setTimeout(() => (this.spawnAnimationPlayed = true), 786);
       }
     }, 85);
@@ -104,8 +55,9 @@ class Endboss extends MovableObject {
       this.playDeadAnimation();
       this.showWinScreen();
       this.letEndbossSinkToGround();
-    } else if (this.isHurt()) this.playAnimation(this.ENDBOSS_HURT);
-    else this.playAnimation(this.ENDBOSS_SWIMMING);
+      toggleVisibility("pause-menu-icon-id", true);
+    } else if (this.isHurt()) this.playAnimation(ENDBOSS_HURT);
+    else this.playAnimation(ENDBOSS_SWIMMING);
   }
 
   showWinScreen() {
@@ -114,8 +66,8 @@ class Endboss extends MovableObject {
   }
 
   playDeadAnimation() {
-    if (this.deadImgCounter < this.ENDBOSS_DEAD.length) {
-      let path = this.ENDBOSS_DEAD[this.deadImgCounter];
+    if (this.deadImgCounter < ENDBOSS_DEAD.length) {
+      let path = ENDBOSS_DEAD[this.deadImgCounter];
       this.img = this.imageCache[path];
       this.deadImgCounter++;
     } else pauseGame = true;
@@ -151,7 +103,7 @@ class Endboss extends MovableObject {
     this.world.character.currentTime = currentTime;
     if (timeSinceLastHit >= 1000) {
       this.world.lastHitTime = currentTime;
-      this.playAnimationOnce(this.ENDBOSS_ATTACK, 100);
+      this.playAnimationOnce(ENDBOSS_ATTACK, 100);
       setTimeout(() => {
         this.world.character.pushCharacterBack();
         this.world.character.hit(this.world.collisionDmgWithEndboss);

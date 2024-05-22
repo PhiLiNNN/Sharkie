@@ -4,36 +4,11 @@ class JellyDangerous extends MovableObject {
   offsetHeight = 8;
   damage = 100;
   speed;
-  JELLY_GREEN = [
-    "./img/2.Enemy/2 Jelly fish/Super dangerous/GREEN1.png",
-    "./img/2.Enemy/2 Jelly fish/Super dangerous/GREEN2.png",
-    "./img/2.Enemy/2 Jelly fish/Super dangerous/GREEN3.png",
-    "./img/2.Enemy/2 Jelly fish/Super dangerous/GREEN4.png",
-  ];
-  JELLY_PINK = [
-    "./img/2.Enemy/2 Jelly fish/Super dangerous/PINK1.png",
-    "./img/2.Enemy/2 Jelly fish/Super dangerous/PINK2.png",
-    "./img/2.Enemy/2 Jelly fish/Super dangerous/PINK3.png",
-    "./img/2.Enemy/2 Jelly fish/Super dangerous/PINK4.png",
-  ];
-  JELLY_GREEN_DEAD = [
-    "./img/2.Enemy/2 Jelly fish/Dead/green/g1.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/green/g2.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/green/g3.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/green/g4.png",
-  ];
-  JELLY_PINK_DEAD = [
-    "./img/2.Enemy/2 Jelly fish/Dead/Pink/P1.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Pink/P2.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Pink/P3.png",
-    "./img/2.Enemy/2 Jelly fish/Dead/Pink/P4.png",
-  ];
-
   constructor(fishType, fishIndex, x, y, speed, isMoving) {
     super().loadImage(`./img/2.Enemy/2 Jelly fish/Super dangerous/${fishType}${fishIndex}.png`);
-    this.loadImages(this[`JELLY_${fishType.toUpperCase()}`]);
-    this.loadImages(this.JELLY_GREEN_DEAD);
-    this.loadImages(this.JELLY_PINK_DEAD);
+    this.loadImages(this.getFishImages(fishType.toUpperCase()));
+    this.loadImages(JELLY_GREEN_DEAD);
+    this.loadImages(JELLY_PINK_DEAD);
     this.y = y;
     this.x = x;
     this.currentY = y;
@@ -41,16 +16,25 @@ class JellyDangerous extends MovableObject {
     this.animate(fishType.toUpperCase());
     if (isMoving) this.moveUpAndDown();
   }
+  getFishImages(fishType) {
+    if (fishType === "GREEN") return JELLY_GREEN;
+    else if (fishType === "PINK") return JELLY_PINK;
+  }
+
+  getFishDeadImages(fishType) {
+    if (fishType === "GREEN") return JELLY_GREEN_DEAD;
+    else if (fishType === "PINK") return JELLY_PINK_DEAD;
+  }
 
   animate(fishType) {
     this.moveLeft();
     const animateFunction = () => {
       if (this.isDead()) {
-        this.playAnimation(this[`JELLY_${fishType}_DEAD`]);
+        this.playAnimation(this.getFishDeadImages(fishType));
         this.y -= 10;
         setTimeout(animateFunction, 40);
       } else {
-        this.playAnimation(this[`JELLY_${fishType}`]);
+        this.playAnimation(this.getFishImages(fishType));
         setTimeout(animateFunction, 200);
       }
     };

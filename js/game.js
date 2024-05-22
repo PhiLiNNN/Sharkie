@@ -4,6 +4,7 @@ let world;
 let intervalIds = [];
 let pauseGame = false;
 let sound = true;
+let heartItems = true;
 let gameDifficulty = 100;
 let dangerousShotSpeed = 1.0;
 let pufferShotSpeed = 1.0;
@@ -37,7 +38,6 @@ function init() {
 }
 
 function openMenu() {
-  console.log("sssss :>> ");
   toggleVisibility("start-btn-id", true);
   toggleVisibility("difficulty-btn-id", true);
   toggleVisibility("continue-btn-id", false);
@@ -64,6 +64,7 @@ function openStartMenu() {
 }
 
 function startGame() {
+  toggleVisibility("pause-menu-icon-id", false);
   toggleVisibility("game-over-id", true);
   intervalIds.forEach(clearInterval);
   pauseGame = false;
@@ -95,10 +96,12 @@ function difficultySettings(difficultyLevel) {
     gameDifficulty = 1;
     dangerousShotSpeed = 1.6;
     pufferShotSpeed = 2.0;
+    heartItems = false;
   } else if (difficultyLevel === "easy") {
     gameDifficulty = 100;
     dangerousShotSpeed = 1.0;
     pufferShotSpeed = 1.0;
+    heartItems = true;
   }
   closeDifficultySettings();
 }
@@ -110,12 +113,10 @@ function turnOnMobilePanel() {
 
 function showMobileButtons() {
   toggleVisibility("control-panel-id", false);
-  toggleVisibility("mobile-menu-icon", false);
 }
 
 function hideMobileButtons() {
   toggleVisibility("control-panel-id", true);
-  toggleVisibility("mobile-menu-icon", true);
 }
 
 function toggleVisibility(id, show, classList = "d-none") {
@@ -141,7 +142,7 @@ function toggleSound() {
 
 function togglePauseGame() {
   pauseGame = !pauseGame;
-  const pauseEl = document.getElementById("pause-menu-icon");
+  const pauseEl = document.getElementById("pause-menu-icon-id");
   if (pauseGame === true) pauseEl.src = "./img/6.Botones/OpenMenu/play2.png";
   else pauseEl.src = "./img/6.Botones/OpenMenu/pause2.png";
 }

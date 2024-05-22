@@ -87,14 +87,14 @@ class World {
   }
 
   executePrimaryAttack() {
-    this.character.playAnimationOnce(this.character.IMAGES_BUBBLE, 50);
+    this.character.playAnimationOnce(CHARACTER_BUBBLE_SHOT, 50);
     this.executeAttack(this.throwableObjsCharacter, false);
   }
 
   executeSecondaryAttack() {
     this.character.reducePoisonEnergy();
     this.poisonBar.setPercentage(this.character.poison_energy);
-    this.character.playAnimationOnce(this.character.IMAGES_BUBBLE_POISON, 50);
+    this.character.playAnimationOnce(CHARACTER_POISON_SHOT, 50);
     this.executeAttack(this.throwablePoisonObjsCharacter, true);
   }
 
@@ -374,9 +374,9 @@ class World {
   }
 
   setRightAnimation(fish) {
-    if (fish.fishType === "ORANGE") fish.playAnimationOnce(fish.ENEMY_ORANGE_TRANSITION, 120);
-    if (fish.fishType === "RED") fish.playAnimationOnce(fish.ENEMY_RED_TRANSITION, 120);
-    if (fish.fishType === "GREEN") fish.playAnimationOnce(fish.ENEMY_GREEN_TRANSITION, 120);
+    if (fish.fishType === "ORANGE") fish.playAnimationOnce(PUFFER_ORANGE_TRANSITION, 120);
+    if (fish.fishType === "RED") fish.playAnimationOnce(PUFFER_RED_TRANSITION, 120);
+    if (fish.fishType === "GREEN") fish.playAnimationOnce(PUFFER_GREEN_TRANSITION, 120);
   }
 
   /**
