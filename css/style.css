@@ -125,6 +125,7 @@ body {
 .canvas-container .you-win-container .back-to-menu-img {
   width: 280px;
   height: 60px;
+  cursor: pointer;
 }
 
 .canvas-container img {
@@ -250,6 +251,7 @@ body {
   padding: 48px 16px;
 }
 .difficulty-popup-container .popup .close-btn {
+  cursor: pointer;
   position: absolute;
   top: 16px;
   right: 16px;
@@ -258,10 +260,11 @@ body {
 }
 
 .instructions-popup-container .popup {
-  background: #000000;
+  background: rgba(0, 0, 0, 0.7882352941);
   width: 750px;
 }
 .instructions-popup-container .popup .close-btn {
+  cursor: pointer;
   position: sticky;
   top: 16px;
   left: 100%;
@@ -334,6 +337,7 @@ body {
   right: 10px;
 }
 .hud-panel img {
+  cursor: pointer;
   margin-left: 8px;
 }
 

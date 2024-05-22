@@ -116,6 +116,7 @@ body {
     .back-to-menu-img {
       width: 280px;
       height: 60px;
+      cursor: pointer;
     }
   }
 }
@@ -237,6 +238,7 @@ body {
     width: 500px;
     padding: 48px 16px;
     .close-btn {
+      cursor: pointer;
       position: absolute;
       top: 16px;
       right: 16px;
@@ -247,9 +249,10 @@ body {
 }
 .instructions-popup-container {
   .popup {
-    background: #000000;
+    background: #000000c9;
     width: 750px;
     .close-btn {
+      cursor: pointer;
       position: sticky;
       top: 16px;
       left: 100%;
@@ -321,6 +324,7 @@ body {
   top: 10px;
   right: 10px;
   img {
+    cursor: pointer;
     margin-left: 8px;
   }
 }
