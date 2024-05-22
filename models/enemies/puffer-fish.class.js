@@ -6,6 +6,7 @@ class PufferFish extends MovableObject {
   damage = 100;
   energy = 1;
   fishType;
+  hurtSoundPlayed = false;
 
   constructor(fishType, fishIndex, x, y, speed) {
     super().loadImage(
@@ -20,7 +21,15 @@ class PufferFish extends MovableObject {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    this.initializeIntervals();
     this.animate(fishType.toUpperCase());
+  }
+
+  initializeIntervals() {
+    let updateHurtSoundPuffer = setInterval(() => {
+      this.playDeadSound(puffer_dead);
+    }, 100);
+    intervalIds.push(updateHurtSoundPuffer);
   }
 
   getFishImages(fishType) {

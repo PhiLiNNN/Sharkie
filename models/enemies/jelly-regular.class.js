@@ -16,8 +16,17 @@ class JellyRegular extends MovableObject {
     this.angle = (angle / 360) * 2 * Math.PI;
     this.radius = radius;
     this.circle();
+    this.initializeIntervals();
     this.animate(fishType.toUpperCase());
   }
+
+  initializeIntervals() {
+    let updateHurtSoundJellyRegular = setInterval(() => {
+      this.playDeadSound(jelly_dead);
+    }, 100);
+    intervalIds.push(updateHurtSoundJellyRegular);
+  }
+
   getFishImages(fishType) {
     if (fishType === "LILA") return JELLY_LILA;
     else if (fishType === "YELLOW") return JELLY_YELLOW;

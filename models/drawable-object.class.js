@@ -10,6 +10,15 @@ class DrawableObject {
   img;
   imageCache = {};
   currentImage = 0;
+  hurtSoundPlayed;
+
+  playDeadSound(sound) {
+    if (this.isDead() && !this.hurtSoundPlayed) {
+      sound.currentTime = 0;
+      sound.play();
+      this.hurtSoundPlayed = true;
+    }
+  }
 
   loadImage(path) {
     this.img = new Image();

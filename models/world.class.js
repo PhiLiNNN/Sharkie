@@ -234,6 +234,7 @@ class World {
   }
 
   checkBubbleBubbleCollision() {
+    let popSoundPlayed = false;
     const checkCollisions = (enemyBubbles, characterBubbles) => {
       enemyBubbles.forEach((enemyBubble, enemyIndex) => {
         characterBubbles.forEach((bubble, bubbleIndex) => {
@@ -241,6 +242,11 @@ class World {
             if (!(enemyBubble instanceof JellyDangerousFishAttack))
               enemyBubbles.splice(enemyIndex, 1);
             characterBubbles.splice(bubbleIndex, 1);
+            if (!this.popSoundPlayed) {
+              bubble_pop.currentTime = 0;
+              bubble_pop.play();
+              popSoundPlayed = true;
+            }
           }
         });
       });
@@ -343,7 +349,7 @@ class World {
         this.enemyAttack(this.getAliveEnemies(this.level.pufferFishes), "pufferFish");
       if (this.character.x > 1000 && !pauseGame && !this.level.endboss.isDead())
         this.enemyAttack(this.getAliveEnemies(this.level.dangerousJellies), "jellyDangerous");
-    }, 400);
+    }, 300);
     intervalIds.push(updateEnemyVisibility);
   }
 

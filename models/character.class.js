@@ -20,7 +20,6 @@ class Character extends MovableObject {
   hitFromDangerousJelly = false;
   stopPushingBack = true;
   currentTime = new Date().getTime();
-  swimming_sound = new Audio("audio/swim.mp3");
   constructor() {
     super().loadImage("img/1.Sharkie/1.IDLE/1.png");
     this.loadImages(CHARACTER_IDLE);
@@ -43,12 +42,24 @@ class Character extends MovableObject {
     intervalIds.push(updateCharacter);
     let updateEndbossAppearance = setInterval(this.isCharNearbyEndboss.bind(this), 200);
     intervalIds.push(updateEndbossAppearance);
+    let updateSwimSound = setInterval(this.playSwimSound.bind(this), 800);
+    intervalIds.push(updateSwimSound);
+    let updateHurtSound = setInterval(this.playHurtSound.bind(this), 10);
+    intervalIds.push(updateHurtSound);
+  }
+
+  playSwimSound() {
+    if (this.isSwimming) swimming_sound.play();
+  }
+
+  playHurtSound() {
+    if (this.isHurt() && !this.hitFromDangerousJelly) character_bubble_hurt.play();
+    else if (this.isHurt() && this.hitFromDangerousJelly) character_electro_hurt.play();
   }
 
   handleMovement() {
     this.isSwimming = false;
     if (!pauseGame) {
-      // this.swimming_sound.pause();
       let targetCameraX = this.world.camera_x;
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_rightEnd && !this.isDead()) {
         this.x += this.speed;
@@ -56,7 +67,6 @@ class Character extends MovableObject {
         targetCameraX = -this.x;
         this.isSwimming = true;
         this.currentTime = new Date().getTime();
-        // this.swimming_sound.play();
       }
       if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd && !this.isDead()) {
         this.x -= this.speed;
@@ -70,13 +80,11 @@ class Character extends MovableObject {
         this.y -= this.speed;
         this.isSwimming = true;
         this.currentTime = new Date().getTime();
-        // this.swimming_sound.play();
       }
       if (this.world.keyboard.DOWN && this.y < this.world.level.level_bottomEnd && !this.isDead()) {
         this.y += this.speed;
         this.isSwimming = true;
         this.currentTime = new Date().getTime();
-        // this.swimming_sound.play();
       }
       this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.01;
     }

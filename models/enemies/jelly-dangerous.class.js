@@ -18,8 +18,17 @@ class JellyDangerous extends MovableObject {
     this.isMoving = isMovingY;
     this.isMovingX = isMovingX;
     this.animate(fishType.toUpperCase());
+    this.initializeIntervals();
     if (this.isMoving) this.moveUpAndDown();
   }
+
+  initializeIntervals() {
+    let updateHurtSoundJellyDangerous = setInterval(() => {
+      this.playDeadSound(jelly_dead);
+    }, 100);
+    intervalIds.push(updateHurtSoundJellyDangerous);
+  }
+
   getFishImages(fishType) {
     if (fishType === "GREEN") return JELLY_GREEN;
     else if (fishType === "PINK") return JELLY_PINK;
