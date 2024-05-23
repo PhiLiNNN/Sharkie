@@ -55,6 +55,7 @@ class Endboss extends MovableObject {
       this.playDeadAnimation();
       this.showWinScreen();
       this.letEndbossSinkToGround();
+      underwater.pause();
       toggleVisibility("pause-menu-icon-id", true);
     } else if (this.isHurt()) this.playAnimation(ENDBOSS_HURT);
     else this.playAnimation(ENDBOSS_SWIMMING);

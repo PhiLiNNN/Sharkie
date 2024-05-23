@@ -38,6 +38,7 @@ function init() {
 }
 
 function openMenu() {
+  muteAllSounds();
   toggleVisibility("start-btn-id", true);
   toggleVisibility("difficulty-btn-id", true);
   toggleVisibility("continue-btn-id", false);
@@ -49,6 +50,7 @@ function openMenu() {
 
 function continueGame() {
   pauseGame = false;
+  handlerSound(sound);
   toggleVisibility("menu-id", true);
 }
 function openStartMenu() {
@@ -64,6 +66,8 @@ function openStartMenu() {
 }
 
 function startGame() {
+  handlerSound(sound);
+  playSound(underwater, 0.8);
   toggleVisibility("pause-menu-icon-id", false);
   toggleVisibility("game-over-id", true);
   intervalIds.forEach(clearInterval);
@@ -131,13 +135,6 @@ function closeMenu() {
 function setStoppableInterval(fn, time) {
   let id = setInterval(fn, time);
   intervalIds.push(id);
-}
-
-function toggleSound() {
-  const soundEl = document.getElementById("sound-menu-icon");
-  sound = !sound;
-  if (sound === false) soundEl.src = "./img/6.Botones/OpenMenu/soundOff2.png";
-  else soundEl.src = "./img/6.Botones/OpenMenu/sound2.png";
 }
 
 function togglePauseGame() {

@@ -3,10 +3,12 @@ class PufferFish extends MovableObject {
   width = 40;
   offsetHeight = 8;
   speed;
+  world;
   damage = 100;
   energy = 1;
   fishType;
   hurtSoundPlayed = false;
+  deadImgCounter = 0;
 
   constructor(fishType, fishIndex, x, y, speed) {
     super().loadImage(
@@ -16,20 +18,14 @@ class PufferFish extends MovableObject {
     this.loadImages(PUFFER_ORANGE_DEAD);
     this.loadImages(PUFFER_GREEN_DEAD);
     this.loadImages(PUFFER_RED_DEAD);
+    this.loadImages(PUFFER_RED_DEAD);
     this.loadImages(this.getFishTransitionImages(fishType.toUpperCase()));
     this.fishType = fishType;
     this.x = x;
     this.y = y;
     this.speed = speed;
-    this.initializeIntervals();
-    this.animate(fishType.toUpperCase());
-  }
-
-  initializeIntervals() {
-    let updateHurtSoundPuffer = setInterval(() => {
-      this.playDeadSound(puffer_dead);
-    }, 100);
-    intervalIds.push(updateHurtSoundPuffer);
+    this.moveLeft();
+    this.initializeIntervals(fishType);
   }
 
   getFishImages(fishType) {
@@ -49,18 +45,54 @@ class PufferFish extends MovableObject {
     else if (fishType === "RED") return PUFFER_RED_DEAD;
   }
 
-  animate(fishType) {
-    this.moveLeft();
-    const animateFunction = () => {
-      if (this.isDead()) {
-        this.img = this.imageCache[this.getFishDeadImages(fishType)[0]];
-        this.y -= 2;
-        setTimeout(animateFunction, 20);
-      } else {
-        this.playAnimation(this.getFishImages(fishType));
-        setTimeout(animateFunction, 200);
-      }
-    };
-    animateFunction();
+  initializeIntervals() {
+    let updateHurtSoundPuffer = setInterval(() => {
+      this.playDeadSound(puffer_dead);
+    }, 100);
+    intervalIds.push(updateHurtSoundPuffer);
+
+    let updatePuffer = setInterval(() => {
+      this.updatePufferAnimation(this.fishType);
+    }, 100);
+    intervalIds.push(updatePuffer);
+  }
+
+  updatePufferAnimation(fishType) {
+    if (this.isDead()) this.handlerPufferDead(fishType);
+    else this.playAnimation(this.getFishImages(fishType));
+  }
+
+  handlerPufferDead(fishType) {
+    if (this.deadImgCounter < this.getFishDeadImages(fishType).length) {
+      let path = this.getFishDeadImages(fishType)[this.deadImgCounter];
+      this.img = this.imageCache[path];
+      this.deadImgCounter++;
+    } else {
+      this.disappearIntervalId = setInterval(() => {
+        this.disappearPuffer();
+      }, 10);
+    }
+  }
+
+  disappearPuffer() {
+    this.y -= 0.1;
+    if (this.y < 80) {
+      clearInterval(this.disappearIntervalId);
+    }
   }
 }
+//   animate(fishType) {
+//     this.moveLeft();
+//     const animateFunction = () => {
+//       if (this.isDead()) {this.handlerDeadAnimation();
+
+//         this.disappearPuffer();
+//         setTimeout(animateFunction, 10);
+//       } else {
+//         this.playAnimation(this.getFishImages(fishType));
+//         setTimeout(animateFunction, 200);
+//       }
+//     };
+//     animateFunction();
+//   }
+// }

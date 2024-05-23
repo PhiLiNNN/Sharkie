@@ -42,19 +42,24 @@ class Character extends MovableObject {
     intervalIds.push(updateCharacter);
     let updateEndbossAppearance = setInterval(this.isCharNearbyEndboss.bind(this), 200);
     intervalIds.push(updateEndbossAppearance);
-    let updateSwimSound = setInterval(this.playSwimSound.bind(this), 800);
+    let updateSwimSound = setInterval(this.playSwimSound.bind(this), 600);
     intervalIds.push(updateSwimSound);
     let updateHurtSound = setInterval(this.playHurtSound.bind(this), 10);
     intervalIds.push(updateHurtSound);
   }
 
   playSwimSound() {
-    if (this.isSwimming) swimming_sound.play();
+    if (this.isSwimming) playSound(swimming_sound, 0.2);
   }
 
   playHurtSound() {
-    if (this.isHurt() && !this.hitFromDangerousJelly) character_bubble_hurt.play();
-    else if (this.isHurt() && this.hitFromDangerousJelly) character_electro_hurt.play();
+    if (this.isHurt() && !this.hitFromDangerousJelly) {
+      character_bubble_hurt.volume = 0.2;
+      character_bubble_hurt.play();
+    } else if (this.isHurt() && this.hitFromDangerousJelly) {
+      character_electro_hurt.volume = 0.2;
+      character_electro_hurt.play();
+    }
   }
 
   handleMovement() {

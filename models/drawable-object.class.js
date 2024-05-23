@@ -14,8 +14,8 @@ class DrawableObject {
 
   playDeadSound(sound) {
     if (this.isDead() && !this.hurtSoundPlayed) {
+      playSound(sound, 0.2);
       sound.currentTime = 0;
-      sound.play();
       this.hurtSoundPlayed = true;
     }
   }

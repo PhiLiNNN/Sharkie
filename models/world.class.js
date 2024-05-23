@@ -39,6 +39,7 @@ class World {
 
   executeAttack(arr, bool) {
     setTimeout(() => {
+      playSound(character_shot, 0.4);
       const xOffset = this.isSwimmingLeft ? 10 : 140;
       const bubble = new SharkieAttack(
         this.character.x + xOffset,
@@ -157,6 +158,7 @@ class World {
           this.character.poison_energy !== 100 &&
           !pauseGame
         ) {
+          playSound(poison_collect, 0.2);
           this.character.collectItem(itemType);
           this.poisonBar.setPercentage(this.character.poison_energy);
           items.splice(idx, 1);
@@ -166,6 +168,7 @@ class World {
           this.character.energy !== 100 &&
           !pauseGame
         ) {
+          playSound(heart_collect, 0.2);
           this.character.collectItem(itemType);
           this.statusBar.setPercentage(this.character.energy);
           items.splice(idx, 1);
@@ -178,7 +181,7 @@ class World {
 
   checkCharacterEnemyCollision() {
     const checkCollisions = (enemies, damage) => {
-      enemies.forEach((enemy) => {
+      enemies.forEach((enemy, idx) => {
         if (this.character.isColliding(enemy) && !enemy.isDead() && !pauseGame) {
           let currentTime = new Date().getTime();
           let timeSinceLastHit = currentTime - this.lastHitTime;
@@ -190,6 +193,7 @@ class World {
             this.isCharColWithJellyDangerousFish(enemy);
           }
         }
+        if (enemy.y < 0) enemies.splice(idx, 1);
       });
     };
     checkCollisions(this.level.pufferFishes, this.collisionDmgWithPuffer);
@@ -234,7 +238,6 @@ class World {
   }
 
   checkBubbleBubbleCollision() {
-    let popSoundPlayed = false;
     const checkCollisions = (enemyBubbles, characterBubbles) => {
       enemyBubbles.forEach((enemyBubble, enemyIndex) => {
         characterBubbles.forEach((bubble, bubbleIndex) => {
@@ -242,11 +245,7 @@ class World {
             if (!(enemyBubble instanceof JellyDangerousFishAttack))
               enemyBubbles.splice(enemyIndex, 1);
             characterBubbles.splice(bubbleIndex, 1);
-            if (!this.popSoundPlayed) {
-              bubble_pop.currentTime = 0;
-              bubble_pop.play();
-              popSoundPlayed = true;
-            }
+            playSound(bubble_pop, 0.4);
           }
         });
       });
