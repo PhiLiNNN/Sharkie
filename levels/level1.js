@@ -1,7 +1,7 @@
 backgroundObject = [];
 width = 720;
 layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
-repeaterAmount = 7; // change this number to set the length of the world
+repeaterAmount = 8; // change this number to set the length of the world
 let y = 230;
 let level1;
 

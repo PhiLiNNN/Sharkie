@@ -77,6 +77,7 @@ class World {
       const currentTime = new Date().getTime();
       this.character.currentTime = currentTime;
       document.getElementById("canvas-id").oncontextmenu = () => false;
+      console.log("this.character.isHurt() :>> ", this.character.isHurt());
       if (this.isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime)) {
         this.executePrimaryAttack();
         lastClickTime = currentTime;
@@ -104,12 +105,18 @@ class World {
       event.button === 2 &&
       currentTime - lastClickTime >= 500 &&
       this.character.poison_energy !== 0 &&
-      !pauseGame
+      !pauseGame &&
+      !this.character.isHurt()
     );
   }
 
   isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime) {
-    return event.button === 0 && currentTime - lastClickTime >= 500 && !pauseGame;
+    return (
+      event.button === 0 &&
+      currentTime - lastClickTime >= 500 &&
+      !pauseGame &&
+      !this.character.isHurt()
+    );
   }
 
   isMobileSecondaryAttackActionReady(currentTime, lastClickTime) {
@@ -117,12 +124,18 @@ class World {
       this.keyboard.SECONDARY &&
       currentTime - lastClickTime >= 500 &&
       this.character.poison_energy !== 0 &&
-      !pauseGame
+      !pauseGame &&
+      !this.character.isHurt()
     );
   }
 
   isMobilePrimaryAttackActionReady(currentTime, lastClickTime) {
-    return this.keyboard.PRIMARY && currentTime - lastClickTime >= 500 && !pauseGame;
+    return (
+      this.keyboard.PRIMARY &&
+      currentTime - lastClickTime >= 500 &&
+      !pauseGame &&
+      !this.character.isHurt()
+    );
   }
 
   /**
