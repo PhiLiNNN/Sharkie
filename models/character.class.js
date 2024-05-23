@@ -13,12 +13,13 @@ class Character extends MovableObject {
   bubbleSpeed = 10;
   poison_energy = 0;
   interactionDistanceEndboss = 500;
-  longIdleTime = 5000;
+  longIdleTime = 2000;
   sleepImgCounter = 0;
   isSwimming = false;
   deadAnimation = false;
   hitFromDangerousJelly = false;
   isEndbossSoundPlaying = false;
+  isSleepingPlaying = false;
   isWinLosePlaying = false;
   stopPushingBack = true;
   currentTime = new Date().getTime();
@@ -129,14 +130,22 @@ class Character extends MovableObject {
     if (this.isDead()) this.handleDeadAnimation();
     else if (this.isHurt()) this.handleHurtAnimation();
     else if (this.isCharacterIdle()) this.handleSleepAnimation();
-    else if (this.isSwimming) this.playAnimation(CHARACTER_SWIMMING);
+    else if (this.isSwimming) this.handleSwimAnimation();
     else this.playAnimation(CHARACTER_IDLE);
     if (this.checkEntityDistance(this.world.level.endboss, this.interactionDistanceEndboss))
       this.world.level.endboss.spawnAnimation = true;
     this.playEndbossSound();
   }
 
+  handleSwimAnimation() {
+    stopSound(snore);
+    this.isSleepingPlaying = false;
+    this.playAnimation(CHARACTER_SWIMMING);
+  }
+
   handleDeadAnimation() {
+    stopSound(snore);
+    this.isSleepingPlaying = false;
     let idx = this.currentImage % CHARACTER_DEAD.length;
     if (idx === CHARACTER_DEAD.length - 1) this.deadAnimation = true;
     if (!this.deadAnimation) {
@@ -158,8 +167,15 @@ class Character extends MovableObject {
       else this.sleepImgCounter = 0;
     }
   }
-
+  playSleepSound() {
+    if (!this.isSleepingPlaying) {
+      playSound(snore, 0.8, true);
+      this.isSleepingPlaying = true;
+      console.log("11111 :>> ");
+    }
+  }
   handleSleepAnimation() {
+    this.playSleepSound();
     if (this.sleepImgCounter < CHARACTER_SLEEPING.length) {
       let path = CHARACTER_SLEEPING[this.sleepImgCounter];
       this.img = this.imageCache[path];
@@ -168,6 +184,8 @@ class Character extends MovableObject {
   }
 
   handleHurtAnimation() {
+    stopSound(snore);
+    this.isSleepingPlaying = false;
     this.hitFromDangerousJelly
       ? this.playAnimation(CHARACTER_ELECTRO_HURT)
       : this.playAnimation(CHARACTER_BUBBLE_HURT);

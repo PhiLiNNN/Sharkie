@@ -39,6 +39,8 @@ class World {
 
   executeAttack(arr, bool) {
     setTimeout(() => {
+      stopSound(snore);
+      this.character.isSleepingPlaying = false;
       playSound(character_shot, 0.2);
       const xOffset = this.isSwimmingLeft ? 10 : 140;
       const bubble = new SharkieAttack(
@@ -77,7 +79,6 @@ class World {
       const currentTime = new Date().getTime();
       this.character.currentTime = currentTime;
       document.getElementById("canvas-id").oncontextmenu = () => false;
-      console.log("this.character.isHurt() :>> ", this.character.isHurt());
       if (this.isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime)) {
         this.executePrimaryAttack();
         lastClickTime = currentTime;

@@ -13,6 +13,7 @@ const win = new Audio("./audio/win.wav");
 const lose = new Audio("./audio/lose.wav");
 const punch = new Audio("./audio/punch.wav");
 const bite = new Audio("./audio/bite.mp3");
+const snore = new Audio("./audio/snore.mp3");
 
 const sounds = [
   swimming_sound,
@@ -30,6 +31,7 @@ const sounds = [
   lose,
   punch,
   bite,
+  snore,
 ];
 
 function toggleSound() {

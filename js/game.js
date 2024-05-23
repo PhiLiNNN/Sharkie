@@ -39,6 +39,7 @@ function init() {
 
 function openMenu() {
   muteAllSounds();
+  stopSound(snore);
   toggleVisibility("start-btn-id", true);
   toggleVisibility("difficulty-btn-id", true);
   toggleVisibility("continue-btn-id", false);
