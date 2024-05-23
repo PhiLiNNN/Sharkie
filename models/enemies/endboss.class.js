@@ -10,6 +10,7 @@ class Endboss extends MovableObject {
   speed = 5.0;
   deadImgCounter = 0;
   world;
+  isWinSoundPlaying = false;
 
   constructor(x) {
     super().loadImage(ENDBOSS_APPEARS[0]);
@@ -51,14 +52,32 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    if (this.isDead()) {
-      this.playDeadAnimation();
-      this.showWinScreen();
-      this.letEndbossSinkToGround();
-      underwater.pause();
-      toggleVisibility("pause-menu-icon-id", true);
-    } else if (this.isHurt()) this.playAnimation(ENDBOSS_HURT);
+    if (this.isDead()) this.handlerEndbossDead();
+    else if (this.isHurt()) this.handlerEndbossHurt();
     else this.playAnimation(ENDBOSS_SWIMMING);
+  }
+
+  handlerEndbossHurt() {
+    this.playAnimation(ENDBOSS_HURT);
+    punch.volume = 0.2;
+    punch.play();
+  }
+
+  handlerEndbossDead() {
+    this.playDeadAnimation();
+    this.showWinScreen();
+    this.letEndbossSinkToGround();
+    this.playWinSound();
+    toggleVisibility("pause-menu-icon-id", true);
+  }
+
+  playWinSound() {
+    if (this.isDead() && !this.isWinSoundPlaying) {
+      stopSound(endboss_fight);
+      playSound(win, 0.6);
+      this.isWinSoundPlaying = true;
+      toggleVisibility("pause-menu-icon-id", true);
+    }
   }
 
   showWinScreen() {
@@ -85,6 +104,7 @@ class Endboss extends MovableObject {
       }, 20);
     }, 300);
   }
+
   moveToCharacter() {
     if (this.world.character.isDead() || this.isDead()) return;
     let dx = this.world.character.x - this.x - 100;
@@ -106,6 +126,7 @@ class Endboss extends MovableObject {
       this.world.lastHitTime = currentTime;
       this.playAnimationOnce(ENDBOSS_ATTACK, 100);
       setTimeout(() => {
+        playSound(bite, 0.4);
         this.world.character.pushCharacterBack();
         this.world.character.hit(this.world.collisionDmgWithEndboss);
         this.world.statusBar.setPercentage(this.world.character.energy);

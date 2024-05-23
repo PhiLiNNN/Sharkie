@@ -67,7 +67,8 @@ function openStartMenu() {
 
 function startGame() {
   handlerSound(sound);
-  playSound(underwater, 0.8);
+  playSound(underwater, 0.4, true);
+  stopSound(endboss_fight);
   toggleVisibility("pause-menu-icon-id", false);
   toggleVisibility("game-over-id", true);
   intervalIds.forEach(clearInterval);
@@ -142,4 +143,22 @@ function togglePauseGame() {
   const pauseEl = document.getElementById("pause-menu-icon-id");
   if (pauseGame === true) pauseEl.src = "./img/6.Botones/OpenMenu/play2.png";
   else pauseEl.src = "./img/6.Botones/OpenMenu/pause2.png";
+}
+
+function enterFullscreen() {
+  let fullscreenElement = document.getElementById("fullscreen-id");
+  toggleVisibility("fullscreen-icon-id", true);
+  toggleVisibility("exit-fullscreen-icon-id", false);
+  if (fullscreenElement.requestFullscreen) fullscreenElement.requestFullscreen();
+  else if (fullscreenElement.msRequestFullscreen) fullscreenElement.msRequestFullscreen();
+  else if (fullscreenElement.webkitRequestFullscreen) fullscreenElement.webkitRequestFullscreen();
+}
+
+function exitFullScreen() {
+  toggleVisibility("fullscreen-icon-id", false);
+  toggleVisibility("exit-fullscreen-icon-id", true);
+  if (document.exitFullscreen) document.exitFullscreen();
+  else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+  else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  else if (document.msExitFullscreen) document.msExitFullscreen();
 }

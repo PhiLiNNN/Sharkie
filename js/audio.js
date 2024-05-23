@@ -8,6 +8,11 @@ const bubble_pop = new Audio("./audio/bubble_pop.mp3");
 const heart_collect = new Audio("./audio/heart_collect.mp3");
 const poison_collect = new Audio("./audio/poison_collect.mp3");
 const underwater = new Audio("./audio/underwater.mp3");
+const endboss_fight = new Audio("./audio/endboss_fight.mp3");
+const win = new Audio("./audio/win.wav");
+const lose = new Audio("./audio/lose.wav");
+const punch = new Audio("./audio/punch.wav");
+const bite = new Audio("./audio/bite.mp3");
 
 const sounds = [
   swimming_sound,
@@ -20,6 +25,11 @@ const sounds = [
   heart_collect,
   poison_collect,
   underwater,
+  endboss_fight,
+  win,
+  lose,
+  punch,
+  bite,
 ];
 
 function toggleSound() {
@@ -56,8 +66,14 @@ function unmuteAllSounds() {
     sound.muted = false;
   });
 }
-function playSound(sound, volume) {
-  sound.volume = volume;
-  sound.currentTime = 0;
-  sound.play();
+function playSound(audio, volume, loop = false) {
+  audio.volume = volume;
+  audio.currentTime = 0;
+  audio.loop = loop;
+  audio.play();
+}
+
+function stopSound(audio) {
+  audio.pause();
+  audio.currentTime = 0;
 }

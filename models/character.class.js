@@ -18,6 +18,8 @@ class Character extends MovableObject {
   isSwimming = false;
   deadAnimation = false;
   hitFromDangerousJelly = false;
+  isEndbossSoundPlaying = false;
+  isWinLosePlaying = false;
   stopPushingBack = true;
   currentTime = new Date().getTime();
   constructor() {
@@ -40,18 +42,29 @@ class Character extends MovableObject {
     intervalIds.push(updateBtns);
     let updateCharacter = setInterval(this.updateCharacterAnimation.bind(this), 200);
     intervalIds.push(updateCharacter);
-    let updateEndbossAppearance = setInterval(this.isCharNearbyEndboss.bind(this), 200);
-    intervalIds.push(updateEndbossAppearance);
     let updateSwimSound = setInterval(this.playSwimSound.bind(this), 600);
     intervalIds.push(updateSwimSound);
-    let updateHurtSound = setInterval(this.playHurtSound.bind(this), 10);
-    intervalIds.push(updateHurtSound);
   }
 
   playSwimSound() {
-    if (this.isSwimming) playSound(swimming_sound, 0.2);
+    if (this.isSwimming) playSound(swimming_sound, 0.08);
   }
 
+  playLoseSound() {
+    if (!this.isWinLosePlaying) {
+      stopSound(endboss_fight);
+      playSound(lose, 0.4);
+      this.isWinLosePlaying = true;
+    }
+  }
+
+  playEndbossSound() {
+    if (this.world.level.endboss.spawnAnimation && !this.isEndbossSoundPlaying) {
+      stopSound(underwater);
+      playSound(endboss_fight, 0.4, true);
+      this.isEndbossSoundPlaying = true;
+    }
+  }
   playHurtSound() {
     if (this.isHurt() && !this.hitFromDangerousJelly) {
       character_bubble_hurt.volume = 0.2;
@@ -71,6 +84,7 @@ class Character extends MovableObject {
       this.moveCharacterDown();
       this.updateCamera();
     }
+    this.playHurtSound();
   }
 
   moveCharacterRight() {
@@ -117,11 +131,9 @@ class Character extends MovableObject {
     else if (this.isCharacterIdle()) this.handleSleepAnimation();
     else if (this.isSwimming) this.playAnimation(CHARACTER_SWIMMING);
     else this.playAnimation(CHARACTER_IDLE);
-  }
-
-  isCharNearbyEndboss() {
     if (this.checkEntityDistance(this.world.level.endboss, this.interactionDistanceEndboss))
       this.world.level.endboss.spawnAnimation = true;
+    this.playEndbossSound();
   }
 
   handleDeadAnimation() {
@@ -131,7 +143,9 @@ class Character extends MovableObject {
       this.playAnimation(CHARACTER_DEAD);
       pauseGame = true;
     }
-
+    stopSound(underwater);
+    stopSound(endboss_fight);
+    this.playLoseSound();
     toggleVisibility("pause-menu-icon-id", true);
     toggleVisibility("game-over-id", false);
     toggleVisibility("exit-gameAfterDead-btn-id", false);

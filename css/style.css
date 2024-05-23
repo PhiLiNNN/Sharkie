@@ -4,6 +4,16 @@
   font-weight: normal;
   font-style: normal;
 }
+:-webkit-full-screen canvas {
+  width: 100%;
+  height: 100vh;
+}
+:fullscreen canvas,
+:-webkit-full-screen canvas {
+  width: 100%;
+  height: 100vh;
+}
+
 ::-webkit-scrollbar {
   width: 20px;
 }
@@ -88,14 +98,20 @@ body {
   box-shadow: 0 0 20px white;
   border: 2px solid white;
 }
-.canvas-container .move-key {
+.canvas-container .move-keys .move-key {
   margin-left: 60px;
   display: flex;
+}
+.canvas-container .move-keys .up-key img,
+.canvas-container .move-keys .left-down-right-key img {
+  width: 35px;
+  height: 35px;
 }
 .canvas-container .up-key {
   display: flex;
   justify-content: center;
   padding-left: 10px;
+  margin-bottom: 2px;
 }
 .canvas-container .left-down-right-key {
   padding-left: 10px;
@@ -333,12 +349,18 @@ body {
 
 .hud-panel {
   position: absolute;
+  display: flex;
+  align-items: center;
   top: 10px;
   right: 10px;
 }
 .hud-panel img {
   cursor: pointer;
   margin-left: 8px;
+}
+.hud-panel svg {
+  margin-left: 8px;
+  fill: #7fffe0;
 }
 
 .turn-device {
@@ -349,6 +371,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 32px;
+  text-align: center;
   color: rgb(238, 234, 234);
   z-index: 1000;
 }
@@ -383,6 +406,70 @@ body {
     width: 90vw;
   }
 }
+@media only screen and (max-width: 590px) {
+  .difficulty-popup-container .popup .instructions img,
+  .instructions-popup-container .popup .instructions img {
+    height: 150px;
+  }
+  .difficulty-popup-container .popup .instructions h2,
+  .instructions-popup-container .popup .instructions h2 {
+    font-size: 16px;
+  }
+  .difficulty-popup-container .popup .instructions p,
+  .difficulty-popup-container .popup .instructions ul,
+  .difficulty-popup-container .popup .instructions li,
+  .instructions-popup-container .popup .instructions p,
+  .instructions-popup-container .popup .instructions ul,
+  .instructions-popup-container .popup .instructions li {
+    font-size: 12px;
+  }
+  .difficulty-popup-container .popup .setting-menu img,
+  .instructions-popup-container .popup .setting-menu img {
+    width: 90;
+    height: 40px;
+  }
+  .difficulty-popup-container .popup .hard-info-text,
+  .instructions-popup-container .popup .hard-info-text {
+    text-align: center;
+    font-size: 12px;
+  }
+  .menu .bottom-menu .bottom-menu-bts img {
+    width: 90px;
+    height: 40px;
+  }
+  .hud-panel img {
+    width: 20px;
+    height: 20px;
+  }
+  .canvas-container .you-win-container .back-to-menu {
+    bottom: -15px;
+  }
+  .canvas-container .you-win-container .back-to-menu-img {
+    width: 200px;
+    height: 35px;
+  }
+  .canvas-container .game-over-container {
+    gap: 8px;
+  }
+  .canvas-container .game-over-container .game-over-img {
+    width: 300px;
+    height: 40px;
+  }
+  .canvas-container .game-over-container .game-over-menu .restart-img,
+  .canvas-container .game-over-container .game-over-menu .back-to-menu-img {
+    width: 90px;
+    height: 40px;
+    padding-inline: 8px;
+  }
+  .canvas-container .move-keys img {
+    width: 20px;
+    height: 20px;
+  }
+  .canvas-container .attack-keys img {
+    width: 20px;
+    height: 20px;
+  }
+}
 @media only screen and (max-width: 500px) {
   .msg {
     display: none;
@@ -391,7 +478,6 @@ body {
     display: block;
   }
   .touchCheckbox {
-    flex-direction: column;
     height: auto;
     gap: 6px;
     font-size: 12px;

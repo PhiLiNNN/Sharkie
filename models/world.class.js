@@ -39,7 +39,7 @@ class World {
 
   executeAttack(arr, bool) {
     setTimeout(() => {
-      playSound(character_shot, 0.4);
+      playSound(character_shot, 0.2);
       const xOffset = this.isSwimmingLeft ? 10 : 140;
       const bubble = new SharkieAttack(
         this.character.x + xOffset,
@@ -150,33 +150,44 @@ class World {
   }
 
   checkCharacterItemCollision() {
-    const checkCollisions = (items, itemType) => {
-      items.forEach((item, idx) => {
-        if (
-          this.character.isColliding(item) &&
-          itemType === "poison" &&
-          this.character.poison_energy !== 100 &&
-          !pauseGame
-        ) {
-          playSound(poison_collect, 0.2);
-          this.character.collectItem(itemType);
-          this.poisonBar.setPercentage(this.character.poison_energy);
-          items.splice(idx, 1);
-        } else if (
-          this.character.isColliding(item) &&
-          itemType === "heart" &&
-          this.character.energy !== 100 &&
-          !pauseGame
-        ) {
-          playSound(heart_collect, 0.2);
-          this.character.collectItem(itemType);
-          this.statusBar.setPercentage(this.character.energy);
-          items.splice(idx, 1);
-        }
-      });
-    };
-    checkCollisions(this.level.poisonItems, "poison");
-    checkCollisions(this.level.heartItems, "heart");
+    this.checkItemCollisions(
+      this.level.poisonItems,
+      "poison",
+      poison_collect,
+      0.6,
+      this.poisonBar,
+      "poison_energy"
+    );
+    this.checkItemCollisions(
+      this.level.heartItems,
+      "heart",
+      heart_collect,
+      0.2,
+      this.statusBar,
+      "energy"
+    );
+  }
+
+  checkItemCollisions(items, itemType, sound, volume, statusBar, energyType) {
+    items.forEach((item, idx) => {
+      if (this.isCollectionItem(item, itemType)) {
+        playSound(sound, volume);
+        this.character.collectItem(itemType);
+        statusBar.setPercentage(this.character[energyType]);
+        items.splice(idx, 1);
+      }
+    });
+  }
+
+  isCollectionItem(item, itemType) {
+    return this.character.isColliding(item) && this.isItemValid(itemType) && !pauseGame;
+  }
+
+  isItemValid(itemType) {
+    return (
+      (itemType === "poison" && this.character.poison_energy !== 100) ||
+      (itemType === "heart" && this.character.energy !== 100)
+    );
   }
 
   checkCharacterEnemyCollision() {
@@ -245,7 +256,7 @@ class World {
             if (!(enemyBubble instanceof JellyDangerousFishAttack))
               enemyBubbles.splice(enemyIndex, 1);
             characterBubbles.splice(bubbleIndex, 1);
-            playSound(bubble_pop, 0.4);
+            playSound(bubble_pop, 0.2);
           }
         });
       });

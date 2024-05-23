@@ -7,6 +7,11 @@ $text-color: rgb(219, 214, 214);
   font-weight: normal;
   font-style: normal;
 }
+:fullscreen canvas,
+:-webkit-full-screen canvas {
+  width: 100%;
+  height: 100vh;
+}
 ::-webkit-scrollbar {
   width: 20px;
 }
@@ -53,7 +58,6 @@ body {
   display: flex;
   justify-content: center;
 }
-
 body {
   background-image: url("../img/7.screen_bg/Screenshot 2024-05-18 224309.png");
   background-repeat: no-repeat;
@@ -66,7 +70,6 @@ body {
   justify-content: center;
   font-family: "LuckiestGuy";
 }
-
 .canvas-container {
   position: relative;
   display: flex;
@@ -79,15 +82,24 @@ body {
     box-shadow: 0 0 20px white;
     border: 2px solid white;
   }
-
-  .move-key {
-    margin-left: 60px;
-    display: flex;
+  .move-keys {
+    .move-key {
+      margin-left: 60px;
+      display: flex;
+    }
+    .up-key,
+    .left-down-right-key {
+      img {
+        width: 35px;
+        height: 35px;
+      }
+    }
   }
   .up-key {
     display: flex;
     justify-content: center;
     padding-left: 10px;
+    margin-bottom: 2px;
   }
   .left-down-right-key {
     padding-left: 10px;
@@ -166,7 +178,6 @@ body {
   .game-over-menu {
     display: flex;
     align-items: center;
-
     .restart-img,
     .back-to-menu-img {
       padding-inline: 36px;
@@ -186,17 +197,14 @@ body {
   gap: 24px;
   align-items: center;
 }
-
 .you-win-container.visible {
   opacity: 1;
 }
-
 .difficulty-img {
   width: clamp(100px, 100%, 180px);
   height: 50px;
   cursor: pointer;
 }
-
 .difficulty-popup-container,
 .instructions-popup-container {
   position: absolute;
@@ -310,7 +318,6 @@ body {
     width: 1.5em;
   }
 }
-
 .control-panel-container {
   position: absolute;
   display: flex;
@@ -321,11 +328,17 @@ body {
 }
 .hud-panel {
   position: absolute;
+  display: flex;
+  align-items: center;
   top: 10px;
   right: 10px;
   img {
     cursor: pointer;
     margin-left: 8px;
+  }
+  svg {
+    margin-left: 8px;
+    fill: #7fffe0;
   }
 }
 .turn-device {
@@ -336,6 +349,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 32px;
+  text-align: center;
   color: $primary;
   z-index: 1000;
 }
@@ -382,6 +396,90 @@ body {
     }
   }
 }
+@media only screen and (max-width: 590px) {
+  .difficulty-popup-container,
+  .instructions-popup-container {
+    .popup {
+      .instructions {
+        img {
+          height: 150px;
+        }
+        h2 {
+          font-size: 16px;
+        }
+        p,
+        ul,
+        li {
+          font-size: 12px;
+        }
+      }
+      .setting-menu {
+        img {
+          width: 90;
+          height: 40px;
+        }
+      }
+      .hard-info-text {
+        text-align: center;
+        font-size: 12px;
+      }
+    }
+  }
+  .menu {
+    .bottom-menu {
+      .bottom-menu-bts {
+        img {
+          width: 90px;
+          height: 40px;
+        }
+      }
+    }
+  }
+  .hud-panel {
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .canvas-container {
+    .you-win-container {
+      .back-to-menu {
+        bottom: -15px;
+      }
+      .back-to-menu-img {
+        width: 200px;
+        height: 35px;
+      }
+    }
+    .game-over-container {
+      gap: 8px;
+      .game-over-img {
+        width: 300px;
+        height: 40px;
+      }
+      .game-over-menu {
+        .restart-img,
+        .back-to-menu-img {
+          width: 90px;
+          height: 40px;
+          padding-inline: 8px;
+        }
+      }
+    }
+    .move-keys {
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .attack-keys {
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
 @media only screen and (max-width: 500px) {
   .msg {
     display: none;
@@ -390,13 +488,11 @@ body {
     display: block;
   }
   .touchCheckbox {
-    flex-direction: column;
     height: auto;
     gap: 6px;
     font-size: 12px;
   }
 }
-
 @media only screen and (max-width: 667px) and (min-height: 667px) {
   .turn-device {
     display: flex;
@@ -405,7 +501,6 @@ body {
     display: none;
   }
 }
-
 @media only screen and (max-height: 480px) {
   body {
     .canvas-container {
@@ -433,7 +528,6 @@ body {
     }
   }
 }
-
 @media only screen and (max-height: 480px) and (max-width: 922px) {
   body {
     .canvas-container {
@@ -450,7 +544,6 @@ body {
         width: 100%;
         aspect-ratio: unset;
       }
-
       .instructions-popup-container {
         .popup {
           width: 100vw;
@@ -469,7 +562,6 @@ body {
     }
   }
 }
-
 .d-none {
   display: none;
 }
