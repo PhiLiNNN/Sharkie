@@ -7,6 +7,15 @@ $text-color: rgb(219, 214, 214);
   font-weight: normal;
   font-style: normal;
 }
+
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
 :fullscreen canvas,
 :-webkit-full-screen canvas {
   width: 100%;
@@ -75,6 +84,31 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  .loader {
+    position: fixed;
+    width: 920px;
+    height: 480px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000000ff;
+    z-index: 1000;
+    transition: opacity 0.75s, visibility 0.75s;
+  }
+  .loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .loader::after {
+    content: "";
+    width: 40px;
+    height: 40px;
+    border: 8px solid #531a82;
+    border-top-color: #7fffe0;
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+  }
   canvas {
     user-select: none;
     background: $game-bg;
@@ -360,6 +394,11 @@ body {
 @media only screen and (max-width: 922px) {
   body {
     .canvas-container {
+      .loader {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1.91/1;
+      }
       canvas {
         width: 100%;
         box-shadow: none;
@@ -504,6 +543,10 @@ body {
 @media only screen and (max-height: 480px) {
   body {
     .canvas-container {
+      .loader {
+        height: 100vh;
+        border-radius: 9px;
+      }
       canvas {
         box-shadow: none;
         border: none;
@@ -531,6 +574,11 @@ body {
 @media only screen and (max-height: 480px) and (max-width: 922px) {
   body {
     .canvas-container {
+      .loader {
+        border-radius: 0;
+        height: 100vh;
+        width: 100%;
+      }
       canvas {
         box-shadow: none;
         border: none;
@@ -560,6 +608,12 @@ body {
         }
       }
     }
+  }
+}
+
+.canvas-container {
+  .d-none {
+    display: none;
   }
 }
 .d-none {
