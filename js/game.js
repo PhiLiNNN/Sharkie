@@ -138,14 +138,6 @@ const buttons = [
 ];
 
 /**
- * Initializes the game by setting up the canvas and button event listeners.
- */
-function init() {
-  canvas = document.getElementById("canvas-id");
-  setBtsEventListener();
-}
-
-/**
  * Sets event listeners for buttons to handle interactions.
  */
 function setBtsEventListener() {
@@ -205,6 +197,8 @@ function openStartMenu() {
  * Starts the game by initializing the level and world, and closing the menu.
  */
 function startGame() {
+  canvas = document.getElementById("canvas-id");
+  setBtsEventListener();
   handlerSound(sound);
   playSound(underwater, 0.4, true);
   stopSound(endboss_fight);
@@ -215,8 +209,8 @@ function startGame() {
   intervalIds.forEach(clearInterval);
   pauseGame = false;
   initLevel();
-  world = new World(canvas);
   closeMenu();
+  world = new World(canvas);
 }
 
 /**
