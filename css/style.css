@@ -312,6 +312,13 @@ body {
   height: 30px;
 }
 
+.impressum {
+  font-family: sans-serif;
+}
+.impressum .popup {
+  letter-spacing: 0px;
+}
+
 .instructions-popup-container .popup {
   background: rgba(0, 0, 0, 0.7882352941);
   width: 750px;
