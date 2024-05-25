@@ -231,7 +231,6 @@ class Character extends MovableObject {
     if (!this.isSleepingPlaying) {
       playSound(snore, 0.8, true);
       this.isSleepingPlaying = true;
-      console.log("11111 :>> ");
     }
   }
 

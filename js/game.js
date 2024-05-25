@@ -180,6 +180,8 @@ function openMenu() {
  */
 function continueGame() {
   pauseGame = false;
+  const pauseEl = document.getElementById("pause-menu-icon-id");
+  pauseEl.src = "./img/6.Botones/OpenMenu/pause2.png";
   handlerSound(sound);
   toggleVisibility("menu-id", true);
 }
@@ -208,6 +210,8 @@ function startGame() {
   stopSound(endboss_fight);
   toggleVisibility("pause-menu-icon-id", false);
   toggleVisibility("game-over-id", true);
+  const pauseEl = document.getElementById("pause-menu-icon-id");
+  pauseEl.src = "./img/6.Botones/OpenMenu/pause2.png";
   intervalIds.forEach(clearInterval);
   pauseGame = false;
   initLevel();

@@ -12,7 +12,7 @@ class Endboss extends MovableObject {
   offsetHeight = 110;
   offsetWidth = 40;
   energy = 100;
-  speed = 5.0;
+  speed = 8.0;
   deadImgCounter = 0;
   world;
   isWinSoundPlaying = false;
