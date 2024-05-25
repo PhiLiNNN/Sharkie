@@ -7,6 +7,7 @@ class World extends WorldAssets {
   character = new Character();
   statusBar = new StatusBar();
   poisonBar = new PoisonBar();
+  endBossBar = new EndbossBar();
   throwableObjsCharacter = [];
   throwablePoisonObjsCharacter = [];
   throwableObjsPuffer = [];
@@ -280,6 +281,7 @@ class World extends WorldAssets {
       if (timeSinceLastHit >= 1000) {
         this.lastHitTime = currentTime;
         this.level.endboss.hit(this.collisionDmgWithEndboss);
+        this.endBossBar.setPercentage(this.level.endboss.energy);
       }
     }
   }

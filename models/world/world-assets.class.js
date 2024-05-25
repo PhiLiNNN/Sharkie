@@ -258,6 +258,7 @@ class WorldAssets {
    * Draws the status bar and poison bar.
    */
   drawBars() {
+    if (this.level.endboss.spawnAnimation) this.addToMap(this.endBossBar);
     this.addToMap(this.statusBar);
     this.addToMap(this.poisonBar);
   }
