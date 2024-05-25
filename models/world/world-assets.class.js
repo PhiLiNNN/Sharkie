@@ -14,10 +14,12 @@ class WorldAssets {
         this.executePrimaryAttack();
         lastClickTime = currentTime;
         this.keyboard.PRIMARY = false;
+        this.character.currentTime = currentTime;
       } else if (this.isMobileSecondaryAttackActionReady(currentTime, lastClickTime)) {
         this.executeSecondaryAttack();
         lastClickTime = currentTime;
         this.keyboard.SECONDARY = false;
+        this.character.currentTime = currentTime;
       }
     }, 25);
   }

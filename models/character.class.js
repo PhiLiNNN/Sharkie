@@ -18,7 +18,7 @@ class Character extends MovableObject {
   bubbleSpeed = 10;
   poison_energy = 0;
   interactionDistanceEndboss = 500;
-  longIdleTime = 10000;
+  longIdleTime = 15000;
   sleepImgCounter = 0;
   isSwimming = false;
   deadAnimation = false;
@@ -220,7 +220,10 @@ class Character extends MovableObject {
     if (!pauseGame) {
       let isSleeping = new Date().getTime() - this.currentTime > this.longIdleTime;
       if (isSleeping) return true;
-      else this.sleepImgCounter = 0;
+      else {
+        this.sleepImgCounter = 0;
+        return false;
+      }
     }
   }
 
