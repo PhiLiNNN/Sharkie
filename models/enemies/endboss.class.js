@@ -167,6 +167,7 @@ class Endboss extends MovableObject {
     if (timeSinceLastHit >= 1000) {
       this.world.lastHitTime = currentTime;
       this.playAnimationOnce(ENDBOSS_ATTACK, 100);
+      this.world.character.hitFromDangerousJelly = false;
       setTimeout(() => {
         playSound(bite, 0.4);
         this.world.character.pushCharacterBack();

@@ -19,12 +19,12 @@ class World extends WorldAssets {
   isSwimmingLeft;
   camera_x = 0;
   lastHitTime = 0;
-  collisionDmgWithEndboss = 20;
-  collisionDmgWithPuffer = 12;
-  collisionDmgWithDangerousJelly = 16;
-  collisionDmgWithRegularJelly = 14;
-  bubbleDmgFromPuffer = 12;
-  lightningDmgFromDangerousJelly = 16;
+  collisionDmgWithEndboss = 0;
+  collisionDmgWithPuffer = 0;
+  collisionDmgWithDangerousJelly = 0;
+  collisionDmgWithRegularJelly = 0;
+  bubbleDmgFromPuffer = 0;
+  lightningDmgFromDangerousJelly = 0;
   bubbleDmgToPuffer = 100;
   bubbleDmgToDangerousJelly = 100;
   bubbleDmgToRegularJelly = 100;
