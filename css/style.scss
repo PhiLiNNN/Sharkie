@@ -7,6 +7,14 @@ $text-color: rgb(219, 214, 214);
   font-weight: normal;
   font-style: normal;
 }
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
 :fullscreen canvas,
 :-webkit-full-screen canvas {
   width: 100%;
@@ -75,6 +83,32 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  .loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2f2f2fd6;
+    z-index: 1000;
+    transition: opacity 0.75s, visibility 0.75s;
+  }
+  .loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .loader::after {
+    content: "";
+    width: 75px;
+    height: 75px;
+    border: 15px solid #dddddd;
+    border-top-color: var(--mockup-color);
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+  }
   .legal {
     position: absolute;
     top: 10px;

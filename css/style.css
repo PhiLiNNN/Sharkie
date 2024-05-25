@@ -4,6 +4,14 @@
   font-weight: normal;
   font-style: normal;
 }
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
 :-webkit-full-screen canvas {
   width: 100%;
   height: 100vh;
@@ -88,6 +96,32 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.canvas-container .loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(47, 47, 47, 0.8392156863);
+  z-index: 1000;
+  transition: opacity 0.75s, visibility 0.75s;
+}
+.canvas-container .loader-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.canvas-container .loader::after {
+  content: "";
+  width: 75px;
+  height: 75px;
+  border: 15px solid #dddddd;
+  border-top-color: var(--mockup-color);
+  border-radius: 50%;
+  animation: loading 0.75s ease infinite;
 }
 .canvas-container .legal {
   position: absolute;

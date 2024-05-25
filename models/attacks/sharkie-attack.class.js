@@ -4,8 +4,8 @@
  * Represents an attack made by the main character, Sharkie.
  */
 class SharkieAttack extends ThrowableObject {
-  width = 40;
-  height = 40;
+  width = 35;
+  height = 35;
   offsetX = 0;
   shotSpeed = 1.5;
   primaryAttackBubble = "img/1.Sharkie/4.Attack/Bubble trap/Bubble.png";
