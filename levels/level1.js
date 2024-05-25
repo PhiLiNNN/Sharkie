@@ -160,7 +160,7 @@ function initLevel() {
       new JellyDangerous("PINK", 1, 4280, 300, 0.2, true, true),
       new JellyDangerous("PINK", 1, 4280, 400, 0.2, true, true),
     ],
-    new Endboss(600),
+    new Endboss(5000),
     backgroundObject,
     new Border(-280),
     new Border(5500),
