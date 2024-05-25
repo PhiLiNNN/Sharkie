@@ -294,7 +294,7 @@ body {
     input {
       display: none;
       &:checked ~ svg .path {
-        stroke: $text-color;
+        stroke: #fff200;
         stroke-dasharray: 70.5096664428711 9999999;
         stroke-dashoffset: -262.2723388671875;
       }

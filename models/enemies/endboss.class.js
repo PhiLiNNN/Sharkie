@@ -1,3 +1,8 @@
+/**
+ * @class Endboss
+ * @extends MovableObject
+ * Represents the end boss in the game.
+ */
 class Endboss extends MovableObject {
   y = -10;
   height = 350;
@@ -12,6 +17,10 @@ class Endboss extends MovableObject {
   world;
   isWinSoundPlaying = false;
 
+  /**
+   * Creates an instance of Endboss.
+   * @param {number} x - The initial x-coordinate of the end boss.
+   */
   constructor(x) {
     super().loadImage(ENDBOSS_APPEARS[0]);
     this.loadImages(ENDBOSS_SWIMMING);
@@ -25,6 +34,9 @@ class Endboss extends MovableObject {
     this.moveEndboss();
   }
 
+  /**
+   * Plays the spawn animation for the end boss.
+   */
   spawnEndboss() {
     let updateSpawnAnimation = setInterval(() => {
       if (this.spawnAnimation && !this.spawnAnimationPlayed) {
@@ -35,6 +47,9 @@ class Endboss extends MovableObject {
     intervalIds.push(updateSpawnAnimation);
   }
 
+  /**
+   * Moves the end boss towards the character.
+   */
   moveEndboss() {
     let updateMovToCha;
     let updateMoveEndboss = setInterval(() => {
@@ -51,18 +66,27 @@ class Endboss extends MovableObject {
     intervalIds.push(updateMoveEndboss);
   }
 
+  /**
+   * Animates the end boss.
+   */
   animate() {
     if (this.isDead()) this.handlerEndbossDead();
     else if (this.isHurt()) this.handlerEndbossHurt();
     else this.playAnimation(ENDBOSS_SWIMMING);
   }
 
+  /**
+   * Handles the animation when the end boss is hurt.
+   */
   handlerEndbossHurt() {
     this.playAnimation(ENDBOSS_HURT);
     punch.volume = 0.2;
     punch.play();
   }
 
+  /**
+   * Handles the animation when the end boss is dead.
+   */
   handlerEndbossDead() {
     this.playDeadAnimation();
     this.showWinScreen();
@@ -71,6 +95,20 @@ class Endboss extends MovableObject {
     toggleVisibility("pause-menu-icon-id", true);
   }
 
+  /**
+   * Plays the dead animation for the end boss.
+   */
+  playDeadAnimation() {
+    if (this.deadImgCounter < ENDBOSS_DEAD.length) {
+      let path = ENDBOSS_DEAD[this.deadImgCounter];
+      this.img = this.imageCache[path];
+      this.deadImgCounter++;
+    } else pauseGame = true;
+  }
+
+  /**
+   * Plays the win sound when the end boss is dead.
+   */
   playWinSound() {
     if (this.isDead() && !this.isWinSoundPlaying) {
       stopSound(endboss_fight);
@@ -80,19 +118,17 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Shows the win screen when the end boss is dead.
+   */
   showWinScreen() {
     toggleVisibility("you-win-id", false);
     setTimeout(() => toggleVisibility("you-win-id", true, "visible"), 200);
   }
 
-  playDeadAnimation() {
-    if (this.deadImgCounter < ENDBOSS_DEAD.length) {
-      let path = ENDBOSS_DEAD[this.deadImgCounter];
-      this.img = this.imageCache[path];
-      this.deadImgCounter++;
-    } else pauseGame = true;
-  }
-
+  /**
+   * Lets the end boss sink to the ground after dying.
+   */
   letEndbossSinkToGround() {
     setInterval(() => {
       const updateSinkToGround = setInterval(() => {
@@ -105,6 +141,9 @@ class Endboss extends MovableObject {
     }, 300);
   }
 
+  /**
+   * Moves the end boss towards the character.
+   */
   moveToCharacter() {
     if (this.world.character.isDead() || this.isDead()) return;
     let dx = this.world.character.x - this.x - 100;
@@ -118,6 +157,9 @@ class Endboss extends MovableObject {
     this.y += dy * this.speed;
   }
 
+  /**
+   * Handles collision between the character and the end boss.
+   */
   handlerCharacterEndbossCollision() {
     let currentTime = new Date().getTime();
     let timeSinceLastHit = currentTime - this.world.lastHitTime;

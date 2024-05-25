@@ -316,7 +316,7 @@ body {
   display: none;
 }
 .touchCheckbox .container input:checked ~ svg .path {
-  stroke: rgb(219, 214, 214);
+  stroke: #fff200;
   stroke-dasharray: 70.5096664429 9999999;
   stroke-dashoffset: -262.2723388672;
 }

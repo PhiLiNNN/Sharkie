@@ -1,3 +1,8 @@
+/**
+ * @class PoisonBar
+ * @extends DrawableObject
+ * Represents the poison energy bar.
+ */
 class PoisonBar extends DrawableObject {
   percentage = 0;
   x = 10;
@@ -13,18 +18,30 @@ class PoisonBar extends DrawableObject {
     "./img/4. Marcadores/green/poisoned bubbles/100_copia.png",
   ];
 
+  /**
+   * The paths to the images representing different poison energy levels.
+   * @type {string[]}
+   */
   constructor() {
     super().loadImage(this.POISON_BAR[0]);
     this.loadImages(this.POISON_BAR);
     this.setPercentage(this.percentage);
   }
 
+  /**
+   * Sets the percentage of poison energy and updates the image accordingly.
+   * @param {number} percentage - The new percentage of poison energy.
+   */
   setPercentage(percentage) {
     this.percentage = percentage;
     let path = this.POISON_BAR[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
+  /**
+   * Resolves the index of the image in the POISON_BAR array based on the current percentage.
+   * @returns {number} - The index of the image.
+   */
   resolveImageIndex() {
     if (this.percentage === 0) return 0;
     else if (this.percentage === 20) return 1;

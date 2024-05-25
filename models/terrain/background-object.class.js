@@ -1,3 +1,7 @@
+/**
+ * Class representing a background object.
+ * @extends DrawableObject
+ */
 class BackgroundObject extends DrawableObject {
   width = 720;
   height = 480;

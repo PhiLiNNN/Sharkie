@@ -1,11 +1,25 @@
+/**
+ * @class JellyRegular
+ * @extends MovableObject
+ * Represents a regular jellyfish enemy in the game.
+ */
 class JellyRegular extends MovableObject {
   height = 40;
   width = 40;
   offsetHeight = 8;
-  angle;
   speed = 0.01;
   radius;
   damage = 100;
+
+  /**
+   * Creates an instance of JellyRegular.
+   * @param {string} fishType - The type of the jellyfish.
+   * @param {number} fishIndex - The index of the jellyfish.
+   * @param {number} x - The initial x-coordinate of the jellyfish.
+   * @param {number} y - The initial y-coordinate of the jellyfish.
+   * @param {number} angle - The angle of the jellyfish-circle.
+   * @param {number} radius - The radius of the jellyfish-circle.
+   */
   constructor(fishType, fishIndex, x, y, angle, radius) {
     super().loadImage(`./img/2.Enemy/2 Jelly fish/Regular damage/${fishType}${fishIndex}.png`);
     this.loadImages(this.getFishImages(fishType.toUpperCase()));
@@ -20,6 +34,9 @@ class JellyRegular extends MovableObject {
     this.animate(fishType.toUpperCase());
   }
 
+  /**
+   * Initializes intervals for the jellyfish.
+   */
   initializeIntervals() {
     let updateHurtSoundJellyRegular = setInterval(() => {
       this.playDeadSound(jelly_dead);
@@ -27,15 +44,30 @@ class JellyRegular extends MovableObject {
     intervalIds.push(updateHurtSoundJellyRegular);
   }
 
+  /**
+   * Retrieves the images for the jellyfish based on its type.
+   * @param {string} fishType - The type of the jellyfish.
+   * @returns {Array} - An array of image paths for the jellyfish.
+   */
   getFishImages(fishType) {
     if (fishType === "LILA") return JELLY_LILA;
     else if (fishType === "YELLOW") return JELLY_YELLOW;
   }
 
+  /**
+   * Retrieves the dead images for the jellyfish based on its type.
+   * @param {string} fishType - The type of the jellyfish.
+   * @returns {Array} - An array of image paths for the dead jellyfish.
+   */
   getFishDeadImages(fishType) {
     if (fishType === "LILA") return JELLY_LILA_DEAD;
     else if (fishType === "YELLOW") return JELLY_YELLOW_DEAD;
   }
+
+  /**
+   * Animates the jellyfish based on its type.
+   * @param {string} fishType - The type of the jellyfish.
+   */
   animate(fishType) {
     const animateFunction = () => {
       if (this.isDead()) {

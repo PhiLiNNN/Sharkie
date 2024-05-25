@@ -1,3 +1,8 @@
+/**
+ * @class Border
+ * @extends DrawableObject
+ * Represents a border in the game.
+ */
 class Border extends DrawableObject {
   width = 300;
   height = 480;

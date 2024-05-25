@@ -1,4 +1,9 @@
-class World {
+/**
+ * @class World
+ * Represents the game world with its assets and interactions.
+ * @extends WorldAssets
+ */
+class World extends WorldAssets {
   character = new Character();
   statusBar = new StatusBar();
   poisonBar = new PoisonBar();
@@ -13,130 +18,40 @@ class World {
   isSwimmingLeft;
   camera_x = 0;
   lastHitTime = 0;
-
   collisionDmgWithEndboss = 20;
   collisionDmgWithPuffer = 10;
   collisionDmgWithDangerousJelly = 15;
   collisionDmgWithRegularJelly = 10;
-
   bubbleDmgFromPuffer = 8;
   lightningDmgFromDangerousJelly = 12;
-
   bubbleDmgToPuffer = 100;
   bubbleDmgToDangerousJelly = 100;
   bubbleDmgToRegularJelly = 100;
+  drawFrame = false;
 
+  /**
+   * Creates an instance of World.
+   * @param {HTMLCanvasElement} canvas - The canvas element for the game.
+   */
   constructor(canvas) {
+    super();
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.draw();
     this.setWorld();
-    this.checkSwimDirection(9);
+    this.checkSwimDirection();
     this.checkBlowBubble();
     this.checkAllPossibleCollisions();
     this.areEnemiesWithinSight();
   }
 
-  executeAttack(arr, bool) {
-    setTimeout(() => {
-      stopSound(snore);
-      this.character.isSleepingPlaying = false;
-      playSound(character_shot, 0.2);
-      const xOffset = this.isSwimmingLeft ? 10 : 140;
-      const bubble = new SharkieAttack(
-        this.character.x + xOffset,
-        this.character.y + 90,
-        this.isSwimmingLeft,
-        bool
-      );
-      arr.push(bubble);
-    }, 400);
-  }
-
+  /**
+   * Checks if the main character can blow bubbles.
+   */
   checkBlowBubble() {
     let lastClickTime = 0;
     this.handlerDesktopBubbles(lastClickTime);
     this.handlerMobileBubbles(lastClickTime);
-  }
-
-  handlerMobileBubbles(lastClickTime) {
-    setInterval(() => {
-      const currentTime = new Date().getTime();
-      if (this.isMobilePrimaryAttackActionReady(currentTime, lastClickTime)) {
-        this.executePrimaryAttack();
-        lastClickTime = currentTime;
-        this.keyboard.PRIMARY = false;
-      } else if (this.isMobileSecondaryAttackActionReady(currentTime, lastClickTime)) {
-        this.executeSecondaryAttack();
-        lastClickTime = currentTime;
-        this.keyboard.SECONDARY = false;
-      }
-    }, 25);
-  }
-
-  handlerDesktopBubbles(lastClickTime) {
-    this.canvas.addEventListener("mousedown", (event) => {
-      const currentTime = new Date().getTime();
-      this.character.currentTime = currentTime;
-      document.getElementById("canvas-id").oncontextmenu = () => false;
-      if (this.isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime)) {
-        this.executePrimaryAttack();
-        lastClickTime = currentTime;
-      } else if (this.isDesktopSecondaryAttackActionReady(event, currentTime, lastClickTime)) {
-        this.executeSecondaryAttack();
-        lastClickTime = currentTime;
-      }
-    });
-  }
-
-  executePrimaryAttack() {
-    this.character.playAnimationOnce(CHARACTER_BUBBLE_SHOT, 50);
-    this.executeAttack(this.throwableObjsCharacter, false);
-  }
-
-  executeSecondaryAttack() {
-    this.character.reducePoisonEnergy();
-    this.poisonBar.setPercentage(this.character.poison_energy);
-    this.character.playAnimationOnce(CHARACTER_POISON_SHOT, 50);
-    this.executeAttack(this.throwablePoisonObjsCharacter, true);
-  }
-
-  isDesktopSecondaryAttackActionReady(event, currentTime, lastClickTime) {
-    return (
-      event.button === 2 &&
-      currentTime - lastClickTime >= 500 &&
-      this.character.poison_energy !== 0 &&
-      !pauseGame &&
-      !this.character.isHurt()
-    );
-  }
-
-  isDesktopPrimaryAttackActionReady(event, currentTime, lastClickTime) {
-    return (
-      event.button === 0 &&
-      currentTime - lastClickTime >= 500 &&
-      !pauseGame &&
-      !this.character.isHurt()
-    );
-  }
-
-  isMobileSecondaryAttackActionReady(currentTime, lastClickTime) {
-    return (
-      this.keyboard.SECONDARY &&
-      currentTime - lastClickTime >= 500 &&
-      this.character.poison_energy !== 0 &&
-      !pauseGame &&
-      !this.character.isHurt()
-    );
-  }
-
-  isMobilePrimaryAttackActionReady(currentTime, lastClickTime) {
-    return (
-      this.keyboard.PRIMARY &&
-      currentTime - lastClickTime >= 500 &&
-      !pauseGame &&
-      !this.character.isHurt()
-    );
   }
 
   /**
@@ -147,24 +62,33 @@ class World {
     this.level.endboss.world = this;
   }
 
+  /**
+   * Checks all possible collisions in the game world.
+   */
   checkAllPossibleCollisions() {
     let updateCollisionInt = setInterval(() => {
       this.checkCharacterCollisions();
       this.checkCollisionWithBubble();
-      this.handlerCollisionWithPoisonBubble();
+      this.checkCollisionWithPoisonBubble();
       this.checkBubbleBubbleCollision();
     }, 25);
     intervalIds.push(updateCollisionInt);
   }
 
+  /**
+   * Checks collisions involving the main character.
+   */
   checkCharacterCollisions() {
     this.checkCharacterEnemyCollision();
-    this.checkCharacterThrowableObjectCollision();
+    this.checkCharacterEnemyAttackCollision();
     this.checkCharacterItemCollision();
   }
 
+  /**
+   * Checks collisions between the main character and items.
+   */
   checkCharacterItemCollision() {
-    this.checkItemCollisions(
+    this.handlerItemCollisions(
       this.level.poisonItems,
       "poison",
       poison_collect,
@@ -172,7 +96,7 @@ class World {
       this.poisonBar,
       "poison_energy"
     );
-    this.checkItemCollisions(
+    this.handlerItemCollisions(
       this.level.heartItems,
       "heart",
       heart_collect,
@@ -182,7 +106,16 @@ class World {
     );
   }
 
-  checkItemCollisions(items, itemType, sound, volume, statusBar, energyType) {
+  /**
+   * Handles collisions between the main character and items.
+   * @param {Array} items - The array of items to check for collisions.
+   * @param {string} itemType - The type of item to check collisions with.
+   * @param {Audio} sound - The sound to play when an item is collected.
+   * @param {number} volume - The volume of the sound to play.
+   * @param {StatusBar} statusBar - The status bar to update after collecting the item.
+   * @param {string} energyType - The type of energy to update in the status bar.
+   */
+  handlerItemCollisions(items, itemType, sound, volume, statusBar, energyType) {
     items.forEach((item, idx) => {
       if (this.isCollectionItem(item, itemType)) {
         playSound(sound, volume);
@@ -193,17 +126,9 @@ class World {
     });
   }
 
-  isCollectionItem(item, itemType) {
-    return this.character.isColliding(item) && this.isItemValid(itemType) && !pauseGame;
-  }
-
-  isItemValid(itemType) {
-    return (
-      (itemType === "poison" && this.character.poison_energy !== 100) ||
-      (itemType === "heart" && this.character.energy !== 100)
-    );
-  }
-
+  /**
+   * Checks collisions between the main character and enemies.
+   */
   checkCharacterEnemyCollision() {
     const checkCollisions = (enemies, damage) => {
       enemies.forEach((enemy, idx) => {
@@ -226,12 +151,10 @@ class World {
     checkCollisions(this.level.regularJellies, this.collisionDmgWithRegularJelly);
   }
 
-  isCharColWithJellyDangerousFish(enemy) {
-    if (enemy instanceof JellyDangerous) this.character.hitFromDangerousJelly = true;
-    else this.character.hitFromDangerousJelly = false;
-  }
-
-  checkCharacterThrowableObjectCollision() {
+  /**
+   * Checks collisions between the main character and enemy attack from enemies.
+   */
+  checkCharacterEnemyAttackCollision() {
     this.checkCharEnemyShotCollision(this.throwableObjsPuffer, this.bubbleDmgFromPuffer);
     this.checkCharEnemyShotCollision(
       this.throwableObjsJellyDangerous,
@@ -239,6 +162,11 @@ class World {
     );
   }
 
+  /**
+   * Checks collisions between the main character and enemy shots.
+   * @param {Array} enemies - The array of enemy shots to check collisions with.
+   * @param {number} damage - The damage to inflict on the character upon collision.
+   */
   checkCharEnemyShotCollision(enemies, damage) {
     enemies.forEach((enemyShot, idx) => {
       if (this.character.isColliding(enemyShot) && !pauseGame) {
@@ -257,11 +185,9 @@ class World {
     });
   }
 
-  isCharHitByJellyDangerousFish(enemyShot) {
-    if (enemyShot instanceof JellyDangerousFishAttack) this.character.hitFromDangerousJelly = true;
-    else this.character.hitFromDangerousJelly = false;
-  }
-
+  /**
+   * Checks collisions between bubbles thrown by the character and bubbles thrown by enemies.
+   */
   checkBubbleBubbleCollision() {
     const checkCollisions = (enemyBubbles, characterBubbles) => {
       enemyBubbles.forEach((enemyBubble, enemyIndex) => {
@@ -281,6 +207,9 @@ class World {
     checkCollisions(this.throwableObjsJellyDangerous, this.throwablePoisonObjsCharacter);
   }
 
+  /**
+   * Handles collisions between the character bubbles and enemies.
+   */
   checkCollisionWithBubble() {
     const bubblesToRemove = [];
     this.throwableObjsCharacter.forEach((bubble, bubbleIdx) => {
@@ -301,7 +230,10 @@ class World {
     this.removeBubbles(bubblesToRemove, this.throwableObjsCharacter);
   }
 
-  handlerCollisionWithPoisonBubble() {
+  /**
+   * Handles collisions between poison bubbles thrown by the character and enemies.
+   */
+  checkCollisionWithPoisonBubble() {
     const bubblesToRemove = [];
     this.throwablePoisonObjsCharacter.forEach((bubble, idx) => {
       const enemiesToCheck = [
@@ -310,17 +242,25 @@ class World {
         {enemie: this.level.regularJellies, damage: this.bubbleDmgToRegularJelly},
       ];
       enemiesToCheck.forEach(({enemie, damage}) => {
-        this.checkPoisonBubbleCollision(enemie, damage, bubble, idx, bubblesToRemove);
+        this.handlerEnemyHit(enemie, damage, bubble, idx, bubblesToRemove);
       });
       if (this.isOutsideCharacterRange(bubble) || this.isCollidingWithEndBoss(bubble)) {
         bubblesToRemove.push(idx);
-        this.checkEndBossCollisionAndHit(bubble);
+        this.handlerEndbossHit(bubble);
       }
     });
     this.removeBubbles(bubblesToRemove, this.throwablePoisonObjsCharacter);
   }
 
-  checkPoisonBubbleCollision(enemyArr, damage, bubble, bubbleIdx, bubblesToRemove) {
+  /**
+   * Checks collisions between poison bubbles thrown by the character and enemies.
+   * @param {Array} enemyArr - The array of enemies to check collisions with.
+   * @param {number} damage - The damage to inflict on enemies upon collision.
+   * @param {object} bubble - The poison bubble object.
+   * @param {number} bubbleIdx - The index of the poison bubble in the array.
+   * @param {Array} bubblesToRemove - The array to store indices of bubbles to remove.
+   */
+  handlerEnemyHit(enemyArr, damage, bubble, bubbleIdx, bubblesToRemove) {
     enemyArr.forEach((enemy) => {
       if (bubble.isColliding(enemy) && !enemy.isDead()) {
         bubblesToRemove.push(bubbleIdx);
@@ -329,7 +269,11 @@ class World {
     });
   }
 
-  checkEndBossCollisionAndHit(bubble) {
+  /**
+   * Handles the collision between a bubble  from  Character and the endboss, causing damage to the end boss.
+   * @param {object} bubble - The bubble object.
+   */
+  handlerEndbossHit(bubble) {
     if (bubble.isColliding(this.level.endboss)) {
       let currentTime = new Date().getTime();
       let timeSinceLastHit = currentTime - this.lastHitTime;
@@ -340,33 +284,9 @@ class World {
     }
   }
 
-  isOutsideCharacterRange(shot) {
-    const rightScreenBorder = 880 - Math.abs(this.character.x + this.camera_x);
-    const leftScreenBorder = Math.abs(this.character.x + this.camera_x);
-    const rightLimit = shot instanceof JellyDangerousFishAttack ? 1300 : rightScreenBorder;
-    return (
-      shot.x > this.character.x + rightLimit ||
-      shot.x < this.character.x - leftScreenBorder ||
-      shot.x < this.level.leftBorder.x + this.level.leftBorder.width ||
-      shot.x > this.level.rightBorder.x
-    );
-  }
-
-  isCollidingWithEndBoss(bubble) {
-    return (
-      bubble.isColliding(this.level.endboss) &&
-      !this.level.endboss.isDead() &&
-      this.level.endboss.spawnAnimation
-    );
-  }
-
-  removeBubbles(arr, allBubbles) {
-    arr.sort((a, b) => b - a);
-    arr.forEach((idx) => {
-      allBubbles.splice(idx, 1);
-    });
-  }
-
+  /**
+   * Checks if enemies are within sight range and triggers their attacks.
+   */
   areEnemiesWithinSight() {
     let updateEnemyVisibility = setInterval(() => {
       if (this.character.x > 40 && !pauseGame && !this.level.endboss.isDead())
@@ -377,10 +297,20 @@ class World {
     intervalIds.push(updateEnemyVisibility);
   }
 
+  /**
+   * Retrieves the list of alive enemies.
+   * @param {Array} enemies - The array of enemies.
+   * @returns {Array} - Returns the array of alive enemies.
+   */
   getAliveEnemies(enemies) {
     return enemies.filter((enemy) => !enemy.isDead());
   }
 
+  /**
+   * Initiates enemy attacks if enemies are within sight range.
+   * @param {Array} aliveEnemies - The array of alive enemies.
+   * @param {string} fishType - The type of enemy fish.
+   */
   enemyAttack(aliveEnemies, fishType) {
     const addEnemyAttack = () => {
       if (aliveEnemies.length === 0) return;
@@ -392,6 +322,11 @@ class World {
     addEnemyAttack();
   }
 
+  /**
+   * Adds enemy attack objects based on the enemy type.
+   * @param {object} enemy - The enemy object.
+   * @param {string} fishType - The type of enemy fish.
+   */
   addEnemyAttackObject(enemy, fishType) {
     let newEnemy;
     if (fishType === "jellyDangerous") {
@@ -403,6 +338,10 @@ class World {
     }
   }
 
+  /**
+   * Sets the animation for the enemy fish based on its type.
+   * @param {object} fish - The enemy fish object.
+   */
   setRightAnimation(fish) {
     if (fish.fishType === "ORANGE") fish.playAnimationOnce(PUFFER_ORANGE_TRANSITION, 120);
     if (fish.fishType === "RED") fish.playAnimationOnce(PUFFER_RED_TRANSITION, 120);
@@ -415,88 +354,19 @@ class World {
    */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.ctx.translate(this.camera_x, 0);
-
-    this.addObjectsToMap(this.level.backgroundObject);
-
-    this.addToMap(this.level.leftBorder);
-    this.addToMap(this.level.rightBorder);
-
-    this.addObjectsToMap(this.level.poisonItems);
-    this.addObjectsToMap(this.level.heartItems);
-
+    this.drawWorldObjs();
+    this.drawItems();
     this.ctx.translate(-this.camera_x, 0);
-    this.addToMap(this.statusBar);
-    this.addToMap(this.poisonBar);
+    this.drawBars();
     this.ctx.translate(this.camera_x, 0);
-
-    this.addToMap(this.character);
-
-    if (this.level.endboss.spawnAnimation) this.addToMap(this.level.endboss);
-
-    this.addObjectsToMap(this.level.regularJellies);
-    this.addObjectsToMap(this.level.dangerousJellies);
-    this.addObjectsToMap(this.level.pufferFishes);
-
-    this.addObjectsToMap(this.throwableObjsCharacter);
-    this.addObjectsToMap(this.throwablePoisonObjsCharacter);
-    this.addObjectsToMap(this.throwableObjsPuffer);
-    this.addObjectsToMap(this.throwableObjsJellyDangerous);
-
+    this.drawCharacter();
+    this.drawEnemies();
+    this.drawAttackObjs();
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
     });
-  }
-
-  /**
-   * Draws a list of objects onto the canvas.
-   * @param {Array} objects - The list of objects to draw.
-   */
-  addObjectsToMap(objects) {
-    objects.forEach((o) => {
-      this.addToMap(o);
-    });
-  }
-
-  /**
-   * Draws a single object onto the canvas.
-   * @param {Object} mo - The object to draw.
-   */
-  addToMap(mo) {
-    if (mo.otherDirection) this.flipImage(mo);
-    mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx);
-    if (mo.otherDirection) this.flipImageBack(mo);
-  }
-
-  /**
-   * Flips the image horizontally before drawing.
-   * @param {Object} mo - The object whose image is to be flipped.
-   */
-  flipImage(mo) {
-    this.ctx.save();
-    this.ctx.translate(mo.width, 0);
-    this.ctx.scale(-1, 1);
-    mo.x = mo.x * -1;
-  }
-
-  /**
-   * Restores the canvas state after flipping the image.
-   * @param {Object} mo - The object whose image was flipped.
-   */
-  flipImageBack(mo) {
-    mo.x = mo.x * -1;
-    this.ctx.restore();
-  }
-
-  checkSwimDirection() {
-    let updateSwimDir = setInterval(() => {
-      if (this.keyboard.RIGHT) this.isSwimmingLeft = false;
-      if (this.keyboard.LEFT) this.isSwimmingLeft = true;
-    }, 25);
-    intervalIds.push(updateSwimDir);
   }
 }

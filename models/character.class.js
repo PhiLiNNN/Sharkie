@@ -1,6 +1,11 @@
+/**
+ * @class Character
+ * @extends MovableObject
+ * Represents the main character in the game.
+ */
 class Character extends MovableObject {
   world;
-  energy = gameDifficulty;
+  energy = characterEnergy;
   height = 190;
   width = 190;
   x = 40;
@@ -13,7 +18,7 @@ class Character extends MovableObject {
   bubbleSpeed = 10;
   poison_energy = 0;
   interactionDistanceEndboss = 500;
-  longIdleTime = 2000;
+  longIdleTime = 10000;
   sleepImgCounter = 0;
   isSwimming = false;
   deadAnimation = false;
@@ -23,6 +28,10 @@ class Character extends MovableObject {
   isWinLosePlaying = false;
   stopPushingBack = true;
   currentTime = new Date().getTime();
+
+  /**
+   * Creates an instance of Character.
+   */
   constructor() {
     super().loadImage("img/1.Sharkie/1.IDLE/1.png");
     this.loadImages(CHARACTER_IDLE);
@@ -35,9 +44,11 @@ class Character extends MovableObject {
     this.loadImages(CHARACTER_SLEEPING);
     this.loadImages(CHARACTER_SLEEPING_CONTINUOUSLY);
     this.initializeIntervals();
-    this.isBlowBubble = false;
   }
 
+  /**
+   * Initializes the intervals for character movement and animation.
+   */
   initializeIntervals() {
     let updateBtns = setInterval(this.handleMovement.bind(this), 10);
     intervalIds.push(updateBtns);
@@ -47,10 +58,16 @@ class Character extends MovableObject {
     intervalIds.push(updateSwimSound);
   }
 
+  /**
+   * Plays the swimming sound if the character is swimming.
+   */
   playSwimSound() {
     if (this.isSwimming) playSound(swimming_sound, 0.08);
   }
 
+  /**
+   * Plays the lose sound if the character is defeated.
+   */
   playLoseSound() {
     if (!this.isWinLosePlaying) {
       stopSound(endboss_fight);
@@ -59,6 +76,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Plays the end boss sound when the end boss is spawned.
+   */
   playEndbossSound() {
     if (this.world.level.endboss.spawnAnimation && !this.isEndbossSoundPlaying) {
       stopSound(underwater);
@@ -66,6 +86,10 @@ class Character extends MovableObject {
       this.isEndbossSoundPlaying = true;
     }
   }
+
+  /**
+   * Plays the hurt sound based on the character's condition.
+   */
   playHurtSound() {
     if (this.isHurt() && !this.hitFromDangerousJelly) {
       character_bubble_hurt.volume = 0.2;
@@ -76,6 +100,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Handles character movement based on keyboard input.
+   */
   handleMovement() {
     this.isSwimming = false;
     if (!pauseGame && !this.isDead()) {
@@ -88,6 +115,9 @@ class Character extends MovableObject {
     this.playHurtSound();
   }
 
+  /**
+   * Moves the character to the right if the RIGHT key is pressed.
+   */
   moveCharacterRight() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_rightEnd) {
       this.x += this.speed;
@@ -97,6 +127,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Moves the character to the left if the LEFT key is pressed.
+   */
   moveCharacterLeft() {
     if (this.world.keyboard.LEFT && this.x > this.world.level.level_leftEnd) {
       this.x -= this.speed;
@@ -106,6 +139,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Moves the character up if the UP key is pressed.
+   */
   moveCharacterUp() {
     if (this.world.keyboard.UP && this.y > this.world.level.level_topEnd) {
       this.y -= this.speed;
@@ -114,6 +150,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Moves the character down if the DOWN key is pressed.
+   */
   moveCharacterDown() {
     if (this.world.keyboard.DOWN && this.y < this.world.level.level_bottomEnd) {
       this.y += this.speed;
@@ -121,11 +160,18 @@ class Character extends MovableObject {
       this.currentTime = new Date().getTime();
     }
   }
+
+  /**
+   * Updates the camera position based on the character's movement.
+   */
   updateCamera() {
     let targetCameraX = this.otherDirection ? -this.x + 700 : -this.x;
     this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.01;
   }
 
+  /**
+   * Updates the character's animation based on its state.
+   */
   updateCharacterAnimation() {
     if (this.isDead()) this.handleDeadAnimation();
     else if (this.isHurt()) this.handleHurtAnimation();
@@ -137,12 +183,18 @@ class Character extends MovableObject {
     this.playEndbossSound();
   }
 
+  /**
+   * Handles the swim animation of the character.
+   */
   handleSwimAnimation() {
     stopSound(snore);
     this.isSleepingPlaying = false;
     this.playAnimation(CHARACTER_SWIMMING);
   }
 
+  /**
+   * Handles the dead animation of the character.
+   */
   handleDeadAnimation() {
     stopSound(snore);
     this.isSleepingPlaying = false;
@@ -160,6 +212,10 @@ class Character extends MovableObject {
     toggleVisibility("exit-gameAfterDead-btn-id", false);
   }
 
+  /**
+   * Checks if the character is idle.
+   * @returns {boolean} True if the character is idle, otherwise false.
+   */
   isCharacterIdle() {
     if (!pauseGame) {
       let isSleeping = new Date().getTime() - this.currentTime > this.longIdleTime;
@@ -167,6 +223,10 @@ class Character extends MovableObject {
       else this.sleepImgCounter = 0;
     }
   }
+
+  /**
+   * Plays the sleeping sound of the character.
+   */
   playSleepSound() {
     if (!this.isSleepingPlaying) {
       playSound(snore, 0.8, true);
@@ -174,6 +234,10 @@ class Character extends MovableObject {
       console.log("11111 :>> ");
     }
   }
+
+  /**
+   * Handles the sleep animation of the character.
+   */
   handleSleepAnimation() {
     this.playSleepSound();
     if (this.sleepImgCounter < CHARACTER_SLEEPING.length) {
@@ -183,6 +247,9 @@ class Character extends MovableObject {
     } else this.playAnimation(CHARACTER_SLEEPING_CONTINUOUSLY);
   }
 
+  /**
+   * Handles the hurt animation of the character.
+   */
   handleHurtAnimation() {
     stopSound(snore);
     this.isSleepingPlaying = false;
@@ -191,6 +258,9 @@ class Character extends MovableObject {
       : this.playAnimation(CHARACTER_BUBBLE_HURT);
   }
 
+  /**
+   * Pushes the character back.
+   */
   pushCharacterBack() {
     let startPos = this.x;
     let endPosLeft = startPos - 200;
@@ -205,6 +275,12 @@ class Character extends MovableObject {
     }, 10);
   }
 
+  /**
+   * Pushes the character in a specified direction until a boundary is reached.
+   * @param {number} dir - The direction of movement (1 for right, -1 for left).
+   * @param {number} endPos - The end position to stop pushing.
+   * @param {number} intervalId - The interval ID for clearing.
+   */
   pushCharacter(dir, endPos, intervalId) {
     this.x += dir * 3.0;
     this.world.camera_x -= dir * 3.0;
@@ -215,10 +291,22 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Checks if the character has moved beyond the right boundary.
+   * @param {number} dir - The direction of movement (1 for right, -1 for left).
+   * @param {number} endPos - The end position to check against.
+   * @returns {boolean} True if the character has moved beyond the right boundary, otherwise false.
+   */
   isBeyondRightBoundary(dir, endPos) {
     return dir > 0 && (this.x >= endPos || this.x > this.world.level.level_rightEnd);
   }
 
+  /**
+   * Checks if the character has moved beyond the left boundary.
+   * @param {number} dir - The direction of movement (1 for right, -1 for left).
+   * @param {number} endPos - The end position to check against.
+   * @returns {boolean} True if the character has moved beyond the left boundary, otherwise false.
+   */
   isBeyondLeftBoundary(dir, endPos) {
     return dir < 0 && (this.x <= endPos || this.x < this.world.level.level_leftEnd);
   }

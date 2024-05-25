@@ -1,10 +1,29 @@
+/**
+ * @fileoverview This file initializes the game's level, including enemies, background objects, and items.
+ */
+
 backgroundObject = [];
+
+/**
+ * The width of the game world.
+ */
 width = 720;
+
+/**
+ * Layers for the background.
+ */
 layers = ["5. Water", "4. Fondo 2", "3. Fondo 1", "1. Light", "2. Floor"];
-repeaterAmount = 8; // change this number to set the length of the world
-let y = 230;
+
+/**
+ * Number of times the background should repeat.
+ */
+repeaterAmount = 8;
 let level1;
 
+/**
+ * Returns an array of HeartItem objects if heartItems is true.
+ * @returns {HeartItem[]} - Array of HeartItem objects or an empty array.
+ */
 function showHeartItems() {
   if (heartItems)
     return [
@@ -16,6 +35,9 @@ function showHeartItems() {
   return [];
 }
 
+/**
+ * Initializes the level with enemies, items, background objects, and borders.
+ */
 function initLevel() {
   level1 = new Level(
     [

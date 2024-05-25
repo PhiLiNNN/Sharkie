@@ -22,9 +22,10 @@
     <script src="./models/character.class.js"></script>
     <script src="./models/bars/status-bar.class.js"></script>
     <script src="./models/bars/poison-bar.class.js"></script>
+    <script src="./models/assets/world/world-assets.class.js"></script>
     <script src="./models/world.class.js"></script>
-    <script src="./models/background-object.class.js"></script>
-    <script src="./models/border.class.js"></script>
+    <script src="./models/terrain/background-object.class.js"></script>
+    <script src="./models/terrain/border.class.js"></script>
     <script src="./models/throwable-object.class.js"></script>
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/attacks/pufferfish-attack.class.js"></script>
@@ -61,7 +62,7 @@
           </div>
           <div class="bottom-menu-bts">
             <img
-              id=""
+              id="instructions-id"
               class="difficulty-img"
               src="./img/6.Botones/Instructions/2.png"
               alt=""
@@ -76,12 +77,12 @@
             <img
               id="continue-btn-id"
               class="d-none"
-              src="img/6.Botones/Continue/2.png"
+              src="./img/6.Botones/Continue/2.png"
               onclick="continueGame()" />
             <img
               id="exit-game-btn-id"
               class="d-none"
-              src="img/6.Botones/ExitGame/2.png"
+              src="./img/6.Botones/ExitGame/2.png"
               onclick="openStartMenu()" />
           </div>
         </div>
@@ -90,8 +91,9 @@
         <img class="you-win-img" src="./img/6.Botones/Try again/Mesa de trabajo 20.png" alt="" />
         <div class="back-to-menu">
           <img
+            id="back-to-menu-id"
             class="back-to-menu-img"
-            src="./img/6.Botones/Back/2png.png"
+            src="./img/6.Botones/Back/2.png"
             onclick="openStartMenu()" />
         </div>
       </div>
@@ -99,13 +101,14 @@
         <img class="game-over-img" src="./img/6.Botones/Tittles/Game Over/Recurso 12.png" alt="" />
         <div class="game-over-menu">
           <img
+            id="restart-id"
             class="restart-img"
             src="./img/6.Botones/Try again/Recurso 17.png"
             onclick="startGame()" />
           <img
             id="exit-gameAfterDead-btn-id"
             class="back-to-menu-img d-none"
-            src="img/6.Botones/ExitGame/2.png"
+            src="./img/6.Botones/ExitGame/2.png"
             onclick="openStartMenu()" />
         </div>
       </div>
@@ -115,6 +118,7 @@
         onclick="closeInstructions()">
         <div class="popup" onclick="stopPropagation(event)">
           <img
+            id="close-btn-id"
             class="close-btn"
             src="./img/6.Botones/Close/2.png"
             alt=""
@@ -170,6 +174,7 @@
         onclick="closeDifficultySettings(event)">
         <div class="popup" onclick="stopPropagation(event)">
           <img
+            id="close-btn2-id"
             class="close-btn"
             src="./img/6.Botones/Close/2.png"
             alt=""
