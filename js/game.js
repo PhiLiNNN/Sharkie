@@ -130,6 +130,11 @@ const buttons = [
     img: "./img/6.Botones/Back/2_highlight.png",
     resetImg: "./img/6.Botones/Back/2.png",
   },
+  {
+    id: "impressum-btn-id",
+    img: "./img/6.Botones/Close/2_highlight.png",
+    resetImg: "./img/6.Botones/Close/2.png",
+  },
 ];
 
 /**
@@ -347,4 +352,18 @@ function exitFullScreen() {
   else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
   else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
   else if (document.msExitFullscreen) document.msExitFullscreen();
+}
+
+/**
+ * Opens the Impressum by toggling the visibility of the Impressum element.
+ */
+function openImpressum() {
+  toggleVisibility("impressum-id", false);
+}
+
+/**
+ * Closes the Impressum by toggling the visibility of the Impressum element.
+ */
+function closeImpressum() {
+  toggleVisibility("impressum-id", true);
 }

@@ -7,15 +7,6 @@ $text-color: rgb(219, 214, 214);
   font-weight: normal;
   font-style: normal;
 }
-
-@keyframes loading {
-  from {
-    transform: rotate(0turn);
-  }
-  to {
-    transform: rotate(1turn);
-  }
-}
 :fullscreen canvas,
 :-webkit-full-screen canvas {
   width: 100%;
@@ -84,30 +75,28 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  .loader {
-    position: fixed;
-    width: 920px;
-    height: 480px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #000000ff;
+  .legal {
+    position: absolute;
+    top: 10px;
+    right: 8px;
     z-index: 1000;
-    transition: opacity 0.75s, visibility 0.75s;
-  }
-  .loader-hidden {
-    opacity: 0;
-    visibility: hidden;
-  }
-  .loader::after {
-    content: "";
-    width: 40px;
-    height: 40px;
-    border: 8px solid #531a82;
-    border-top-color: #7fffe0;
-    border-radius: 50%;
-    animation: loading 0.75s ease infinite;
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 12px;
+      background: #7fffe0;
+      color: #531a82;
+      border: 4px solid white;
+      z-index: 1000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      &:active {
+        border: 4px solid #fffd55;
+      }
+    }
   }
   canvas {
     user-select: none;
@@ -183,6 +172,7 @@ body {
   width: 920px;
   height: 460px;
   z-index: 910;
+
   .bottom-menu {
     position: absolute;
     bottom: 16px;
@@ -240,7 +230,9 @@ body {
   cursor: pointer;
 }
 .difficulty-popup-container,
-.instructions-popup-container {
+.instructions-popup-container,
+.impressum,
+.data-protection {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -275,7 +267,9 @@ body {
     }
   }
 }
-.difficulty-popup-container {
+.difficulty-popup-container,
+.impressum,
+.data-protection {
   .popup {
     width: 500px;
     padding: 48px 16px;
@@ -394,11 +388,6 @@ body {
 @media only screen and (max-width: 922px) {
   body {
     .canvas-container {
-      .loader {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1.91/1;
-      }
       canvas {
         width: 100%;
         box-shadow: none;
@@ -435,6 +424,7 @@ body {
     }
   }
 }
+
 @media only screen and (max-width: 590px) {
   .difficulty-popup-container,
   .instructions-popup-container {
@@ -531,6 +521,20 @@ body {
     gap: 6px;
     font-size: 12px;
   }
+  .canvas-container {
+    .legal {
+      top: 6px;
+      button {
+        border-radius: 8px;
+        padding: 4px 12px;
+        font-size: 14px;
+        border: 2px solid white;
+        &:active {
+          border: 2px solid #fffd55;
+        }
+      }
+    }
+  }
 }
 @media only screen and (max-width: 667px) and (min-height: 667px) {
   .turn-device {
@@ -543,10 +547,6 @@ body {
 @media only screen and (max-height: 480px) {
   body {
     .canvas-container {
-      .loader {
-        height: 100vh;
-        border-radius: 9px;
-      }
       canvas {
         box-shadow: none;
         border: none;
@@ -574,11 +574,6 @@ body {
 @media only screen and (max-height: 480px) and (max-width: 922px) {
   body {
     .canvas-container {
-      .loader {
-        border-radius: 0;
-        height: 100vh;
-        width: 100%;
-      }
       canvas {
         box-shadow: none;
         border: none;
