@@ -589,6 +589,7 @@ body {
   }
   body .canvas-container .menu {
     height: 100vh;
+    padding-bottom: 0;
   }
   body .canvas-container .instructions-popup-container .popup {
     height: 100vh;
@@ -610,6 +611,7 @@ body {
   }
   body .canvas-container .menu {
     background-size: 100% 100%;
+    border-radius: 0;
     height: 100vh;
     width: 100%;
     aspect-ratio: unset;

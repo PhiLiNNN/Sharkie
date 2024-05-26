@@ -13,12 +13,14 @@ class ThrowableObject extends MovableObject {
   blow(isSwimmingLeft, offsetX, shotSpeed) {
     let angle = 0;
     let updateBlowAnimation = setInterval(() => {
-      this.y += Math.sin(angle) * 0.5;
-      if (isSwimmingLeft) {
-        this.x -= shotSpeed;
-        this.offsetX = offsetX + 65;
-      } else this.x += shotSpeed;
-      angle += 0.1;
+      if (!pauseGame) {
+        this.y += Math.sin(angle) * 0.5;
+        if (isSwimmingLeft) {
+          this.x -= shotSpeed;
+          this.offsetX = offsetX + 65;
+        } else this.x += shotSpeed;
+        angle += 0.1;
+      }
     }, 1);
     intervalIds.push(updateBlowAnimation);
   }
